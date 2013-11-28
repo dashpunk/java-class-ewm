@@ -12,7 +12,7 @@ import psdi.webclient.system.controller.WebClientEvent;
 public class MsTbPregao extends AppBean {
 
 	/**
-	 * @author Marcelo
+	 * @author marcelosydney.lima
 	 */
 	public MsTbPregao() {
 	}
@@ -33,7 +33,46 @@ public class MsTbPregao extends AppBean {
 					mboDestino.setValue("MSTBPREGAOID", getMbo().getInt("MSTBPREGAOID"));
 					System.out.println("########### MSTBPREGAOID" + getMbo().getInt("MSTBPREGAOID"));
 				}
+				super.save();
+			} else {
+				
+				MboRemote mbo1;
+				MboRemote mbo2;
+				
+				double valorglobal = 0d;
+				
+				for (int i = 0; ((mbo1 = getMbo().getMboSet("MSTBITENSPREGAO").getMbo(i)) != null); i++) {
+					if (mbo1.getString("MSALCODSITUACAO").equalsIgnoreCase("HOMOLOGADO")) {
+						System.out.println("########## MSNUNUMVALORUNITARIO = " + mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getDouble("MSNUNUMVALORUNITARIO"));
+						mbo1.setValue("MSNUNUMVALORUNITARIO", mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getDouble("MSNUNUMVALORUNITARIO"));
+						System.out.println("########## MSALCODMOEDA = " + mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getString("MSALCODMOEDA"));
+						mbo1.setValue("MSALCODMOEDA", mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getString("MSALCODMOEDA"));
+						
+						double quantidade = 0d;
+						double valortotal = 0d;
+						
+						for (int j = 0; ((mbo2 = mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAO").getMbo(j)) != null); j++) {
+							double valor = mbo2.getDouble("MSNUNUMQUANTIDADE") * mbo2.getDouble("MSNUNUMVALORUNITARIO");
+							System.out.println("########## Valor = " + valor);
+							mbo2.setValue("MSNUNUMVALORTOTAL", valor);
+							quantidade += mbo2.getDouble("MSNUNUMQUANTIDADE");
+							valortotal += valor;
+						}
+						
+						System.out.println("########## Quantidade = " + quantidade);
+						mbo1.setValue("MSNUNUMQUANTIDADEREGISTRADA", quantidade);
+						System.out.println("########## Valor Total = " + valortotal);
+						mbo1.setValue("MSNUNUMVALORTOTAL", valortotal);
+						
+						valorglobal += mbo1.getDouble("MSNUNUMVALORTOTAL");
+					}
+				}
+				
+				System.out.println("########## Valor Global = " + valorglobal);
+				getMbo().setValue("MSNUNUMVALORGLOBAL", valorglobal);
+				super.save();
 			}
+			
 			//mboDestino.getThisMboSet().save();
 			super.save();
 			
