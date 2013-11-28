@@ -43,6 +43,7 @@ public class MsTbPregao extends AppBean {
 				
 				for (int i = 0; ((mbo1 = getMbo().getMboSet("MSTBITENSPREGAO").getMbo(i)) != null); i++) {
 					if (mbo1.getString("MSALCODSITUACAO").equalsIgnoreCase("HOMOLOGADO")) {
+						super.save();
 						System.out.println("########## MSNUNUMVALORUNITARIO = " + mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getDouble("MSNUNUMVALORUNITARIO"));
 						mbo1.setValue("MSNUNUMVALORUNITARIO", mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getDouble("MSNUNUMVALORUNITARIO"));
 						System.out.println("########## MSALCODMOEDA = " + mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getString("MSALCODMOEDA"));
