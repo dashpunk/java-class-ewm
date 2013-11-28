@@ -20,21 +20,14 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 	public MsCotacao() {
 		System.out.print("CTIS # --- Entrou na Classe AppBean MsCotacao");
 	}
-
-	@Override
-	public void initialize() throws MXException, RemoteException {
-		super.initialize();
-		try {
-			tempMedicamentos();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
+	
+	
+	 public int SAVE() throws MXException, RemoteException {
+		 tempMedicamentos();
+		 
+		 return super.SAVE();
+	 }
+	 
 	@Override
 	public synchronized void dataChangedEvent(DataBean speaker) {
 
