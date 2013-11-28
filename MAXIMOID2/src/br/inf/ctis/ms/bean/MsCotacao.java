@@ -14,7 +14,7 @@ import psdi.util.MXException;
 import psdi.webclient.system.beans.DataBean;
 
 /**
- * @author willians.andrade1
+ * @author willians.andrade
  */
 public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 	public MsCotacao() {
@@ -22,8 +22,8 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 	}
 
 	@Override
-	public void initializeApp() throws MXException, RemoteException {
-		super.initializeApp();
+	public void initialize() throws MXException, RemoteException {
+		super.initialize();
 		try {
 			tempMedicamentos();
 		} catch (RemoteException e) {
