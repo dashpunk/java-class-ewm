@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import psdi.mbo.MboRemote;
+import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 import psdi.webclient.system.beans.AppBean;
 import psdi.webclient.system.controller.Utility;
@@ -44,29 +45,35 @@ public class MsTbPregao extends AppBean {
 				for (int i = 0; ((mbo1 = getMbo().getMboSet("MSTBITENSPREGAO").getMbo(i)) != null); i++) {
 					super.save();
 					if (mbo1.getString("MSALCODSITUACAO").equalsIgnoreCase("HOMOLOGADO")) {
-						super.save();
-						System.out.println("########## MSNUNUMVALORUNITARIO = " + mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getDouble("MSNUNUMVALORUNITARIO"));
-						mbo1.setValue("MSNUNUMVALORUNITARIO", mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getDouble("MSNUNUMVALORUNITARIO"));
-						System.out.println("########## MSALCODMOEDA = " + mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getString("MSALCODMOEDA"));
-						mbo1.setValue("MSALCODMOEDA", mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getString("MSALCODMOEDA"));
-						
-						double quantidade = 0d;
-						double valortotal = 0d;
-						
-						for (int j = 0; ((mbo2 = mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAO").getMbo(j)) != null); j++) {
-							double valor = mbo2.getDouble("MSNUNUMQUANTIDADE") * mbo2.getDouble("MSNUNUMVALORUNITARIO");
-							System.out.println("########## Valor = " + valor);
-							mbo2.setValue("MSNUNUMVALORTOTAL", valor);
-							quantidade += mbo2.getDouble("MSNUNUMQUANTIDADE");
-							valortotal += valor;
+						System.out.println("########## Count Fornecedores do Item do Pregão = " + mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAO").count());
+						if (mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAO").count() > 0) {
+							super.save();
+							System.out.println("########## MSNUNUMVALORUNITARIO = " + mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getDouble("MSNUNUMVALORUNITARIO"));
+							mbo1.setValue("MSNUNUMVALORUNITARIO", mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getDouble("MSNUNUMVALORUNITARIO"));
+							System.out.println("########## MSALCODMOEDA = " + mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getString("MSALCODMOEDA"));
+							mbo1.setValue("MSALCODMOEDA", mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAOVENCEDOR").getMbo(0).getString("MSALCODMOEDA"));
+							
+							double quantidade = 0d;
+							double valortotal = 0d;
+							
+							for (int j = 0; ((mbo2 = mbo1.getMboSet("MSTBFORNECEDORESITEMPREGAO").getMbo(j)) != null); j++) {
+								double valor = mbo2.getDouble("MSNUNUMQUANTIDADE") * mbo2.getDouble("MSNUNUMVALORUNITARIO");
+								System.out.println("########## Valor = " + valor);
+								mbo2.setValue("MSNUNUMVALORTOTAL", valor);
+								quantidade += mbo2.getDouble("MSNUNUMQUANTIDADE");
+								valortotal += valor;
+							}
+							
+							System.out.println("########## Quantidade = " + quantidade);
+							mbo1.setValue("MSNUNUMQUANTIDADEREGISTRADA", quantidade);
+							System.out.println("########## Valor Total = " + valortotal);
+							mbo1.setValue("MSNUNUMVALORTOTAL", valortotal);
+							
+							valorglobal += mbo1.getDouble("MSNUNUMVALORTOTAL");
+						} else {
+							throw new MXApplicationException("pregao", "FornecedorNulo");
 						}
-						
-						System.out.println("########## Quantidade = " + quantidade);
-						mbo1.setValue("MSNUNUMQUANTIDADEREGISTRADA", quantidade);
-						System.out.println("########## Valor Total = " + valortotal);
-						mbo1.setValue("MSNUNUMVALORTOTAL", valortotal);
-						
-						valorglobal += mbo1.getDouble("MSNUNUMVALORTOTAL");
+						super.save();	
 					}
 				}
 				
