@@ -47,13 +47,31 @@ public class MsTermoAditivo extends AppBean {
 			} else {
 				MboRemote mbo;
 				for (int i = 0; ((mbo=getMbo().getMboSet("MSTBITENSTERMOADITIVO").getMbo(i)) !=null); i++) {
-					if (mbo.getBoolean("MSNUFLGSELECAO")) {
-						if((mbo.getDouble("MSNUNUMPORCENTAGEMADITIVADA") > 0) || (mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA") > 0)) {
-							mbo.setValue("MSNUNUMVALORTOTAL", mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA") * mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("UNITCOST"));
-							super.save();
-						} else if ((mbo.getDouble("MSNUNUMVALORUNITARIOALTERADO") > 0)) {
+					if (mbo.getBoolean("MSNUFLGSELECAO")) {		
+						if(((mbo.getDouble("MSNUNUMPORCENTAGEMADITIVADA") > 0) || (mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA") > 0)) && (mbo.getDouble("MSNUNUMVALORUNITARIOALTERADO") > 0)) {
+							if (mbo.getString("MSALCODTIPO").equalsIgnoreCase("ACRESCIMO")) {
+								mbo.setValue("MSNUNUMVALORTOTALADITIVO", mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA") * mbo.getDouble("MSNUNUMVALORUNITARIOALTERADO"));
+								mbo.setValue("MSNUNUMVALORTOTAL", (mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("ORDERQTY") + mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA")) * mbo.getDouble("MSNUNUMVALORUNITARIOALTERADO"));
+								super.save();
+							} else if (mbo.getString("MSALCODTIPO").equalsIgnoreCase("SUPRESSAO")) {
+								mbo.setValue("MSNUNUMVALORTOTALADITIVO", mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA") * mbo.getDouble("MSNUNUMVALORUNITARIOALTERADO") * -1);
+								mbo.setValue("MSNUNUMVALORTOTAL", (mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("ORDERQTY") - mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA")) * mbo.getDouble("MSNUNUMVALORUNITARIOALTERADO"));
+								super.save();
+							}
+						} else if(((mbo.getDouble("MSNUNUMPORCENTAGEMADITIVADA") > 0) || (mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA") > 0)) && (mbo.getDouble("MSNUNUMVALORUNITARIOALTERADO") == 0)) {
+							if (mbo.getString("MSALCODTIPO").equalsIgnoreCase("ACRESCIMO")) {
+								mbo.setValue("MSNUNUMVALORTOTALADITIVO", mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA") * mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("UNITCOST"));
+								mbo.setValue("MSNUNUMVALORTOTAL", (mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("ORDERQTY") + mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA")) * mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("UNITCOST"));
+								super.save();
+							} else if (mbo.getString("MSALCODTIPO").equalsIgnoreCase("SUPRESSAO")) {
+								mbo.setValue("MSNUNUMVALORTOTALADITIVO", mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA") * mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("UNITCOST") * -1);
+								mbo.setValue("MSNUNUMVALORTOTAL", (mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("ORDERQTY") - mbo.getDouble("MSNUNUMQUANTIDADEADITIVADA")) * mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("UNITCOST"));
+								super.save();
+							}
+						} else if ((mbo.getDouble("MSNUNUMVALORUNITARIOALTERADO") > 0) && (mbo.getDouble("MSNUNUMPORCENTAGEMADITIVADA") == 0)) {
+							mbo.setValue("MSNUNUMVALORTOTALADITIVO", mbo.getDouble("MSNUNUMVALORUNITARIOALTERADO") * mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("ORDERQTY"));
 							mbo.setValue("MSNUNUMVALORTOTAL", mbo.getDouble("MSNUNUMVALORUNITARIOALTERADO") * mbo.getMboSet("MSVWITENSNETERMOADITIVO").getMbo(0).getDouble("ORDERQTY"));
-							super.save();
+							super.save(); 
 						} else {
 							throw new MXApplicationException("termoaditivo", "NaoAditivado");
 						}
