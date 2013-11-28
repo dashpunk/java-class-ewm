@@ -26,6 +26,7 @@ public class BasicoPrintTR extends DataBean {
             Hashtable reportParams = new Hashtable();
 
             reportParams.put("PONUM", (String) parent.getMbo().getString("PONUM"));
+            reportParams.put("REPORTTYPE", (String) getMbo().getString("REPORTTYPE"));
 
             WebClientEvent event = sessionContext.getCurrentEvent();
             reportParams.put("relatorio", (String) event.getValue());
