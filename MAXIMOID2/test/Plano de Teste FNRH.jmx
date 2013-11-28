@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.1">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Plano de Teste" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Grupo de Usuários" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador de Iteração" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1322850844000</longProp>
+        <longProp name="ThreadGroup.end_time">1322850844000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Relatório de Sumário" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>true</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <WebServiceSampler guiclass="WebServiceSamplerGui" testclass="WebServiceSampler" testname="Requisição (SOAP) Requisição" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">192.168.1.197</stringProp>
+          <stringProp name="HTTPSampler.port">80</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.path">/meaweb/services/SNRHOS_FNRH</stringProp>
+          <stringProp name="WebserviceSampler.wsdl_url">http://192.168.1.197/meaweb/wsdl/SNRHOS_FNRH.wsdl</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <stringProp name="Soap.Action">urn:processDocument</stringProp>
+          <stringProp name="HTTPSamper.xml_data">&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot; xmlns:max=&quot;http://www.ibm.com/maximo&quot;&gt;
+   &lt;soap:Header/&gt;
+   &lt;soap:Body&gt;
+      &lt;max:CreateFNRH&gt;
+         &lt;max:FNRHSet&gt;
+            &lt;max:SNTBFNRH&gt;
+               &lt;max:SNPERSONID&gt;1015&lt;/max:SNPERSONID&gt;
+               &lt;max:SNNUMHOSP&gt;1&lt;/max:SNNUMHOSP&gt;
+               &lt;max:SNUHNUM&gt;1232&lt;/max:SNUHNUM&gt;
+               &lt;max:SNMOTVIA&gt;01&lt;/max:SNMOTVIA&gt;
+               &lt;max:SNTIPTRAN&gt;01&lt;/max:SNTIPTRAN&gt;
+               &lt;max:BGSTCHAVE&gt;AAA&lt;/max:BGSTCHAVE&gt;
+&lt;max:SNENT&gt;2011-12-05T12:00:00-02:00&lt;/max:SNENT&gt;
+&lt;max:SNSAI&gt;2011-12-06T14:00:00-02:00&lt;/max:SNSAI&gt;
+&lt;max:SNSTATUS&gt;CHECKOUT&lt;/max:SNSTATUS&gt;
+               &lt;max:BGSTDSCPAISDEST&gt;BRASIL&lt;/max:BGSTDSCPAISDEST&gt;
+               &lt;max:BGSTDSCESTADODEST&gt;DISTRITO FEDERAL&lt;/max:BGSTDSCESTADODEST&gt;
+               &lt;max:BGSTDSCPAIS&gt;BRASIL&lt;/max:BGSTDSCPAIS&gt;
+               &lt;max:BGSTDSCESTADO&gt;SÃO PAULO&lt;/max:BGSTDSCESTADO&gt;
+               &lt;max:BGSTDSCCIDADEDEST&gt;BRASILIA&lt;/max:BGSTDSCCIDADEDEST&gt;
+               &lt;max:BGSTDSCCIDADE&gt;CAMPINAS&lt;/max:BGSTDSCCIDADE&gt;
+            &lt;/max:SNTBFNRH&gt;
+         &lt;/max:FNRHSet&gt;
+      &lt;/max:CreateFNRH&gt;
+   &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</stringProp>
+          <stringProp name="WebServiceSampler.xml_data_file"></stringProp>
+          <stringProp name="WebServiceSampler.xml_path_loc"></stringProp>
+          <stringProp name="WebserviceSampler.timeout"></stringProp>
+          <stringProp name="WebServiceSampler.memory_cache">true</stringProp>
+          <stringProp name="WebServiceSampler.read_response">true</stringProp>
+          <stringProp name="WebServiceSampler.use_proxy">false</stringProp>
+          <stringProp name="WebServiceSampler.proxy_host"></stringProp>
+          <stringProp name="WebServiceSampler.proxy_port"></stringProp>
+        </WebServiceSampler>
+        <hashTree/>
+        <SoapSampler guiclass="SoapSamplerGui" testclass="SoapSampler" testname="Requisição SOAP/XML-RPC" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="SoapSampler.URL_DATA">http://192.168.1.197/meaweb/services/SNRHOS_FNRH</stringProp>
+          <stringProp name="HTTPSamper.xml_data">&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot; xmlns:max=&quot;http://www.ibm.com/maximo&quot;&gt;
+   &lt;soap:Header/&gt;
+   &lt;soap:Body&gt;
+      &lt;max:CreateFNRH&gt;
+         &lt;max:FNRHSet&gt;
+            &lt;max:SNTBFNRH&gt;
+               &lt;max:SNPERSONID&gt;1015&lt;/max:SNPERSONID&gt;
+               &lt;max:SNNUMHOSP&gt;1&lt;/max:SNNUMHOSP&gt;
+               &lt;max:SNUHNUM&gt;1232&lt;/max:SNUHNUM&gt;
+               &lt;max:SNMOTVIA&gt;01&lt;/max:SNMOTVIA&gt;
+               &lt;max:SNTIPTRAN&gt;01&lt;/max:SNTIPTRAN&gt;
+               &lt;max:BGSTCHAVE&gt;AAA&lt;/max:BGSTCHAVE&gt;
+&lt;max:SNENT&gt;2011-12-05T12:00:00-02:00&lt;/max:SNENT&gt;
+&lt;max:SNSAI&gt;2011-12-06T14:00:00-02:00&lt;/max:SNSAI&gt;
+&lt;max:SNSTATUS&gt;CHECKOUT&lt;/max:SNSTATUS&gt;
+               &lt;max:BGSTDSCPAISDEST&gt;BRASIL&lt;/max:BGSTDSCPAISDEST&gt;
+               &lt;max:BGSTDSCESTADODEST&gt;DISTRITO FEDERAL&lt;/max:BGSTDSCESTADODEST&gt;
+               &lt;max:BGSTDSCPAIS&gt;BRASIL&lt;/max:BGSTDSCPAIS&gt;
+               &lt;max:BGSTDSCESTADO&gt;SÃO PAULO&lt;/max:BGSTDSCESTADO&gt;
+               &lt;max:BGSTDSCCIDADEDEST&gt;BRASILIA&lt;/max:BGSTDSCCIDADEDEST&gt;
+               &lt;max:BGSTDSCCIDADE&gt;CAMPINAS&lt;/max:BGSTDSCCIDADE&gt;
+            &lt;/max:SNTBFNRH&gt;
+         &lt;/max:FNRHSet&gt;
+      &lt;/max:CreateFNRH&gt;
+   &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</stringProp>
+          <stringProp name="SoapSampler.xml_data_file"></stringProp>
+          <stringProp name="SoapSampler.SOAP_ACTION">urn:processDocument</stringProp>
+          <stringProp name="SoapSampler.SEND_SOAP_ACTION">true</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+        </SoapSampler>
+        <hashTree/>
+      </hashTree>
+      <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Gráfico de Resultados" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="Ver Árvore de Resultados" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
