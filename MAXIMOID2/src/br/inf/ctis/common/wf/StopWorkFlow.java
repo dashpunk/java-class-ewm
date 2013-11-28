@@ -11,6 +11,9 @@ import psdi.util.logging.MXLoggerFactory;
 import psdi.workflow.WFProcess;
 import psdi.workflow.WFProcessSetRemote;
 
+
+
+
 public class StopWorkFlow implements psdi.common.action.ActionCustomClass {
 
 	private static final MXLogger log = MXLoggerFactory.getLogger("maximo");
@@ -23,7 +26,7 @@ public class StopWorkFlow implements psdi.common.action.ActionCustomClass {
 		System.out.println("########## WfInstance " + (WFInstanceSetRemote) mbo.getMboSet("ACTIVEWFINSTANCE"));
 		System.out.println("########## WfInstance vazia?" + wfInstanceSet.isEmpty());
 		if(!wfInstanceSet.isEmpty()) {
-			System.out.println("########## WfInstance estï¿½ vazia!");
+			System.out.println("########## WfInstance está vazia!");
 			//log.debug("WfInstance is not empty");
 			
 			for(int wfInstance=0; wfInstance <wfInstanceSet.count();wfInstance++) {
