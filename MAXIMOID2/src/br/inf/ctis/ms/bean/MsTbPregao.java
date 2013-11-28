@@ -70,6 +70,7 @@ public class MsTbPregao extends AppBean {
 							mbo1.setValue("MSNUNUMVALORTOTAL", valortotal);
 							
 							valorglobal += mbo1.getDouble("MSNUNUMVALORTOTAL");
+							super.save();
 						} else {
 							throw new MXApplicationException("pregao", "FornecedorNulo");
 						}
