@@ -12,7 +12,7 @@ import psdi.webclient.system.controller.WebClientEvent;
 public class MsTbPregao extends AppBean {
 
 	/**
-	 * @author marcelosydney.lima
+	 * @author marcelosydney.lima1
 	 */
 	public MsTbPregao() {
 	}
