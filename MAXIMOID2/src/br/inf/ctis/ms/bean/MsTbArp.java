@@ -24,14 +24,48 @@ public class MsTbArp extends AppBean {
 				MboRemote mbo;
 				MboRemote mboDestino = null;
 				
-				for (int i = 0; ((mbo= getMbo().getMboSet("POLINE").getMbo(i)) !=null); i++) {
+				for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSPREGAO").getMbo(i)) !=null); i++) {
 					mboDestino = getMbo().getMboSet("MSTBITENSARP").add();
 					System.out.println("############ add() na itens arp");
 					mboDestino.setValue("POLINEID", mbo.getInt("POLINEID"));
 					System.out.println("############ POLINEID = " + mbo.getInt("POLINEID"));
+					
+					mboDestino.setValue("MSTBITENSPREGAOID", mbo.getInt("MSTBITENSPREGAOID"));
+					System.out.println("############ MSTBITENSPREGAOID = " + mbo.getInt("MSTBITENSPREGAOID"));
+					
+					mboDestino.setValue("MSALCODMOEDA", mbo.getString("MSALCODMOEDA"));
+					System.out.println("############ MSALCODMOEDA = " + mbo.getString("MSALCODMOEDA"));
+					
+					mboDestino.setValue("MSNUNUMQUANTIDADEREGISTRADA", mbo.getDouble("MSNUNUMQUANTIDADEREGISTRADA"));
+					System.out.println("############ MSNUNUMQUANTIDADEREGISTRADA = " + mbo.getDouble("MSNUNUMQUANTIDADEREGISTRADA"));
+					
+					mboDestino.setValue("MSNUNUMVALORUNITARIO", mbo.getDouble("MSNUNUMVALORUNITARIO"));
+					System.out.println("############ MSNUNUMVALORUNITARIO = " + mbo.getDouble("MSNUNUMVALORUNITARIO"));
+					
+					mboDestino.setValue("MSNUNUMVALORTOTAL", mbo.getDouble("MSNUNUMVALORTOTAL"));
+					System.out.println("############ MSNUNUMVALORTOTAL = " + mbo.getDouble("MSNUNUMVALORTOTAL"));
+				
 					mboDestino.setValue("MSTBARPID", getMbo().getInt("MSTBARPID"));
 					System.out.println("########### MSTBARPID" + getMbo().getInt("MSTBARPID"));
 				}
+				super.save();
+			} else {
+				
+				MboRemote mbo1;
+				
+				double valorglobal = 0d;
+				
+				for (int i = 0; ((mbo1 = getMbo().getMboSet("MSTBITENSARP").getMbo(i)) != null); i++) {
+					super.save();
+					if (mbo1.getBoolean("MSNUFLGSELECAOARP")) {
+						super.save();
+						valorglobal += mbo1.getDouble("MSNUNUMVALORTOTAL");
+					}
+				}
+				
+				System.out.println("########## Valor Global = " + valorglobal);
+				getMbo().setValue("MSNUNUMVALORGLOBAL", valorglobal);
+				super.save();
 			}
 			//mboDestino.getThisMboSet().save();
 			super.save();
