@@ -26,6 +26,7 @@ public class MsNuFlgTermoAditivo extends MboValueAdapter {
 
         if (getMboValue().getBoolean()) {
             getMboValue().getMbo().setValueNull("MSALCODMODALIDADE");
+            getMboValue().getMbo().setValueNull("MSALNUMMODALIDADE");
         } else if (!getMboValue().getBoolean()) {
         	getMboValue().getMbo().setValueNull("MSALNUMINSTRUMENTOCONTRATACAO");
         }
