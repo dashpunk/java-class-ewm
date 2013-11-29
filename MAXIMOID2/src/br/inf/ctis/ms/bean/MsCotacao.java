@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import psdi.mbo.MboSet;
 import psdi.util.MXException;
-import psdi.webclient.system.beans.DataBean;
 
 /**
  * @author DUDU
@@ -23,24 +22,13 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 	
 	
 	 public int SAVE() throws MXException, RemoteException {
-		 tempMedicamentos();
+		 System.out.print("CTIS # --- Entrou na Classe AppBean MsCotacao SAVE()");
 		 
-		 return super.SAVE();
+		tempMedicamentos();
+		 
+		return currentRow;
+		
 	 }
-	 
-	@Override
-	public synchronized void dataChangedEvent(DataBean speaker) {
-
-		try {
-			tempMedicamentos();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	public void tempMedicamentos() throws MXException, RemoteException {
 
@@ -70,10 +58,11 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 				MboSet mboDestino = (MboSet) getMbo().getMboSet(
 						"MSTBMEDICPERSISTENTE");
 
-				// mboDestino.deleteAndRemoveAll();
+				mboDestino.deleteAndRemoveAll();
 
 				refreshTable();
-
+				mboDestino.save();
+				
 				for (String key : map.keySet()) {
 					Component c = map.get(key);
 
@@ -81,17 +70,20 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 					 * Adicionar Linhas Novas
 					 */
 					
-					System.out.print("MSSISMAT: " + c.getId() +  " --- MSQTD: " + c.getQuantity() + " --- MSTBOCID: " + getMbo().getInt("MSTBOCID"));
+					System.out.print("#####  Setando Valores  ------  MSSISMAT: " + c.getId() +  " --- MSQTD: " + c.getQuantity() + " --- MSTBOCID: " + getMbo().getInt("MSTBOCID"));
 					
 					mboDestino.add();
 
 					mboDestino.setValue("MSSISMAT", c.getId());
 					mboDestino.setValue("MSQTD", c.getQuantity());
 					mboDestino.setValue("MSTBOCID", getMbo().getInt("MSTBOCID"));
+					
+					
 				}
+				refreshTable();
+				mboDestino.save();
 			}
 
-			refreshTable();
 			// reloadTable();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -112,7 +104,7 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 			for (int i = 0; i < iTamanho; i++) {
 				String mssismat = Integer.toString(mboOrigem.getMbo(i).getInt("MSSISMAT"));
 				Integer qntd = mboOrigem.getMbo(i).getInt("MSQTD");
-
+				System.out.print("##### adicionarComponentes  ------   MSSISMAT: " + mboOrigem.getMbo(i).getInt("MSSISMAT") +  " --- MSQTD: " + mboOrigem.getMbo(i).getInt("MSQTD") + " --- MSTBOCID: " + getMbo().getInt("MSTBOCID"));
 				components.add(new Component(mssismat, mssismat, qntd));
 			}
 		}
