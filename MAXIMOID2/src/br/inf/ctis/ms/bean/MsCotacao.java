@@ -29,6 +29,7 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 
 		tempMedicamentos();
 
+		super.save();
 		return currentRow;
 
 	}
@@ -66,7 +67,7 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 					mboDestino.getMbo(i).delete();
 				}
 
-				mboDestino.save();
+				//mboDestino.save();
 
 				for (String key : map.keySet()) {
 					Component c = map.get(key);
@@ -92,7 +93,7 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 
 				}
 
-				mboDestino.save();
+				//mboDestino.save();
 				refreshTable();
 				reloadTable();
 			}
