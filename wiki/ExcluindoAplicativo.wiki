@@ -9,7 +9,7 @@
   * delete from maxmenu where elementtype='APP' and keyvalue='APPNAME';
   * delete from appdoctype where app= 'APPNAME';
 
-= Excluindo Opção de Assinatura de Toolbar =
+= Excluindo Opção de Assinatura e Toolbar =
 
   * delete from sigoptflag where app='APPNAME';
   * delete from wfapptoolbar where appname='APPNAME';
