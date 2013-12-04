@@ -16,7 +16,7 @@ import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 
 /**
- * @author DUDU
+ * @author Willians Andrade
  */
 public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 	public MsCotacao() {
