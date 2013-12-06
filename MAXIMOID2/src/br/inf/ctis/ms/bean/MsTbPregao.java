@@ -7,8 +7,7 @@ import psdi.mbo.MboRemote;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 import psdi.webclient.system.beans.AppBean;
-import psdi.webclient.system.controller.Utility;
-import psdi.webclient.system.controller.WebClientEvent;
+
 
 public class MsTbPregao extends AppBean {
 
@@ -26,15 +25,22 @@ public class MsTbPregao extends AppBean {
 				MboRemote mbo;
 				MboRemote mboDestino = null;
 				
-				for (int i = 0; ((mbo= getMbo().getMboSet("POLINE").getMbo(i)) !=null); i++) {
-					mboDestino = getMbo().getMboSet("MSTBITENSPREGAO").add();
-					System.out.println("############ add() na itens pregao");
-					mboDestino.setValue("POLINEID", mbo.getInt("POLINEID"));
-					System.out.println("############ POLINEID = " + mbo.getInt("POLINEID"));
-					mboDestino.setValue("MSTBPREGAOID", getMbo().getInt("MSTBPREGAOID"));
-					System.out.println("########### MSTBPREGAOID" + getMbo().getInt("MSTBPREGAOID"));
+				System.out.println("########## ID2PERIODO: " + getMbo().getMboSet("PO").getMbo(0).getMboSet("ID2RELPR").getMbo(0).getString("ID2PERIODO"));
+				getMbo().setValue("ID2PERIODO", getMbo().getMboSet("PO").getMbo(0).getMboSet("ID2RELPR").getMbo(0).getString("ID2PERIODO"));
+				
+				if (getMbo().getMboSet("MSTBITENSPREGAO").isEmpty()){
+					for (int i = 0; ((mbo= getMbo().getMboSet("POLINE").getMbo(i)) !=null); i++) {
+						mboDestino = getMbo().getMboSet("MSTBITENSPREGAO").add();
+						System.out.println("############ add() na itens pregao");
+						mboDestino.setValue("POLINEID", mbo.getInt("POLINEID"));
+						System.out.println("############ POLINEID = " + mbo.getInt("POLINEID"));
+						mboDestino.setValue("MSTBPREGAOID", getMbo().getInt("MSTBPREGAOID"));
+						System.out.println("########### MSTBPREGAOID" + getMbo().getInt("MSTBPREGAOID"));
+					}
 				}
+				
 				super.save();
+				
 			} else {
 				
 				MboRemote mbo1;
