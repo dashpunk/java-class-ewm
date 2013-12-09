@@ -1,5 +1,5 @@
 /**
- * Classe para distribui��o, iniciar e parar fluxo.
+ * Classe para distribuição, iniciar e parar fluxo.
  */
 package br.inf.ctis.ms.bean;
 
@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.lang.reflect.Method;
 
+import psdi.app.rfq.RFQRemote;
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboSet;
 import psdi.mbo.SqlFormat;
@@ -25,6 +26,7 @@ import psdi.workflow.WFInstanceRemote;
 import psdi.workflow.WFInstanceSetRemote;
 import psdi.workflow.WFProcess;
 import psdi.workflow.WFProcessSetRemote;
+import psdi.workflow.WorkFlowServiceRemote;
 import br.inf.ctis.common.wf.StopWorkFlow;
 
 /**
@@ -42,46 +44,74 @@ public class MsDistribuicao extends DataBean {
 
 		if (mbo != null) {
 			applySelectAtorDemanda(mbo);
-			rotear(mbo);
-
+			pararWorkFlow(mbo);
+			iniciarWorkFlow(mbo);
 			// Fecha a Dialog
-			WebClientEvent closeEvt = new WebClientEvent("dialogok",
-					this.app.getCurrentPageId(), null, this.clientSession);
+			WebClientEvent closeEvt = new WebClientEvent("dialogok", this.app.getCurrentPageId(), null, this.clientSession);
 			WebClientRuntime.sendEvent(closeEvt);
-			System.out
-					.print("CTIS ########## MsDistribuicao - Fechou a Dialog");
+			System.out.print("CTIS ########## MsDistribuicao - Fechou a Dialog");
 		}
 
 		return 1;
 	}
 
 	/**
-	 * 
+	 *  Iniciando e Parando Instancias
 	 */
-	private void rotear(MboRemote mbo) throws MXException, RemoteException {
+	private void pararWorkFlow(MboRemote mbo) throws MXException, RemoteException {
 
 		System.out.println("CTIS ############### Entrou no Rotear WORKORDER");
-		WFInstanceSetRemote wfInstanceSet = (WFInstanceSetRemote) mbo
-				.getMboSet("ACTIVEWORKFLOW");
+		WFInstanceSetRemote wfInstanceSet = (WFInstanceSetRemote) mbo.getMboSet("ACTIVEWORKFLOW");
 
 		
 		if (!wfInstanceSet.isEmpty()) {
 			for (int w = 0; w < wfInstanceSet.count(); w++) {
-
-				WFInstanceRemote wfInst = (WFInstanceRemote) wfInstanceSet
-						.getMbo(w);
-					wfInst.stopWorkflow("Parar WorkFlow"); // Memo of the
-															// transaction...
-					wfInstanceSet.save();
-					System.out.println("CTIS ############### Roteando: " + w);
+				// Parar Instancia
+				WFInstanceRemote wfInst = (WFInstanceRemote) wfInstanceSet.getMbo(w);
+				wfInst.stopWorkflow("Parou, o que escrever aqui?");	
+				// Salvando Instancia
+				//wfInstanceSet.save();
+				System.out.println("CTIS ############### Roteando: " + w);
 				}
 		} else {
-			System.out
-					.println("CTIS ############### wfInstanceSet está vazio.");
+			System.out.println("CTIS ############### wfInstanceSet está vazio.");
 		}
-
 	}
+	
+	/// Teste de ReStart
+	
+	
+	public void iniciarWorkFlow(MboRemote mbo)
+		    throws MXException, RemoteException
+		    {
+		    WFInstanceSetRemote wfInstanceSet=(WFInstanceSetRemote) mbo.getMboSet("ACTIVEWORKFLOW");
 
+		    
+		        if(!wfInstanceSet.isEmpty())
+		        {
+		            for(int wfInstance=0; wfInstance <wfInstanceSet.count();wfInstance++)
+		            {
+		            WFInstance wfInst=(WFInstance) wfInstanceSet.getMbo(wfInstance);
+		            String processName = wfInst.getString("processname");         
+		            WFProcessSetRemote wfProcessSet = (WFProcessSetRemote) mbo.getMboSet("WFPROCESS");
+		            SqlFormat sqf1 = new SqlFormat(mbo.getUserInfo(), "processname = :1 and active = 1");
+		             sqf1.setObject(1,"WFPROCESS","PROCESSNAME", processName);
+		             wfProcessSet.setWhere(sqf1.format());
+		            int matchingProcess = wfProcessSet.count();
+		            WFProcess wfProcess = null;
+		             
+		            if (matchingProcess==1)
+		            {
+		                wfProcess = (WFProcess)wfProcessSet.getMbo(0);
+		            }
+
+		            wfInst.initiateWorkflow("Iniciou, o que escrever aqui?",wfProcess);
+
+		            wfInstanceSet.save();
+		            }
+		        } 
+		    } 
+	
 	// Guarda Valor do campo na MBO e retorna
 	private MboRemote getAtorDemandaMbo() throws MXException, RemoteException {
 		DataBean atorDemandaBean = this.app.getDataBean("msalnatordemanda");
@@ -94,12 +124,11 @@ public class MsDistribuicao extends DataBean {
 			DataBean appBean = this.app.getAppBean();
 			mbo = appBean.getMboOrZombie();
 		}
-		System.out
-				.print("CTIS ########## MsDistribuicao - Guarda Valor do MBO");
+		System.out.print("CTIS ########## MsDistribuicao - Guarda Valor do MBO");
 		return mbo;
 	}
 
-	// xxx
+	// Setando Valores e Selecionando.
 
 	private void applySelectAtorDemanda(MboRemote mbo) throws MXException,
 			RemoteException {
@@ -114,8 +143,7 @@ public class MsDistribuicao extends DataBean {
 			mbo.setValue("msalflgescalacao", "1");
 			mbo.setValue("msalnobs", "sim", 2L);
 
-			System.out
-					.println("CTIS ########## MsDistribuicao - Seta valores selecionados");
+			System.out.println("CTIS ########## MsDistribuicao - Seta valores selecionados");
 			return;
 		}
 
@@ -133,17 +161,14 @@ public class MsDistribuicao extends DataBean {
 						System.out
 								.println("CTIS ########## workorder.isSelected()");
 						try {
-							// Verifica se a Op��o de Assinatura DIST retorna
-							// verdadeiro
+							// Verifica se a Opçãode Assinatura DIST retorna verdadeiro
 							workorder.sigOptionAccessAuthorized("DIST");
 
-							workorder.setValue("msalnatordemanda", getMbo(row)
-									.getString("personid"));
+							workorder.setValue("msalnatordemanda", getMbo(row).getString("personid"));
 							workorder.setValue("msalflgescalacao", "1");
 							workorder.setValue("msalnobs", "sim", 2L);
 
-							System.out
-									.print("CTIS ########## MsDistribuicao - Seta valores para WorkOrder (todas as linhas selecionadas)");
+							System.out.print("CTIS ########## MsDistribuicao - Seta valores para WorkOrder (todas as linhas selecionadas)");
 						} catch (MXException e) {
 							System.out
 									.print("CTIS ########## MsDistribuicao - Erro na Linha 92");
@@ -154,8 +179,6 @@ public class MsDistribuicao extends DataBean {
 					i++;
 					workorder = resultsBean.getMbo(i);
 				}
-
-				// }
 				MboSet tkset = (MboSet) resultsBean.getMboSet();
 				this.clientSession.addMXWarnings(tkset.getWarnings());
 				this.clientSession.handleMXWarnings(false);
