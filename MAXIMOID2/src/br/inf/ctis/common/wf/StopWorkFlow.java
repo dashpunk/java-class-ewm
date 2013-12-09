@@ -23,10 +23,8 @@ public class StopWorkFlow implements psdi.common.action.ActionCustomClass {
 		//log.debug("Entered applyCustomAction of StopWorkFlow");
 		WFInstanceSetRemote wfInstanceSet=(WFInstanceSetRemote) mbo.getMboSet("ACTIVEWFINSTANCE");
 		
-		System.out.println("########## WfInstance " + (WFInstanceSetRemote) mbo.getMboSet("ACTIVEWFINSTANCE"));
-		System.out.println("########## WfInstance vazia?" + wfInstanceSet.isEmpty());
 		if(!wfInstanceSet.isEmpty()) {
-			System.out.println("########## WfInstance está vazia!");
+			System.out.println("########## WfInstance estï¿½ vazia!");
 			//log.debug("WfInstance is not empty");
 			
 			for(int wfInstance=0; wfInstance <wfInstanceSet.count();wfInstance++) {
