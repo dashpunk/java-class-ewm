@@ -38,7 +38,7 @@ public class MsNotaEmp extends AppBean {
 								System.out.println("########## MS_CREDORC" + getMbo().getMboSet("MSTBPREGAO").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_CREDORC"));
 								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBPREGAO").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_CREDORC"));
 								System.out.println("########## MS_ELEDESP" + getMbo().getMboSet("MSTBPREGAO").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));
-								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBPREGAO").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));		
+								getMbo().setValue("MS_ELEDESP", getMbo().getMboSet("MSTBPREGAO").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));		
 								
 								for (int i = 0; ((mbo= getMbo().getMboSet("MSTBFORNECEDORESITEMPREGAO").getMbo(i)) !=null); i++) {
 									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
@@ -89,7 +89,7 @@ public class MsNotaEmp extends AppBean {
 								System.out.println("########## MS_CREDORC" + getMbo().getMboSet("MSTBINEXIGIBILIDADE").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_CREDORC"));
 								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBINEXIGIBILIDADE").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_CREDORC"));
 								System.out.println("########## MS_ELEDESP" + getMbo().getMboSet("MSTBINEXIGIBILIDADE").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));
-								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBINEXIGIBILIDADE").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));
+								getMbo().setValue("MS_ELEDESP", getMbo().getMboSet("MSTBINEXIGIBILIDADE").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));
 								
 								for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(i)) !=null); i++) {
 									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
@@ -140,7 +140,7 @@ public class MsNotaEmp extends AppBean {
 								System.out.println("########## MS_CREDORC" + getMbo().getMboSet("MSTBARP").getMbo(0).getMboSet("MSTBPREGAO").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_CREDORC"));
 								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBARP").getMbo(0).getMboSet("MSTBPREGAO").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_CREDORC"));
 								System.out.println("########## MS_ELEDESP" + getMbo().getMboSet("MSTBARP").getMbo(0).getMboSet("MSTBPREGAO").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));
-								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBARP").getMbo(0).getMboSet("MSTBPREGAO").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));
+								getMbo().setValue("MS_ELEDESP", getMbo().getMboSet("MSTBARP").getMbo(0).getMboSet("MSTBPREGAO").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));
 								
 								for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSARP").getMbo(i)) !=null); i++) {
 									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
@@ -191,12 +191,11 @@ public class MsNotaEmp extends AppBean {
 							//NOTAS DE EMPENHO DE TERMO ADITIVO (COPIAR CONTRACTLINE E MSTBITENSNOTAEMPENHO)
 							if (getMbo().getString("MSALCODINSTRUMENTOCONTRATACAO").equals("CONTRATO")) { 
 								//CONTRATO
-								throw new MXApplicationException("generica", "ORIGINALCONTRATO");
-								
-								/*System.out.println("########## MS_CREDORC" + getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_CREDORC"));
+														
+								System.out.println("########## MS_CREDORC" + getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_CREDORC"));
 								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_CREDORC"));
 								System.out.println("########## MS_ELEDESP" + getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_ELEDESP"));
-								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_ELEDESP"));
+								getMbo().setValue("MS_ELEDESP", getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_ELEDESP"));
 								 
 								for (int i = 0; ((mbo= getMbo().getMboSet("CONTRACTLINE").getMbo(i)) !=null); i++) {
 									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
@@ -219,7 +218,27 @@ public class MsNotaEmp extends AppBean {
 									
 									mboDestino.setValue("MSNUNUMTABELAORIGEMID", mbo.getInt("CONTRACTLINEID"));
 									System.out.println("############ MSNUNUMTABELAORIGEMID = " + mbo.getInt("CONTRACTLINEID"));
-								}*/
+									
+									mboDestino.setValue("COMPANY", mbo.getString("COMPANY"));
+									System.out.println("############ COMPANY = " + mbo.getString("COMPANY"));
+									
+									mboDestino.setValue("PERSONID", mbo.getString("PERSONID"));
+									System.out.println("############ PERSONID = " + mbo.getString("PERSONID"));
+									
+									mboDestino.setValue("MSNUNUMQUANTIDADEREGISTRADA", mbo.getDouble("ORDERQTY"));
+									System.out.println("############ MSNUNUMQUANTIDADEREGISTRADA = " + mbo.getDouble("ORDERQTY"));
+									
+									mboDestino.setValue("MSNUNUMVALORUNITARIOREGISTRADO", mbo.getDouble("UNITCOST"));
+									System.out.println("############ MSNUNUMVALORUNITARIOREGISTRADO = " + mbo.getDouble("UNITCOST"));
+									
+									mboDestino.setValue("MSNUNUMVALORTOTALREGISTRADO", mbo.getDouble("LINECOST"));
+									System.out.println("############ MSNUNUMVALORTOTALREGISTRADO = " + mbo.getDouble("LINECOST"));
+									
+									mboDestino.setValue("MSALCODMOEDA", mbo.getString("MSALCODMOEDA"));
+									System.out.println("############ MSALCODMOEDA = " + mbo.getString("MSALCODMOEDA"));
+									
+									mboDestino.setValue("MSNUNUMQUANTIDADEEMPENHADA", 0);
+								}
 								//CONTRATO
 							} else if (getMbo().getString("MSALCODINSTRUMENTOCONTRATACAO").equals("NE")) {
 								//NOTA DE EMPENHO
@@ -227,7 +246,7 @@ public class MsNotaEmp extends AppBean {
 								System.out.println("########## MS_CREDORC" + getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_CREDORC"));
 								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_CREDORC"));
 								System.out.println("########## MS_ELEDESP" + getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_ELEDESP"));
-								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_ELEDESP"));
+								getMbo().setValue("MS_ELEDESP", getMbo().getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MS_ELEDESP"));
 								
 								for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSNOTAEMPENHOADITIVO").getMbo(i)) !=null); i++) {
 									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
@@ -280,7 +299,7 @@ public class MsNotaEmp extends AppBean {
 						System.out.println("########## MS_CREDORC" + getMbo().getMboSet("MSTBNOTAEMPENHOORIGINAL").getMbo(0).getString("MS_CREDORC"));
 						getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBNOTAEMPENHOORIGINAL").getMbo(0).getString("MS_CREDORC"));
 						System.out.println("########## MS_ELEDESP" + getMbo().getMboSet("MSTBNOTAEMPENHOORIGINAL").getMbo(0).getString("MS_ELEDESP"));
-						getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBNOTAEMPENHOORIGINAL").getMbo(0).getString("MS_ELEDESP"));
+						getMbo().setValue("MS_ELEDESP", getMbo().getMboSet("MSTBNOTAEMPENHOORIGINAL").getMbo(0).getString("MS_ELEDESP"));
 						
 						for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSNOTAEMPENHOORIGINAL").getMbo(i)) !=null); i++) {
 							mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
@@ -331,7 +350,7 @@ public class MsNotaEmp extends AppBean {
 						System.out.println("########## MS_CREDORC" + getMbo().getMboSet("MSTBNOTAEMPENHOORIGINAL").getMbo(0).getString("MS_CREDORC"));
 						getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBNOTAEMPENHOORIGINAL").getMbo(0).getString("MS_CREDORC"));
 						System.out.println("########## MS_ELEDESP" + getMbo().getMboSet("MSTBNOTAEMPENHOORIGINAL").getMbo(0).getString("MS_ELEDESP"));
-						getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBNOTAEMPENHOORIGINAL").getMbo(0).getString("MS_ELEDESP"));
+						getMbo().setValue("MS_ELEDESP", getMbo().getMboSet("MSTBNOTAEMPENHOORIGINAL").getMbo(0).getString("MS_ELEDESP"));
 						
 						for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSNOTAEMPENHOORIGINAL").getMbo(i)) !=null); i++) {
 							mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
