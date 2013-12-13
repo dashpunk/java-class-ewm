@@ -4,6 +4,9 @@
 package br.inf.ctis.ms.bean;
 
 import java.rmi.RemoteException;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.lang.reflect.Method;
@@ -13,6 +16,7 @@ import psdi.mbo.MboRemote;
 import psdi.mbo.MboSet;
 import psdi.mbo.SqlFormat;
 import psdi.server.MXServer;
+import psdi.util.DBConnect;
 import psdi.util.MXException;
 import psdi.util.logging.MXLogger;
 import psdi.util.logging.MXLoggerFactory;
@@ -44,8 +48,6 @@ public class MsDistribuicao extends DataBean {
 
 		if (mbo != null) {
 			applySelectAtorDemanda(mbo);
-			pararWorkFlow(mbo);
-			iniciarWorkFlow(mbo);
 			// Fecha a Dialog
 			WebClientEvent closeEvt = new WebClientEvent("dialogok", this.app.getCurrentPageId(), null, this.clientSession);
 			WebClientRuntime.sendEvent(closeEvt);
@@ -58,23 +60,92 @@ public class MsDistribuicao extends DataBean {
 	/**
 	 *  Iniciando e Parando Instancias
 	 */
-	private void pararWorkFlow(MboRemote mbo) throws MXException, RemoteException {
+	private void pararWorkFlow(String NumProcesso) throws MXException, RemoteException {
 
-		System.out.println("CTIS ############### Entrou no Rotear WORKORDER");
-		WFInstanceSetRemote wfInstanceSet = (WFInstanceSetRemote) mbo.getMboSet("ACTIVEWORKFLOW");
-
+		String Num = NumProcesso;
+		System.out.println("CTIS ############### Entrou no Parar WORKORDER");
 		
-		if (!wfInstanceSet.isEmpty()) {
-			for (int w = 0; w < wfInstanceSet.count(); w++) {
-				// Parar Instancia
-				WFInstanceRemote wfInst = (WFInstanceRemote) wfInstanceSet.getMbo(w);
-				wfInst.stopWorkflow("Parou, o que escrever aqui?");	
-				// Salvando Instancia
-				//wfInstanceSet.save();
-				System.out.println("CTIS ############### Roteando: " + w);
-				}
+		if (Num != "") {
+			String WFID 		= "0";
+			String OWNERID 		= "0";
+			String NODEID 		= "0";
+			String PROCESSREV 	= "0";
+			String PROCESSNAME 	= "0";
+			
+			// Selecionado o maior WFID e OWNERID
+			
+			MboSet WFINSTANCE;
+			WFINSTANCE = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("WFINSTANCE", sessionContext.getUserInfo());
+			WFINSTANCE.setWhere("OWNERTABLE = 'WORKORDER' and OWNERID in (select workorderid from workorder where MSNUMPROC = '" + NumProcesso +"') order by WFID desc");
+			WFINSTANCE.reset();
+			System.out.println("CTIS ############### Parar WORKORDER WFID: (" + WFINSTANCE.count() + ") " + 1);
+			WFID = WFINSTANCE.getMbo(0).getString("WFID");
+			OWNERID = WFINSTANCE.getMbo(0).getString("OWNERID");
+			
+			// Localiza Nodeid Process e ProcessName
+			
+			MboSet WFCALLSTACK;
+			WFCALLSTACK = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("WFCALLSTACK", sessionContext.getUserInfo());
+			WFCALLSTACK.setWhere("WFID = '" + WFID + "'");
+			WFCALLSTACK.reset();
+			
+			NODEID = WFCALLSTACK.getMbo(0).getString("NODEID");
+			PROCESSREV = WFCALLSTACK.getMbo(0).getString("PROCESSREV");
+			PROCESSNAME = WFCALLSTACK.getMbo(0).getString("PROCESSNAME");
+			
+			// 1 = Desenvolvimento 2 = Produção
+			int Banco = 1;
+			String driver = null;
+			String url = null;
+			String username = null;
+			String password = null;
+			Properties prop;
+			
+			if (Banco == 1){
+			// CONEXAO BANCO DESENVOLVIMENTO 
+		        prop = MXServer.getMXServer().getConfig();
+		        byte[] bytes = null;
+		        driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
+		        url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=srvoradf2.saude.gov)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=DFHO1.SAUDE.GOV)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC)(RETRIES=20)(DELAY=5))))");
+		        username = prop.getProperty("mxe.db.user", "dbmaximo");
+		        password = prop.getProperty("mxe.db.password", "max894512");
+			} else {
+		     // CONEXAO BANCO PRODUCAO 
+		        
+		        prop = MXServer.getMXServer().getConfig();
+		        byte[] bytes = null;
+		        driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
+		        url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@srvoradf0.saude.gov:1521/DFPO1.SAUDE.GOV");
+		        username = prop.getProperty("mxe.db.user", "dbmaximo");
+		        password = prop.getProperty("mxe.db.password", "max894512");
+			}      
+	        try {
+				Class.forName(driver).newInstance();
+	            java.sql.Connection conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
+	            Statement stmt = conexao.createStatement();
+	            // 1 update
+	            PreparedStatement up1 = conexao.prepareStatement("UPDATE WFINSTANCE SET ACTIVE = 0 WHERE WFID = '" + WFID + "'");
+	            up1.execute();
+	            conexao.commit();
+	            // 2 update
+	            PreparedStatement up2 = conexao.prepareStatement("UPDATE WFASSIGNMENT SET ASSIGNSTATUS = 'INACTIVE' WHERE WFID = '" + WFID + "'");
+	            up2.execute();
+	            conexao.commit();
+	            // 3 update
+	            PreparedStatement up3 = conexao.prepareStatement("UPDATE WFCALLSTACK SET ACTIVE = 0 WHERE WFID = '" + WFID + "'");
+	            up3.execute();
+	            conexao.commit();
+	            // 4 insert
+	            PreparedStatement in4 = conexao.prepareStatement("Insert into WFTRANSACTION   (TRANSID, NODEID, WFID, TRANSTYPE, TRANSDATE, NODETYPE, PROCESSREV, PROCESSNAME, PERSONID, OWNERTABLE, OWNERID) (select wftransactionseq.nextval, " + NODEID + ", " + WFID + ", 'WFINTUS',  sysdate, 'TAREFA', " + PROCESSREV + ", '" + PROCESSNAME + "', 'MAXADMIN', 'WORKORDER', " + OWNERID + "  from wfinstance where wfid = 565008 )");
+	            in4.execute();
+	            conexao.commit();
+	            
+	        } catch (Exception e) {
+	            System.out.println("---e "+e.getMessage());
+	        }
+
 		} else {
-			System.out.println("CTIS ############### wfInstanceSet está vazio.");
+			System.out.println("CTIS ############### Parar WORKORDER: Retornou vazio!");
 		}
 	}
 	
@@ -167,6 +238,8 @@ public class MsDistribuicao extends DataBean {
 							workorder.setValue("msalnatordemanda", getMbo(row).getString("personid"));
 							workorder.setValue("msalflgescalacao", "1");
 							workorder.setValue("msalnobs", "sim", 2L);
+							
+							pararWorkFlow(workorder.getString("workorderid"));
 
 							System.out.print("CTIS ########## MsDistribuicao - Seta valores para WorkOrder (todas as linhas selecionadas)");
 						} catch (MXException e) {
