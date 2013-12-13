@@ -32,6 +32,7 @@ import psdi.workflow.WFProcess;
 import psdi.workflow.WFProcessSetRemote;
 import psdi.workflow.WorkFlowServiceRemote;
 import br.inf.ctis.common.wf.StopWorkFlow;
+import br.inf.id2.common.util.Uteis;
 
 /**
  * @author Eduardo Assis
@@ -56,14 +57,14 @@ public class MsDistribuicao extends DataBean {
 
 		return 1;
 	}
-
+ 
 	/**
 	 *  Iniciando e Parando Instancias
 	 */
 	private void pararWorkFlow(String NumProcesso) throws MXException, RemoteException {
 
 		String Num = NumProcesso;
-		System.out.println("CTIS ############### Entrou no Parar WORKORDER");
+		System.out.println("CTIS ############### Entrou no Parar WORKORDER" + Num);
 		
 		if (Num != "") {
 			String WFID 		= "0";
@@ -78,9 +79,14 @@ public class MsDistribuicao extends DataBean {
 			WFINSTANCE = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("WFINSTANCE", sessionContext.getUserInfo());
 			WFINSTANCE.setWhere("OWNERTABLE = 'WORKORDER' and OWNERID in (select workorderid from workorder where MSNUMPROC = '" + NumProcesso +"') order by WFID desc");
 			WFINSTANCE.reset();
-			System.out.println("CTIS ############### Parar WORKORDER WFID: (" + WFINSTANCE.count() + ") " + 1);
+			
 			WFID = WFINSTANCE.getMbo(0).getString("WFID");
+			WFID = Uteis.getApenasNumeros(WFID);
+			
 			OWNERID = WFINSTANCE.getMbo(0).getString("OWNERID");
+			OWNERID = Uteis.getApenasNumeros(OWNERID);
+			
+			System.out.println("CTIS ############### Parar WORKORDER WFID: (" + WFINSTANCE.count() + ") -- " + WFID);
 			
 			// Localiza Nodeid Process e ProcessName
 			
@@ -90,18 +96,16 @@ public class MsDistribuicao extends DataBean {
 			WFCALLSTACK.reset();
 			
 			NODEID = WFCALLSTACK.getMbo(0).getString("NODEID");
+			NODEID = Uteis.getApenasNumeros(NODEID);
 			PROCESSREV = WFCALLSTACK.getMbo(0).getString("PROCESSREV");
 			PROCESSNAME = WFCALLSTACK.getMbo(0).getString("PROCESSNAME");
 			
-			// 1 = Desenvolvimento 2 = Produção
-			int Banco = 1;
 			String driver = null;
 			String url = null;
 			String username = null;
 			String password = null;
 			Properties prop;
 			
-			if (Banco == 1){
 			// CONEXAO BANCO DESENVOLVIMENTO 
 		        prop = MXServer.getMXServer().getConfig();
 		        byte[] bytes = null;
@@ -109,16 +113,7 @@ public class MsDistribuicao extends DataBean {
 		        url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=srvoradf2.saude.gov)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=DFHO1.SAUDE.GOV)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC)(RETRIES=20)(DELAY=5))))");
 		        username = prop.getProperty("mxe.db.user", "dbmaximo");
 		        password = prop.getProperty("mxe.db.password", "max894512");
-			} else {
-		     // CONEXAO BANCO PRODUCAO 
-		        
-		        prop = MXServer.getMXServer().getConfig();
-		        byte[] bytes = null;
-		        driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
-		        url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@srvoradf0.saude.gov:1521/DFPO1.SAUDE.GOV");
-		        username = prop.getProperty("mxe.db.user", "dbmaximo");
-		        password = prop.getProperty("mxe.db.password", "max894512");
-			}      
+
 	        try {
 				Class.forName(driver).newInstance();
 	            java.sql.Connection conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
@@ -136,7 +131,7 @@ public class MsDistribuicao extends DataBean {
 	            up3.execute();
 	            conexao.commit();
 	            // 4 insert
-	            PreparedStatement in4 = conexao.prepareStatement("Insert into WFTRANSACTION   (TRANSID, NODEID, WFID, TRANSTYPE, TRANSDATE, NODETYPE, PROCESSREV, PROCESSNAME, PERSONID, OWNERTABLE, OWNERID) (select wftransactionseq.nextval, " + NODEID + ", " + WFID + ", 'WFINTUS',  sysdate, 'TAREFA', " + PROCESSREV + ", '" + PROCESSNAME + "', 'MAXADMIN', 'WORKORDER', " + OWNERID + "  from wfinstance where wfid = 565008 )");
+	            PreparedStatement in4 = conexao.prepareStatement("Insert into WFTRANSACTION   (TRANSID, NODEID, WFID, TRANSTYPE, TRANSDATE, NODETYPE, PROCESSREV, PROCESSNAME, PERSONID, OWNERTABLE, OWNERID) (select wftransactionseq.nextval, " + NODEID + ", " + WFID + ", 'WFINTUS',  sysdate, 'TAREFA', " + PROCESSREV + ", '" + PROCESSNAME + "', 'MAXADMIN', 'WORKORDER', " + OWNERID + "  from wfinstance where wfid = " + WFID +")");
 	            in4.execute();
 	            conexao.commit();
 	            
@@ -239,7 +234,7 @@ public class MsDistribuicao extends DataBean {
 							workorder.setValue("msalflgescalacao", "1");
 							workorder.setValue("msalnobs", "sim", 2L);
 							
-							pararWorkFlow(workorder.getString("workorderid"));
+							pararWorkFlow(workorder.getString("MSNUMPROC"));
 
 							System.out.print("CTIS ########## MsDistribuicao - Seta valores para WorkOrder (todas as linhas selecionadas)");
 						} catch (MXException e) {
