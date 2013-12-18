@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboSetRemote;
+import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 import psdi.webclient.beans.contpurch.ContPurchAppBean;
 import psdi.webclient.system.beans.AppBean;
@@ -56,9 +57,61 @@ public class MsContrato extends ContPurchAppBean {
 					mboDestino.setValue("MSALCODINSTRUMENTOCONTRATACAO", mbo.getString("MSALCODINSTRUMENTOCONTRATACAO"), 2L);
 					mboDestino.setValue("MSALNUMINSTRUMENTOCONTRATACAO", mbo.getString("MSALNUMINSTRUMENTOCONTRATACAO"), 2L);
 				}
+				super.save();
+			} else {
+				
+				MboRemote mboContractline;
+				MboRemote mboParcelas;
+				
+				for (int i = 0; ((mboContractline= getMbo().getMboSet("CONTRACTLINE").getMbo(i)) != null); i++) {
+					
+					double quantidade = 0d;
+					System.out.println("########## quantidade = " + quantidade);
+					super.save();
+					
+					for (int j = 0; ((mboParcelas= getMbo().getMboSet("MSTBPARCELASCONTRATO").getMbo(j)) != null); j++) {
+						quantidade += mboParcelas.getDouble("MSNUNUMQUANTIDADEPARCELA");
+						System.out.println("########## qtdParcela = " + mboParcelas.getDouble("MSNUNUMQUANTIDADEPARCELA"));
+						System.out.println("########## quantidade = " + quantidade);
+						System.out.println("########## quantidadeItem = " + mboContractline.getDouble("ORDERQTY"));
+						if (quantidade > mboContractline.getDouble("ORDERQTY")) {
+							mboParcelas.setValue("MSNUNUMQUANTIDADEPARCELA", 0);
+							super.save();
+							throw new MXApplicationException("contrato", "quantidadeparcelaexcedente");
+						}
+					}
+					super.save();
+				}
+				
+				super.save();
+				
 			}
 			//mboDestino.getThisMboSet().save();
 			super.save();
+			
+			System.out.println("########## TOTALCOST = " + getMbo().getDouble("TOTALCOST"));
+			double valorglobal = getMbo().getDouble("TOTALCOST");
+			System.out.println("########## valorglobal = " + valorglobal);
+			
+			MboRemote mbo1;
+			
+			for (int j = 0; ((mbo1 = getMbo().getMboSet("MSTBNECONTRATO").getMbo(j)) != null); j++) {
+				if (mbo1.getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MSALCODTIPO").equalsIgnoreCase("REFORCO")) {
+					valorglobal += (mbo1.getMboSet("MSTBNOTAEMPENHO").getMbo(0).getDouble("MSNUNUMVALOREMPENHO"));
+					System.out.println("########## valorglobal REFORCO = " + valorglobal);
+				} else if (mbo1.getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MSALCODTIPO").equalsIgnoreCase("ANULACAO")) {
+					valorglobal -= (mbo1.getMboSet("MSTBNOTAEMPENHO").getMbo(0).getDouble("MSNUNUMVALOREMPENHO"));
+					System.out.println("########## valorglobal ANULACAO = " + valorglobal);
+				} else {
+					System.out.println("########## valorglobal ORIGINAL = " + valorglobal);
+				}
+				super.save();
+			}
+			
+			System.out.println("########## valorglobal = " + valorglobal);
+			getMbo().setValue("MSNUNUMVALORGLOBAL", valorglobal);
+			super.save();
+			
 			
 			/*WebClientEvent event = sessionContext.getCurrentEvent();
 			Utility.sendEvent(new WebClientEvent("refreshTable", app.getApp(), null, sessionContext));

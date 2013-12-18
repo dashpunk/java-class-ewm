@@ -234,10 +234,15 @@ public class MsNotaEmp extends AppBean {
 									mboDestino.setValue("MSNUNUMVALORTOTALREGISTRADO", mbo.getDouble("LINECOST"));
 									System.out.println("############ MSNUNUMVALORTOTALREGISTRADO = " + mbo.getDouble("LINECOST"));
 									
+									mboDestino.setValue("MSNUNUMQUANTIDADEEMPENHADA", mbo.getDouble("ORDERQTY"));
+									System.out.println("############ MSNUNUMQUANTIDADEEMPENHADA = " + mbo.getDouble("ORDERQTY"));
+									
+									mboDestino.setValue("MSNUNUMVALORTOTALEMPENHADO", mbo.getDouble("LINECOST"));
+									System.out.println("############ MSNUNUMVALORTOTALEMPENHADO = " + mbo.getDouble("LINECOST"));
+									
 									mboDestino.setValue("MSALCODMOEDA", mbo.getString("MSALCODMOEDA"));
 									System.out.println("############ MSALCODMOEDA = " + mbo.getString("MSALCODMOEDA"));
 									
-									mboDestino.setValue("MSNUNUMQUANTIDADEEMPENHADA", 0);
 								}
 								//CONTRATO
 							} else if (getMbo().getString("MSALCODINSTRUMENTOCONTRATACAO").equals("NE")) {
@@ -282,13 +287,18 @@ public class MsNotaEmp extends AppBean {
 									mboDestino.setValue("MSNUNUMVALORUNITARIOREGISTRADO", mbo.getDouble("MSNUNUMVALORUNITARIOREGISTRADO"));
 									System.out.println("############ MSNUNUMVALORUNITARIOREGISTRADO = " + mbo.getDouble("MSNUNUMVALORUNITARIOREGISTRADO"));
 									
+									mboDestino.setValue("MSNUNUMQUANTIDADEEMPENHADA", mbo.getDouble("MSNUNUMQUANTIDADEEMPENHADA"));
+									System.out.println("############ MSNUNUMQUANTIDADEEMPENHADA = " + mbo.getDouble("MSNUNUMQUANTIDADEEMPENHADA"));
+									
+									mboDestino.setValue("MSNUNUMVALORTOTALEMPENHADO", mbo.getDouble("MSNUNUMVALORTOTALEMPENHADO"));
+									System.out.println("############ MSNUNUMVALORTOTALEMPENHADO = " + mbo.getDouble("MSNUNUMVALORTOTALEMPENHADO"));
+									
 									mboDestino.setValue("MSNUNUMVALORTOTALREGISTRADO", mbo.getDouble("MSNUNUMVALORTOTALREGISTRADO"));
 									System.out.println("############ MSNUNUMVALORTOTALREGISTRADO = " + mbo.getDouble("MSNUNUMVALORTOTALREGISTRADO"));
 									
 									mboDestino.setValue("MSALCODMOEDA", mbo.getString("MSALCODMOEDA"));
 									System.out.println("############ MSALCODMOEDA = " + mbo.getString("MSALCODMOEDA"));
 									
-									mboDestino.setValue("MSNUNUMQUANTIDADEEMPENHADA", 0);
 								}
 								//NOTA DE EMPENHO
 							} 
@@ -308,11 +318,8 @@ public class MsNotaEmp extends AppBean {
 							mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
 							System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
 							
-							mboDestino.setValue("MSALCODINSTRUMENTOCONTRATACAO", getMbo().getString("MSALCODINSTRUMENTOCONTRATACAO"));
-							System.out.println("########### MSALCODINSTRUMENTOCONTRATACAO = " + getMbo().getString("MSALCODINSTRUMENTOCONTRATACAO"));
-							
-							mboDestino.setValue("MSALNUMINSTRUMENTOCONTRATACAO", getMbo().getString("MSALNUMINSTRUMENTOCONTRATACAO"));
-							System.out.println("########### MSALNUMINSTRUMENTOCONTRATACAO = " + getMbo().getString("MSALNUMINSTRUMENTOCONTRATACAO"));
+							mboDestino.setValue("MSNUCODNOTAEMPENHOORIGINAL", getMbo().getInt("MSNUCODNOTAEMPENHOORIGINAL"));
+							System.out.println("########### MSNUCODNOTAEMPENHOORIGINAL = " + getMbo().getInt("MSNUCODNOTAEMPENHOORIGINAL"));
 							
 							mboDestino.setValue("ID2ITEMNUM", mbo.getString("ID2ITEMNUM"));
 							System.out.println("########### ID2ITEMNUM = " + mbo.getString("ID2ITEMNUM"));
@@ -359,11 +366,9 @@ public class MsNotaEmp extends AppBean {
 							mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
 							System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
 							
-							mboDestino.setValue("MSALCODINSTRUMENTOCONTRATACAO", getMbo().getString("MSALCODINSTRUMENTOCONTRATACAO"));
-							System.out.println("########### MSALCODINSTRUMENTOCONTRATACAO = " + getMbo().getString("MSALCODINSTRUMENTOCONTRATACAO"));
+							mboDestino.setValue("MSNUCODNOTAEMPENHOORIGINAL", getMbo().getInt("MSNUCODNOTAEMPENHOORIGINAL"));
+							System.out.println("########### MSNUCODNOTAEMPENHOORIGINAL = " + getMbo().getInt("MSNUCODNOTAEMPENHOORIGINAL"));
 							
-							mboDestino.setValue("MSALNUMINSTRUMENTOCONTRATACAO", getMbo().getString("MSALNUMINSTRUMENTOCONTRATACAO"));
-							System.out.println("########### MSALNUMINSTRUMENTOCONTRATACAO = " + getMbo().getString("MSALNUMINSTRUMENTOCONTRATACAO"));
 							
 							mboDestino.setValue("ID2ITEMNUM", mbo.getString("ID2ITEMNUM"));
 							System.out.println("########### ID2ITEMNUM = " + mbo.getString("ID2ITEMNUM"));
@@ -407,6 +412,13 @@ public class MsNotaEmp extends AppBean {
 				
 				for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSNOTAEMPENHO").getMbo(i)) !=null); i++) {
 					
+					if (mbo.getDouble("MSNUNUMQUANTIDADEREGISTRADA") < mbo.getDouble("MSNUNUMQUANTIDADEEMPENHADA")) {
+						mbo.setValue("MSNUNUMQUANTIDADEEMPENHADA", 0);
+						mbo.setValue("MSNUNUMVALORTOTALEMPENHADO", 0);
+						super.save();
+						throw new MXApplicationException("notaempenho", "QuantidadeExcedente");
+					}
+					
 					double quantidadeitem = 0d;
 					MboRemote mboItensMesmaOrigem;
 					
@@ -414,6 +426,13 @@ public class MsNotaEmp extends AppBean {
 						System.out.println("############ MSNUNUMQUANTIDADEEMPENHADA = " + mboItensMesmaOrigem.getDouble("MSNUNUMQUANTIDADEEMPENHADA"));
 						System.out.println("############ MSTBITENSNOTAEMPENHOID = " + mboItensMesmaOrigem.getInt("MSTBITENSNOTAEMPENHOID"));
 						quantidadeitem += mboItensMesmaOrigem.getDouble("MSNUNUMQUANTIDADEEMPENHADA");
+						System.out.println("############ quantidadeitem = " + quantidadeitem);
+					}
+					
+					for (int j = 0; ((mboItensMesmaOrigem= mbo.getMboSet("MSTBITENSNOTAEMPENHOMESMAMODALIDADEANULACAO").getMbo(j)) !=null); j++) {
+						System.out.println("############ MSNUNUMQUANTIDADEEMPENHADA = " + mboItensMesmaOrigem.getDouble("MSNUNUMQUANTIDADEEMPENHADA"));
+						System.out.println("############ MSTBITENSNOTAEMPENHOID = " + mboItensMesmaOrigem.getInt("MSTBITENSNOTAEMPENHOID"));
+						quantidadeitem -= mboItensMesmaOrigem.getDouble("MSNUNUMQUANTIDADEEMPENHADA");
 						System.out.println("############ quantidadeitem = " + quantidadeitem);
 					}
 					
