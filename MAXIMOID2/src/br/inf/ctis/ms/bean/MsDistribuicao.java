@@ -43,59 +43,55 @@ public class MsDistribuicao extends DataBean {
 		MboRemote mbo = getAtorDemandaMbo();
 
 			applySelectAtorDemanda(mbo);
-			super.save();
-			refreshTable();
-			reloadTable();
 			mbo = getAtorDemandaMbo();
 			pararWorkFlow(mbo);
+			iniciarWorkFlow(mbo);
 			WebClientEvent closeEvt = new WebClientEvent("dialogok", this.app.getCurrentPageId(), null, this.clientSession);
 			WebClientRuntime.sendEvent(closeEvt);
-			System.out.print("CTIS ########## MsDistribuicao - Fechou a Dialog");
 
 
 		return 1;
 	}
+	/**
+	 * Iniciando Instancias
+	 */
+    
+	public void iniciarWorkFlow(MboRemote mbo)
+            throws MXException, RemoteException
+            {
+		
+            WFInstanceSetRemote wfInstanceSet=(WFInstanceSetRemote) mbo.getMboSet("ACTIVEWORKFLOW");
 
-	/// Teste de ReStart
-    
-    
-    public void iniciarWorkFlow(MboRemote mbo)
-                throws MXException, RemoteException
+            
+                if(!wfInstanceSet.isEmpty())
                 {
-                WFInstanceSetRemote wfInstanceSet=(WFInstanceSetRemote) mbo.getMboSet("ACTIVEWORKFLOW");
-
-                
-                    if(!wfInstanceSet.isEmpty())
+                    for(int wfInstance=0; wfInstance <wfInstanceSet.count();wfInstance++)
                     {
-                        for(int wfInstance=0; wfInstance <wfInstanceSet.count();wfInstance++)
-                        {
-                        WFInstance wfInst=(WFInstance) wfInstanceSet.getMbo(wfInstance);
-                        String processName = wfInst.getString("processname");         
-                        WFProcessSetRemote wfProcessSet = (WFProcessSetRemote) mbo.getMboSet("WFPROCESS");
-                        SqlFormat sqf1 = new SqlFormat(mbo.getUserInfo(), "processname = :1 and active = 1");
-                         sqf1.setObject(1,"WFPROCESS","PROCESSNAME", processName);
-                         wfProcessSet.setWhere(sqf1.format());
-                        int matchingProcess = wfProcessSet.count();
-                        WFProcess wfProcess = null;
-                         
-                        if (matchingProcess==1)
-                        {
-                            wfProcess = (WFProcess)wfProcessSet.getMbo(0);
-                        }
+                    	System.out.println("Chamar iniciar: wfInstance");
+                    WFInstance wfInst=(WFInstance) wfInstanceSet.getMbo(wfInstance);
+                    String processName = wfInst.getString("processname");         
+                    WFProcessSetRemote wfProcessSet = (WFProcessSetRemote) mbo.getMboSet("WFPROCESS");
+                    SqlFormat sqf1 = new SqlFormat(mbo.getUserInfo(), "processname = :1 and active = 1");
+                     sqf1.setObject(1,"WFPROCESS","PROCESSNAME", processName);
+                     wfProcessSet.setWhere(sqf1.format());
+                    int matchingProcess = wfProcessSet.count();
+                    WFProcess wfProcess = null;
+                     
+                    if (matchingProcess==1)
+                    {
+                        wfProcess = (WFProcess)wfProcessSet.getMbo(0);
+                    }
 
-                        wfInst.initiateWorkflow("Iniciou, o que escrever aqui?",wfProcess);
+                    wfInst.initiateWorkflow("Iniciou, o que escrever aqui?",wfProcess);
 
-                        wfInstanceSet.save();
-                        }
-                    } 
+                    wfInstanceSet.save();
+                    }
                 } 
+            } 
     
 	/**
 	 * Parando Instancias
 	 */
-    
-    
-	// Setando Valores e Selecionando.
 
 	private void pararWorkFlow(MboRemote mbo) throws MXException, RemoteException {
 		// Guarda as linhas selecionadas
@@ -122,14 +118,14 @@ public class MsDistribuicao extends DataBean {
 							if (!wfInstanceSet.isEmpty()) {
 								for (int w = 0; w < wfInstanceSet.count(); w++) {
 									WFInstanceRemote wfInst = (WFInstanceRemote) wfInstanceSet.getMbo(w);
-									wfInst.stopWorkflow("Parou, o que escrever aqui?");
+									wfInst.stopWorkflow("Demanda Judicial foi parada.");
 									wfInstanceSet.save();
 								}
 
 							} else {
 								System.out.println("CTIS ############### wfInstanceSet está vazio.");
 							}
-							
+							System.out.println("Chamar iniciar.");
 							iniciarWorkFlow(workorder);
 							
 							System.out.print("CTIS ########## MsDistribuicao - Seta valores para WorkOrder (todas as linhas selecionadas)");
@@ -153,20 +149,17 @@ public class MsDistribuicao extends DataBean {
 	// Guarda Valor do campo na MBO e retorna
 	private MboRemote getAtorDemandaMbo() throws MXException, RemoteException {
 		DataBean atorDemandaBean = this.app.getDataBean("msalnatordemanda");
-
-		System.out.print("CTIS ########## getAtorDemandaMbo:" + atorDemandaBean);
+		
+		System.out.println("Chamar getAtorDemandaMbo:" + atorDemandaBean);
 		
 		MboRemote mbo = null;
 		if (atorDemandaBean != null) {
 			mbo = atorDemandaBean.getMbo();
-			System.out.print("CTIS ########## getAtorDemandaMbo - atorDemandaBean != null");
 		}
 		if (mbo == null) {
 			DataBean appBean = this.app.getAppBean();
 			mbo = appBean.getMboOrZombie();
-			System.out.print("CTIS ########## getAtorDemandaMbo - getMboOrZombie()");
 		}
-		System.out.print("CTIS ########## MsDistribuicao - Guarda Valor do MBO");
 		return mbo;
 	}
 
@@ -179,7 +172,6 @@ public class MsDistribuicao extends DataBean {
 		ResultsBean resultsBean = this.app.getResultsBean();
 
 		if (this.app.onListTab()) {
-			System.out.println("CTIS ########## this.app.onListTab()");
 			resultsBean.hasRecordsForAction();
 
 			if (resultsBean.getTableStateFlags().isFlagSet(32768L)) {
@@ -189,20 +181,14 @@ public class MsDistribuicao extends DataBean {
 				while (workorder != null) {
 					if (workorder.isSelected()) {
 
-						System.out.println("CTIS ########## workorder.isSelected()");
 						try {
-							// Verifica se a Opçãode Assinatura DIST retorna
-							// verdadeiro
 							workorder.sigOptionAccessAuthorized("DIST");
 
-							workorder.setValue("msalnatordemanda", getMbo(row)
-									.getString("personid"));
+							workorder.setValue("msalnatordemanda", getMbo(row).getString("personid"));
 							workorder.setValue("msalflgescalacao", "1");
 							workorder.setValue("msalnobs", "sim", 2L);
 							
-							System.out.print("CTIS ########## MsDistribuicao - Seta valores para WorkOrder (todas as linhas selecionadas)");
 						} catch (MXException e) {
-							System.out.print("CTIS ########## MsDistribuicao - Erro na Linha 92");
 							((MboSet) workorder.getThisMboSet()).addWarning(e);
 						}
 					}
