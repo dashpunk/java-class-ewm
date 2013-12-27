@@ -82,7 +82,7 @@ public class MsDistribuicao extends DataBean {
                         wfProcess = (WFProcess)wfProcessSet.getMbo(0);
                     }
 
-                    wfInst.initiateWorkflow("Iniciou, o que escrever aqui?",wfProcess);
+                    wfInst.initiateWorkflow("Demanda Judicial Designada",wfProcess);
 
                     wfInstanceSet.save();
                     }
@@ -186,7 +186,6 @@ public class MsDistribuicao extends DataBean {
 
 							workorder.setValue("msalnatordemanda", getMbo(row).getString("personid"));
 							workorder.setValue("msalflgescalacao", "1");
-							workorder.setValue("msalnobs", "sim", 2L);
 							
 						} catch (MXException e) {
 							((MboSet) workorder.getThisMboSet()).addWarning(e);
