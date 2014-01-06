@@ -24,8 +24,7 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 	}
 
 	public int SAVE() throws MXException, RemoteException {
-		System.out
-				.print("CTIS # --- Entrou na Classe AppBean MsCotacao SAVE()");
+		System.out.print("CTIS # --- Entrou na Classe AppBean MsCotacao SAVE()");
 
 		tempMedicamentos();
 
