@@ -35,12 +35,21 @@ public class MsOrdemCompra extends DataBean {
 			System.out.println("CTIS # --- Entrou no GerarOrdem");
 			MboSet mboMedicamentos = (MboSet) app.getDataBean("MAINRECORD")
 					.getMbo().getMboSet("MSTBMEDICAMENTO");
-
-			if (getMbo().getString("MSFORNEC001").equals("N")
+			if (getMbo().getString("MSFORNEC005").equals("S")){
+				
+				
+				if (getMbo().getString("MSFORNEC001").equals("S") 
+					|| getMbo().getString("MSFORNEC002").equals("S")
+					|| getMbo().getString("MSFORNEC003").equals("S")
+					|| getMbo().getString("MSFORNEC004").equals("S")){
+					throw new MXApplicationException("msco", "informeSomenteExclusivo");
+				}
+				
+				
+			} else if (getMbo().getString("MSFORNEC001").equals("N")
 					&& getMbo().getString("MSFORNEC002").equals("N")
 					&& getMbo().getString("MSFORNEC003").equals("N")
-					&& getMbo().getString("MSFORNEC004").equals("N")
-					&& getMbo().getString("MSFORNEC005").equals("N")) {
+					&& getMbo().getString("MSFORNEC004").equals("N")) {
 				throw new MXApplicationException("msco", "informeFornecedor");
 			}
 
@@ -102,6 +111,7 @@ public class MsOrdemCompra extends DataBean {
 							+ ")");
 					mboMed.setValue("MSTBOCID", novoIdOC);
 					mboMed.setValue("STATUSCOT", "AG. COTACAO");
+					mboMed.setValue("SELECIONADO", false);
 
 					itemMarcado = true;
 					System.out.println("CTIS # --- SetValue(" + i + ")");
@@ -139,7 +149,7 @@ public class MsOrdemCompra extends DataBean {
 			if (itemMarcado) {
 				throw new MXApplicationException("system", "novaOrdemCompra");
 			}
-
+			
 		} catch (RemoteException re) {
 			re.printStackTrace();
 		}
