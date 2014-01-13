@@ -62,7 +62,7 @@ public class MSCatMat extends MboValueAdapter {
 			for (int i = 0; ((mboa = TabelaMedicamentos.getMbo(i)) != null); i++) {
 				System.out.println("#### CTIS - MSCatMat / verificaSeExiste CatMat For" + mboa.getString("CATMAT") + "     =    " + CatMat + " ? " );
 				System.out.println("CTIS ### CatMat MBOA:" + mboa.getString("CATMAT").equals(CatMat));
-				if (mboa.getString("CATMAT").equals(CatMat)) {
+				if (mboa.getString("CATMAT").equals(CatMat) && (getMboValue().getMbo().getInt("MSTBMEDICAMENTOID") != mboa.getInt("MSTBMEDICAMENTOID"))) {
 					System.out.println("#### CTIS - MSCatMat / verificaSeExiste CatMat Return FALSE");
 					throw new MXApplicationException("MsCatMat", "ValorCatmatJaExiste");
 				}
