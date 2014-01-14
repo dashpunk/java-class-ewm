@@ -8,7 +8,11 @@
 package br.inf.ctis.ms.field;
 
 import java.rmi.RemoteException;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.Properties;
 
+import psdi.id2.Uteis;
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboSet;
@@ -16,6 +20,7 @@ import psdi.mbo.MboSetRemote;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
 import psdi.server.MXServer;
+import psdi.util.DBConnect;
 import psdi.util.MXApplicationYesNoCancelException;
 import psdi.util.MXException;
 
@@ -48,55 +53,108 @@ public class MsQtdDemJud extends MboValueAdapter {
 				
 				double QtdDisp = mboSetEstoqueMedic.getMbo(0).getDouble("MSNUMQNTDISP");
 				
-				if (QtdDisp < QtdSolic){
-					System.out.println(">>>>>>>>> CTIS - " + QtdDisp + " > " + QtdSolic);
-					
-					// Alerta
-					String yesNoId = getClass().getName();
-					int userInput = MXApplicationYesNoCancelException.getUserInput(yesNoId, MXServer.getMXServer(), getMboValue().getMbo().getUserInfo());
-					System.out.println(">>>>> retorno = " + userInput);
-					
-					switch (userInput) {
-					case MXApplicationYesNoCancelException.NULL:
-						System.out.println(">>> userImput null");
-						Object params[] = { QtdDisp, QtdSolic };
-						throw new MXApplicationYesNoCancelException(yesNoId, "msdemjud","MsQtd", params);
-					case MXApplicationYesNoCancelException.YES:
-						System.out.println(">>> Usuario clicou em SIM");
+					if (QtdDisp > 0 && getMboValue().getMbo().getString("MSALNTIPOATENDIMENTO").equals("COMPRA")){
+						System.out.println(">>>>>>>>> CTIS - " + QtdSolic  + " > " + QtdDisp);
+	
+						String yesNoId = getClass().getName();
+						int userInput = MXApplicationYesNoCancelException.getUserInput(yesNoId, MXServer.getMXServer(), getMboValue().getMbo().getUserInfo());
+						System.out.println(">>>>> retorno = " + userInput);
 						
-						int Wonum = getMboValue().getMbo().getInt("WONUM");
-						double QtdCompra = QtdSolic - QtdDisp;
+						switch (userInput) {
+						case MXApplicationYesNoCancelException.NULL:
+							System.out.println(">>> userImput null");
+							Object params[] = { QtdDisp, QtdSolic };
+							throw new MXApplicationYesNoCancelException(yesNoId, "msdemjud","MsQtd", params);
+						case MXApplicationYesNoCancelException.YES:
+							System.out.println(">>> Usuario clicou em SIM");
+							
+							int ID_do_Pai = getMboValue().getMbo().getInt("MSMEDPAI");
+							String Catmat = getMboValue().getMbo().getString("CATMAT");
+							String DescCatmat = getMboValue().getMbo().getString("DESCRIPTION");
+							String Wonum = getMboValue().getMbo().getString("WONUM");
+							double QtdCompra = QtdSolic - QtdDisp;
+							
+							MboSetRemote mboSetMedicamento;
+							mboSetMedicamento = getMboValue().getMbo().getMboSet("MSTBMEDICAMENTOS");
+							
+							MboRemote mboDestinoMed;
+							mboDestinoMed = mboSetMedicamento.add();
+							
+							if (QtdDisp == QtdSolic){
+							
+								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE");
+								getMboValue().getMbo().setValue("MSQTD", QtdDisp);
+								getMboValue().getMbo().setValue("MSMEDPAI", 0);
+								
+								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("DESCRIPTION", DescCatmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("WONUM", Wonum, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSQTD", 0, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNTIPOATENDIMENTO", "COMPRA", MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSMEDPAI", ID_do_Pai, MboConstants.NOACCESSCHECK);
+								
+								getMboValue().getMbo().getThisMboSet().save();
 						
-						MboSetRemote mboSetMedicamento;
-						mboSetMedicamento = getMboValue().getMbo().getMboSet("MSTBMEDICAMENTOS");
+							} else if (QtdSolic < QtdDisp){
+								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE");
+								getMboValue().getMbo().setValue("MSQTD", QtdSolic);
+								getMboValue().getMbo().setValue("MSMEDPAI", 0);
+								
+								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("DESCRIPTION", DescCatmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("WONUM", Wonum, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSQTD", 0, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNTIPOATENDIMENTO", "COMPRA", MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSMEDPAI", ID_do_Pai, MboConstants.NOACCESSCHECK);
+								
+								getMboValue().getMbo().getThisMboSet().save();
+								
+							} else if (QtdSolic > QtdDisp){
+								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE");
+								getMboValue().getMbo().setValue("MSQTD", QtdDisp);
+								getMboValue().getMbo().setValue("MSMEDPAI", 0);
+								
+								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("DESCRIPTION", DescCatmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("WONUM", Wonum, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSQTD", QtdCompra, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNTIPOATENDIMENTO", "COMPRA", MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSMEDPAI", ID_do_Pai, MboConstants.NOACCESSCHECK);
+								
+								getMboValue().getMbo().getThisMboSet().save();
+							}
+														
+							// UPDATE ALMOXARIFADO DE MEDICAMENTO
+							
+							MboSetRemote mboSetAlmoxMed;
+							mboSetAlmoxMed = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBMEDALMOX", getMboValue().getMbo().getUserInfo());
+							mboSetAlmoxMed.setWhere("MSTBMEDALMOXID = '"+ IdEstoque + "'");
+							mboSetAlmoxMed.reset();
 						
-						MboRemote mboDestinoMed;
-						mboDestinoMed = mboSetMedicamento.add();
-
-						System.out.println(">>>>> WONUM : " + Wonum);
-						mboDestinoMed.setValue("WONUM", Wonum,  MboConstants.NOACCESSCHECK);
-						System.out.println(">>>>> MSQTD : " + QtdCompra);
-						mboDestinoMed.setValue("MSQTD", QtdCompra,  MboConstants.NOACCESSCHECK);
-						System.out.println(">>>>> MSALNTIPOATENDIMENTO : " + "ESTOQUE");
-						mboDestinoMed.setValue("MSALNTIPOATENDIMENTO", "ESTOQUE", MboConstants.NOACCESSCHECK);
-						System.out.println(">>>>> MSIDESTOQUE : " + IdEstoque);
-						mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
-						
-						getMboValue().getMbo().getThisMboSet().save();
-
-						break;
-					case MXApplicationYesNoCancelException.NO:
-						System.out.println(">>> Usuario clicou em NAO");
-						getMboValue().getMbo().setValueNull("MSQTD");
-						break;
-					default:
-						System.out.println(">>> userImpot DEFAULT");
-						break;
+							double NovoTotal_Reserva = 0;
+							
+							if (QtdSolic > QtdDisp){
+								NovoTotal_Reserva = mboSetAlmoxMed.getMbo(0).getDouble("MSNUMQNTRESERV") + QtdDisp;
+							} else {
+								NovoTotal_Reserva = mboSetAlmoxMed.getMbo(0).getDouble("MSNUMQNTRESERV") + QtdSolic;
+							}
+							
+							mboSetAlmoxMed.getMbo(0).setValue("MSNUMQNTRESERV", NovoTotal_Reserva, MboConstants.NOACCESSCHECK);
+							mboSetAlmoxMed.save();
+					        
+							break;
+						case MXApplicationYesNoCancelException.NO:
+							System.out.println(">>> Usuario clicou em NAO");
+							break;
+						default:
+							System.out.println(">>> userImpot DEFAULT");
+							break;
 					}
 				}
 			}
 		}
-		
-		
 	}
 }
