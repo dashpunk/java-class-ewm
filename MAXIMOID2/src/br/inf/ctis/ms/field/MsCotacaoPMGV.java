@@ -38,10 +38,16 @@ public class MsCotacaoPMGV extends MboValueAdapter {
 		Double MedicamentoQntd = getMboValue().getMbo().getMboSet("MSTBCOTCDJU").getMbo(0).getDouble("MSQTD");
 		
 		if(!getMboValue().getMbo().isNull("MSNUMFATEMB") && !getMboValue().getMbo().isNull("MSNUMQNT")){
-			Double Total = Qntd / Fator;
+			double Total = Qntd / Fator;
+			
+			if ((int) Total != Total){
+				//não inteiro
+				throw new MXApplicationException("MsCotacao", "TotalNaoInteiro");
+			}
+		
 			System.out.println("##### CTIS MsCotacaoPMGV -  Total: " + Total);
 			
-			if (Total < MedicamentoQntd){
+			if (Qntd < MedicamentoQntd){
 				System.out.println("##### CTIS MsCotacaoPMGV -  Verifica: " + Total + " < "+ MedicamentoQntd);
 				throw new MXApplicationException("MsCotacao", "TotalMenorQuantidadeMed");
 			}
