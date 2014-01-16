@@ -68,7 +68,6 @@ public class MsQtdDemJud extends MboValueAdapter {
 						case MXApplicationYesNoCancelException.YES:
 							System.out.println(">>> Usuario clicou em SIM");
 							
-							int ID_do_Pai = getMboValue().getMbo().getInt("MSMEDPAI");
 							String Catmat = getMboValue().getMbo().getString("CATMAT");
 							String DescCatmat = getMboValue().getMbo().getString("DESCRIPTION");
 							String Wonum = getMboValue().getMbo().getString("WONUM");
@@ -80,11 +79,13 @@ public class MsQtdDemJud extends MboValueAdapter {
 							MboRemote mboDestinoMed;
 							mboDestinoMed = mboSetMedicamento.add();
 							
-							if (QtdDisp == QtdSolic){
+							int ID_do_Pai = mboDestinoMed.getInt("MSTBMEDICAMENTOID");
 							
+							if (QtdDisp == QtdSolic){
+												
 								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE");
 								getMboValue().getMbo().setValue("MSQTD", QtdDisp);
-								getMboValue().getMbo().setValue("MSMEDPAI", 0);
+								getMboValue().getMbo().setValue("MSMEDPAI", ID_do_Pai);
 								
 								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("DESCRIPTION", DescCatmat, MboConstants.NOACCESSCHECK);
@@ -92,14 +93,14 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("MSQTD", 0, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNTIPOATENDIMENTO", "COMPRA", MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
-								mboDestinoMed.setValue("MSMEDPAI", ID_do_Pai, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSMEDPAI", 0, MboConstants.NOACCESSCHECK);
 								
 								getMboValue().getMbo().getThisMboSet().save();
 						
 							} else if (QtdSolic < QtdDisp){
 								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE");
 								getMboValue().getMbo().setValue("MSQTD", QtdSolic);
-								getMboValue().getMbo().setValue("MSMEDPAI", 0);
+								getMboValue().getMbo().setValue("MSMEDPAI", ID_do_Pai);
 								
 								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("DESCRIPTION", DescCatmat, MboConstants.NOACCESSCHECK);
@@ -114,7 +115,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 							} else if (QtdSolic > QtdDisp){
 								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE");
 								getMboValue().getMbo().setValue("MSQTD", QtdDisp);
-								getMboValue().getMbo().setValue("MSMEDPAI", 0);
+								getMboValue().getMbo().setValue("MSMEDPAI", ID_do_Pai);
 								
 								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("DESCRIPTION", DescCatmat, MboConstants.NOACCESSCHECK);
@@ -122,7 +123,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("MSQTD", QtdCompra, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNTIPOATENDIMENTO", "COMPRA", MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
-								mboDestinoMed.setValue("MSMEDPAI", ID_do_Pai, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSMEDPAI", 0, MboConstants.NOACCESSCHECK);
 								
 								getMboValue().getMbo().getThisMboSet().save();
 							}
