@@ -51,6 +51,16 @@ public class AlterarStatusMedicamentos implements ActionCustomClass {
 				}
 
 			}
+		} else if (mbo.getString("STATUS").equals("REAL. QUANT.")) {
+			mbo.setValue("STATUS", "AG. OC", MboConstants.NOACCESSCHECK);	
+			for (int i = 0; ((aMbo = mbo.getMboSet("MSTBMEDICAMENTO").getMbo(i)) != null); i++) {
+
+				if (aMbo.getString("MSALNTIPOATENDIMENTO").equals("COMPRA")) {
+					aMbo.setValue("STATUS", "AG. OC", MboConstants.NOACCESSCHECK);
+					aMbo.setValue("MSFLWORKFLOW", "03", MboConstants.NOACCESSCHECK);					
+				}
+
+			}
 		}
 		// Salva
 		mbo.getMboSet("MSTBMEDICAMENTO").save(MboConstants.NOACCESSCHECK);

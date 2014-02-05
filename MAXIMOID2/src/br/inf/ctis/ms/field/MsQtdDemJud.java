@@ -83,47 +83,59 @@ public class MsQtdDemJud extends MboValueAdapter {
 							
 							if (QtdDisp == QtdSolic){
 												
-								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE");
-								getMboValue().getMbo().setValue("MSQTD", QtdDisp);
-								getMboValue().getMbo().setValue("MSMEDPAI", ID_do_Pai);
+								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE", MboConstants.NOACCESSCHECK);
+								getMboValue().getMbo().setValue("MSQTD", QtdDisp, MboConstants.NOACCESSCHECK);
+								getMboValue().getMbo().setValue("MSMEDPAI", ID_do_Pai, MboConstants.NOACCESSCHECK);
+								getMboValue().getMbo().setValue("STATUS", "GER.GUIA.REMESSA", MboConstants.NOACCESSCHECK);
 								
-								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								
 								mboDestinoMed.setValue("DESCRIPTION", DescCatmat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("WONUM", Wonum, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSQTD", 0, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNTIPOATENDIMENTO", "COMPRA", MboConstants.NOACCESSCHECK);
-								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSMEDPAI", 0, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("STATUS", "VER.DEP.JUD", MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
+								
 								
 								getMboValue().getMbo().getThisMboSet().save();
 						
 							} else if (QtdSolic < QtdDisp){
-								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE");
-								getMboValue().getMbo().setValue("MSQTD", QtdSolic);
-								getMboValue().getMbo().setValue("MSMEDPAI", ID_do_Pai);
+								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE", MboConstants.NOACCESSCHECK);
+								getMboValue().getMbo().setValue("MSQTD", QtdSolic, MboConstants.NOACCESSCHECK);
+								getMboValue().getMbo().setValue("MSMEDPAI", ID_do_Pai, MboConstants.NOACCESSCHECK);
+								getMboValue().getMbo().setValue("STATUS", "GER.GUIA.REMESSA", MboConstants.NOACCESSCHECK);
 								
-								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								
 								mboDestinoMed.setValue("DESCRIPTION", DescCatmat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("WONUM", Wonum, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSQTD", 0, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNTIPOATENDIMENTO", "COMPRA", MboConstants.NOACCESSCHECK);
-								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSMEDPAI", ID_do_Pai, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("STATUS", "ATEND.ESTOQUE", MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
+								
 								
 								getMboValue().getMbo().getThisMboSet().save();
-								
+							
 							} else if (QtdSolic > QtdDisp){
-								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE");
-								getMboValue().getMbo().setValue("MSQTD", QtdDisp);
-								getMboValue().getMbo().setValue("MSMEDPAI", ID_do_Pai);
+								getMboValue().getMbo().setValue("MSALNTIPOATENDIMENTO", "ESTOQUE", MboConstants.NOACCESSCHECK);
+								getMboValue().getMbo().setValue("MSQTD", QtdDisp, MboConstants.NOACCESSCHECK);
+								getMboValue().getMbo().setValue("MSMEDPAI", ID_do_Pai, MboConstants.NOACCESSCHECK);
+								getMboValue().getMbo().setValue("STATUS", "GER.GUIA.REMESSA", MboConstants.NOACCESSCHECK);
 								
-								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								
 								mboDestinoMed.setValue("DESCRIPTION", DescCatmat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("WONUM", Wonum, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSQTD", QtdCompra, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNTIPOATENDIMENTO", "COMPRA", MboConstants.NOACCESSCHECK);
-								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSMEDPAI", 0, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("STATUS", "VER.DEP.JUD", MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
+								
 								
 								getMboValue().getMbo().getThisMboSet().save();
 							}

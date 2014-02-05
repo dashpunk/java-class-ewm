@@ -25,25 +25,34 @@ public class MSCatMat extends MboValueAdapter {
 	@Override
 	public void validate() throws MXException, RemoteException {
 
-
-		System.out.println("#### CTIS - Entrou na MSCatMat");
 		super.validate();
-
-		MboRemote WORKORDER;
-		WORKORDER = getMboValue().getMbo().getMboSet("WORKORDER").getMbo(0);
-
-		System.out.println("CTIS ### CatMat:" + getMboValue().getMbo().getString("CATMAT") + "    -     " + getMboValue().getMbo().isNull("CATMAT") );
 		
-		if (verificaSeExiste(getMboValue().getMbo().getString("CATMAT")) && !getMboValue().getMbo().isNull("CATMAT")) {
-			if (!WORKORDER.isNull("STATUS")) {
-				if (WORKORDER.getString("STATUS").equals("ESTADO/MUNICIPIO")) {
-					novaLinha("ESTADO/MUNICIPIO");
-				} else if (WORKORDER.getString("STATUS").equals("VER. PROGRAMA")) {
-					novaLinha("VER. PROGRAMA");
+		System.out.println("Entrou no Validade de CATMAT");
+		
+		System.out.println("TIPO DE ATENDIMENTO: " + getMboValue().getMbo().getString("MSALNTIPOATENDIMENTO") + 
+						   "MSMEDPAI: " + getMboValue().getMbo().getInt("MSMEDPAI"));
+				
+		if (!getMboValue().getMbo().getString("MSALNTIPOATENDIMENTO").equals("ESTOQUE") && getMboValue().getMbo().isNull("MSMEDPAI")){
+				
+				System.out.println("#### CTIS - Entrou na MSCatMat");
+						
+				MboRemote WORKORDER;
+				WORKORDER = getMboValue().getMbo().getMboSet("WORKORDER").getMbo(0);
+		
+				System.out.println("CTIS ### CatMat:" + getMboValue().getMbo().getString("CATMAT") + "    -     " + getMboValue().getMbo().isNull("CATMAT") );
+				
+				if (verificaSeExiste(getMboValue().getMbo().getString("CATMAT")) && !getMboValue().getMbo().isNull("CATMAT")) {
+					if (!WORKORDER.isNull("STATUS")) {
+						if (WORKORDER.getString("STATUS").equals("ESTADO/MUNICIPIO")) {
+							novaLinha("ESTADO/MUNICIPIO");
+						} else if (WORKORDER.getString("STATUS").equals("VER. PROGRAMA")) {
+							novaLinha("VER. PROGRAMA");
+						}
+					}
+				} else {
+					novaLinha("");
 				}
-			}
-		} else {
-			novaLinha("");
+				
 		}
 	}
 
@@ -67,7 +76,7 @@ public class MSCatMat extends MboValueAdapter {
 					throw new MXApplicationException("MsCatMat", "ValorCatmatJaExiste");
 				}
 			}
-		}
+		} 
 		return true;
 	}
 
@@ -104,9 +113,6 @@ public class MSCatMat extends MboValueAdapter {
 			mbo.setValue("MSALNTIPOATENDIMENTO", "", MboConstants.NOACCESSCHECK);
 			mbo.setValue("DESCRIPTION", "", MboConstants.NOACCESSCHECK);
 			mbo.setValue("STATUS", "", MboConstants.NOACCESSCHECK);
-			mbo.setFieldFlag("MSALNTIPOATENDIMENTO", MboConstants.READONLY, false);
-		} else {
-			mbo.setFieldFlag("MSALNTIPOATENDIMENTO", MboConstants.READONLY,true);
 		}
 	}
 }
