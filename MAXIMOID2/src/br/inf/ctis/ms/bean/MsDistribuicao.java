@@ -53,7 +53,7 @@ public class MsDistribuicao extends DataBean {
 		return 1;
 	}
 	/**
-	 * Iniciando Instancias
+	 * Iniciando Instancias   
 	 */
     
 	public void iniciarWorkFlow(MboRemote mbo)
