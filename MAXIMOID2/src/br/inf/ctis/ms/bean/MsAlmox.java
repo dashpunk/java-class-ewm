@@ -83,7 +83,7 @@ public class MsAlmox extends psdi.webclient.system.beans.AppBean {
 		System.out.print("CTIS # --- Setar Status e ID");
 		Medic.setValue("MSALNSTATUS", status, MboConstants.NOACCESSCHECK);
 		Medic.setValue("MSTBALMOXERIFADOID",
-				getMbo().getInt("MSTBALMOXERIFADOID"),
+				getMbo().getInt("MSTBALMOXARIFADOID"),
 				MboConstants.NOACCESSCHECK);
 
 		Medic.setValue("MSNUMQNTTOTAL", 0, MboConstants.NOACCESSCHECK);
