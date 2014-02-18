@@ -4,7 +4,9 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
+import psdi.mbo.MboSet;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 import psdi.webclient.system.beans.AppBean;
@@ -16,15 +18,17 @@ public class MsNotaEmp extends AppBean {
 	 */
 	public MsNotaEmp() {
 	}
-	
+	 
 	@Override
 	public void save() throws MXException {
 		try {
 			if(getMbo().isNew()){
 			
 				MboRemote mbo;
+				MboRemote mbo1;
 				MboRemote mboDestino = null;
 				
+
 				System.out.println("############ MODALIDADE: "+ getMbo().getString("MSALCODMODALIDADE"));
 				
 				if (getMbo().getMboSet("MSTBITENSNOTAEMPENHO").isEmpty()){
@@ -42,7 +46,7 @@ public class MsNotaEmp extends AppBean {
 								
 								for (int i = 0; ((mbo= getMbo().getMboSet("MSTBFORNECEDORESITEMPREGAO").getMbo(i)) !=null); i++) {
 									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
-									System.out.println("############ add() na itens da nota de empenho");
+									System.out.println("############ add() na itens da nota de empenho - PREGÃO");
 									
 									mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
 									System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
@@ -93,7 +97,7 @@ public class MsNotaEmp extends AppBean {
 								
 								for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(i)) !=null); i++) {
 									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
-									System.out.println("############ add() na itens da nota de empenho");
+									System.out.println("############ add() na itens da nota de empenho - INEXIGIBILIDADE");
 									
 									mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
 									System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
@@ -134,6 +138,70 @@ public class MsNotaEmp extends AppBean {
 									mboDestino.setValue("MSNUNUMQUANTIDADEEMPENHADA", 0);
 								}
 								//INEXIGIBILIDADE
+							} else if (getMbo().getString("MSALCODMODALIDADE").equals("OC")) {
+								//ORDEM DE COMPRA
+									
+								
+							
+								for (int i = 0; ((mbo= getMbo().getMboSet("MSTBCOTCDJU").getMbo(i)) !=null); i++) {
+									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
+									System.out.println("############ add() na itens da nota de empenho - ORDEM DE COMPRA");
+									
+									
+									// Setando Status
+									for (int j = 0; ((mbo1 = getMbo().getMboSet("MSTBMEDICAMENTO").getMbo(j)) !=null); j++) {
+										System.out.println("############ Entrou no for de medicamentos");
+										mbo1.setValue("STATUS", "AG.REMESSA", MboConstants.NOACCESSCHECK);
+										System.out.println("########### STATUS = " + mbo1.getString("STATUS"));
+									}
+									/// Fim	
+																				
+									mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
+									System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
+									
+									mboDestino.setValue("MSALCODMODALIDADE", getMbo().getString("MSALCODMODALIDADE"));
+									System.out.println("########### MSALCODMODALIDADE = " + getMbo().getString("MSALCODMODALIDADE"));
+									
+									mboDestino.setValue("MSALNUMMODALIDADE", getMbo().getString("MSALNUMMODALIDADE"));
+									System.out.println("########### MSALNUMMODALIDADE = " + getMbo().getString("MSALNUMMODALIDADE"));
+									
+									mboDestino.setValue("ID2ITEMNUM", mbo.getString("MSSISMAT"));
+									System.out.println("########### ID2ITEMNUM = " + mbo.getString("MSSISMAT"));
+									
+									mboDestino.setValue("POLINEID", mbo.getInt("MSTBOCID"));
+									System.out.println("############ POLINEID = " + mbo.getInt("MSTBOCID"));
+									
+									mboDestino.setValue("MSALNFORNECEDOR", mbo.getString("MSFORNECEDOR"));
+									System.out.println("############ MSALNFORNECEDOR = " + mbo.getString("MSFORNECEDOR"));
+									
+									mboDestino.setValue("MSALNFORNECEDOR", mbo.getString("MSFORNECEDOR"));
+									System.out.println("############ MSALNFORNECEDOR = " + mbo.getString("MSFORNECEDOR"));									
+																	
+									mboDestino.setValue("MSNUNUMQUANTIDADEEMPENHADA", 0);
+									
+									
+									//INICIO: MUDAR STATUS DA ORDEM DE COMPRA SE TODOS ITENS TIVEREM NOTA DE EMPENHO	
+									MboSet mboSetMedicamento;
+									mboSetMedicamento = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBMEDICAMENTO", sessionContext.getUserInfo());
+
+									mboSetMedicamento.setWhere("MSTBOCID = '" + mbo.getInt("MSTBOCID") + "'");
+									mboSetMedicamento.reset();
+									
+									MboSet mboSetNotaEmp;
+									mboSetNotaEmp = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBITENSNOTAEMPENHO", sessionContext.getUserInfo());
+
+									mboSetNotaEmp.setWhere("POLINEID = '" + mbo.getInt("MSTBOCID") + "'");
+									mboSetNotaEmp.reset();	
+									
+									MboRemote mboOc = getMbo().getMboSet("MSTBOC").getMbo();
+											
+											
+							        if (mboSetMedicamento.count() == mboSetNotaEmp.count() ) {
+							        	mboOc.setValue("MSSTATUS", "FINALIZADA");
+							        }
+									//FIM: MUDAR STATUS DA ORDEM DE COMPRA SE TODOS ITENS TIVEREM NOTA DE EMPENHO	
+								}
+								//ORDEM DE COMPRA
 							} else if (getMbo().getString("MSALCODMODALIDADE").equals("ARP")) {
 								//ARP
 								
@@ -144,7 +212,7 @@ public class MsNotaEmp extends AppBean {
 								
 								for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSARP").getMbo(i)) !=null); i++) {
 									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
-									System.out.println("############ add() na itens da nota de empenho");
+									System.out.println("############ add() na itens da nota de empenho - ARP");
 									
 									mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
 									System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
@@ -199,7 +267,7 @@ public class MsNotaEmp extends AppBean {
 								 
 								for (int i = 0; ((mbo= getMbo().getMboSet("CONTRACTLINE").getMbo(i)) !=null); i++) {
 									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
-									System.out.println("############ add() na itens da nota de empenho");
+									System.out.println("############ add() na itens da nota de empenho - TERMO ADITIVO");
 									
 									mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
 									System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
@@ -255,7 +323,7 @@ public class MsNotaEmp extends AppBean {
 								
 								for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSNOTAEMPENHOADITIVO").getMbo(i)) !=null); i++) {
 									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
-									System.out.println("############ add() na itens da nota de empenho");
+									System.out.println("############ add() na itens da nota de empenho - NE");
 									
 									mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
 									System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
@@ -313,7 +381,7 @@ public class MsNotaEmp extends AppBean {
 						
 						for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSNOTAEMPENHOORIGINAL").getMbo(i)) !=null); i++) {
 							mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
-							System.out.println("############ add() na itens da nota de empenho");
+							System.out.println("############ add() na itens da nota de empenho - REFORÇO");
 							
 							mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
 							System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
@@ -361,7 +429,7 @@ public class MsNotaEmp extends AppBean {
 						
 						for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSNOTAEMPENHOORIGINAL").getMbo(i)) !=null); i++) {
 							mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
-							System.out.println("############ add() na itens da nota de empenho");
+							System.out.println("############ add() na itens da nota de empenho - ANULAÇÃO");
 							
 							mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
 							System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
