@@ -15,45 +15,60 @@ import psdi.util.MXException;
 public class MsGerOC extends psdi.webclient.system.beans.AppBean {
 
 	public MsGerOC() {
-		System.out.print("############ --- MsGerOC");
+		System.out.println("############ --- MsGerOC");
 	}
 
 	@Override
 	public void save() throws MXException {
 		try {
 			
+			super.save();
+			
+			System.out.println("################# Entrou na Classe MsGerOC");
 			MboSet mboSetVenc;
 			mboSetVenc = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBCOTCDJU", getMbo().getUserInfo());
 			mboSetVenc.setWhere("MSTBOCID = '" + getMbo().getString("MSTBOCID") + "' and msflvenc = '1'");
 			mboSetVenc.reset();
 			
 			float Total = 0;
+			System.out.println("################# Total = 0");
 			
-			for (int i = 1; mboSetVenc.count() > i ; i++){
-				String medicamento = mboSetVenc.getString("MSSISMAT");
-				int qtdSismat = 0;
-				for (int j = 1; mboSetVenc.count() > j; j++){
-					if (medicamento == mboSetVenc.getString("MSSISMAT")){
-						qtdSismat++;
-					}
-					if (qtdSismat > 1){
-						throw new MXApplicationException("msgeroc","SismatMaiorQueUm");
-					}
-					qtdSismat = 0;
-				}
+			for (int i = 0; mboSetVenc.count() > i ; i++){
+				System.out.println("################# Entrou no for I: " + i);
+				String medicamento = mboSetVenc.getMbo(i).getString("MSSISMAT");
 				
-				if (mboSetVenc.getBoolean("MSFLVENC")){
-					Total += mboSetVenc.getFloat("MSNUMPREC");
+				System.out.println("################# Medicamento: " + medicamento);
+				
+				int qtnSismat = 0;
+				
+				for (int j = 0; mboSetVenc.count() > j; j++){
+					if ( mboSetVenc.getMbo(j).getString("MSSISMAT").equals(medicamento)){
+						qtnSismat++;
+						System.out.println("################# Sismat QTD: " + qtnSismat);
+					}
+					
+					if (qtnSismat > 1){
+						//error
+						throw new MXApplicationException("msgeroc", "MaisDeUmSismatSelecionado");
+					}
+				} 
+				
+				if (mboSetVenc.getMbo(i).getBoolean("MSFLVENC")){
+					System.out.println("################# Soma Total");
+					Total += mboSetVenc.getMbo(i).getFloat("MSNUMPREC");
 				}
 			}
-			
+			System.out.println("################# Setou Valor Total : " + Total);
 			getMbo().setValue("MSNUMTOTAL", Total);
+			
+		
+			super.save();
 			
 			refreshTable();
 			reloadTable();
-
+			
 		} catch (RemoteException ex) {
-			Logger.getLogger(MsAlmox.class.getName()).log(Level.SEVERE, null,
+			Logger.getLogger(MsGerOC.class.getName()).log(Level.SEVERE, null,
 					ex);
 		}
 	}
