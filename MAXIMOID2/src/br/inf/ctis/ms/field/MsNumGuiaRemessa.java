@@ -32,13 +32,16 @@ public class MsNumGuiaRemessa extends MboValueAdapter{
 	
 	private void define() throws MXException {
         try {
-        	if (!getMboValue().getMbo().isNull("MSCODREMESSA")) {
-	        	String valor =
-	        					Uteis.adicionaValorEsquerda(getMboValue().getMbo().getString("MSCODREMESSA"),"0", 9)
+        	System.out.println("Entrou na Classe GUIA REMESSA FIELD");
+        	if (!getMboValue().getMbo().getString("MSCODREMESSA").startsWith("GUIA.")) {
+	        	String valor =  "GUIA." +  Uteis.adicionaValorEsquerda(getMboValue().getMbo().getString("MSCODREMESSA"),"0", 9)
 	        					+ "/"
 	        					+ new GregorianCalendar().get(GregorianCalendar.YEAR);
 	        	
+	        	System.out.println("Valor" + valor);
+	        	
 	        	getMboValue().getMbo().setValue("MSCODREMESSA",valor, MboConstants.NOACCESSCHECK);
+	        	System.out.println("Setou Valor");
         	}
         } catch (RemoteException re) {
         	System.out.println("######## Exceção ao definir o valor de MSCODREMESSA: " + re.getMessage());
