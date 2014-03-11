@@ -23,7 +23,7 @@ import psdi.webclient.system.controller.WebClientEvent;
 public class MsOrdemCompra extends DataBean {
 
 	public MsOrdemCompra() {
-		System.out.println("CTIS # --- Entrou em MsOrdemCompra()");
+		System.out.println("CTIS # --- Entrou em MsOrdemCompra(1)");
 	}
 
 	public void GerarOrdem() throws MXException {
@@ -32,7 +32,7 @@ public class MsOrdemCompra extends DataBean {
 			Integer novoIdOC = 0;
 			Date dataOrdemCompra = null;
 
-			System.out.println("CTIS # --- Entrou no GerarOrdem");
+			System.out.println("CTIS # --- Entrou no GerarOrdem 1");
 			MboSet mboMedicamentos = (MboSet) app.getDataBean("MAINRECORD")
 					.getMbo().getMboSet("MSTBMEDICAMENTO");
 			if (getMbo().getString("MSFORNEC005").equals("S")){
