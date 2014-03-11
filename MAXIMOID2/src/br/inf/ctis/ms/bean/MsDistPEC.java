@@ -35,6 +35,26 @@ public class MsDistPEC extends DataBean {
 		System.out.println("-------------------- PEC | Linha Selecionada PAI: " + getMbo(row).getInt("MSTBPEC_ACOESID"));
 		System.out.println("-------------------- PEC | Linha Selecionada DESTINO: " + getMbo(row).getInt("MSACAO"));
 
+		
+		// Fechar Dialog ACTION
+
+		WebClientEvent closeEvt = new WebClientEvent("dialogok", this.app.getCurrentPageId(), null, this.clientSession);
+
+		WebClientRuntime.sendEvent(closeEvt);
+
+		// Auto Iniciar WORKFLOW
+		super.selectrecord();
+
+		DataBean ownerBean = this.app.getDataBean();
+		if (ownerBean != null) {
+			MboRemote mbo = ownerBean.getMbo();
+
+			WebClientSession wcs = this.clientSession;
+			WorkflowDirector director = wcs.getWorkflowDirector();
+			director.allowAutoInit();
+			director.startInput(wcs.getCurrentAppId(), mbo, DirectorInput.workflow);
+		}
+		
 		// Setar Valores na PO
 		
 		MboRemote mboAcao;
@@ -60,24 +80,6 @@ public class MsDistPEC extends DataBean {
 		
 		System.out.println("-------------------- PEC | Valores Setados na PO: ----> " + PoNum + " / " + MsFluxo + " / " +  MsAcao + " / " +  MsGrupo);
 		
-		// Fechar Dialog ACTION
-
-		WebClientEvent closeEvt = new WebClientEvent("dialogok", this.app.getCurrentPageId(), null, this.clientSession);
-
-		WebClientRuntime.sendEvent(closeEvt);
-
-		// Auto Iniciar WORKFLOW
-		super.selectrecord();
-
-		DataBean ownerBean = this.app.getDataBean();
-		if (ownerBean != null) {
-			MboRemote mbo = ownerBean.getMbo();
-
-			WebClientSession wcs = this.clientSession;
-			WorkflowDirector director = wcs.getWorkflowDirector();
-			director.allowAutoInit();
-			director.startInput(wcs.getCurrentAppId(), mbo, DirectorInput.workflow);
-		}
 		
 		save();
 		
