@@ -3,19 +3,19 @@ package br.inf.ctis.ms.field;
 import java.rmi.RemoteException;
 import javax.security.auth.Refreshable;
 import org.apache.catalina.loader.Reloader;
-
+import com.sun.enterprise.util.Utility;
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboSetRemote;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
 import psdi.util.MXException;
-import psdi.webclient.system.controller.Utility;
 import psdi.webclient.system.controller.WebClientEvent;
+
+
 
 /**
  * @author willians.andrade
- * 
  */
 
 public class MsNumTaxaPrev extends MboValueAdapter {
@@ -36,6 +36,7 @@ public class MsNumTaxaPrev extends MboValueAdapter {
 		// PUFOB(R$), Frete + Seguro (R$), 3,5% (R$), Buffer (R$), Total (R$)
 
 		if (!getMboValue().getMbo().isNull("MSNUMTXPR")) {
+			
 			System.out.print("********** Entrou no IF().");
 			MboRemote mboa = null;
 			MboRemote mbob = null;
