@@ -35,7 +35,31 @@ public class MsDistPEC extends DataBean {
 		System.out.println("-------------------- PEC | Linha Selecionada PAI: " + getMbo(row).getInt("MSTBPEC_ACOESID"));
 		System.out.println("-------------------- PEC | Linha Selecionada DESTINO: " + getMbo(row).getInt("MSACAO"));
 
+		// Setar Valores na PO
 		
+				MboRemote mboAcao;
+				mboAcao = getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0);
+				
+				MboRemote mboGrupo;
+				mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
+				
+				int PoNum = app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"); // Número da PO
+				int MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID"); 					// Fluxo de Ação
+				int MsAcao = getMbo(row).getInt("MSACAO"); 							// Ação de Opções
+				String MsGrupo = mboGrupo.getString("MSGRUPO"); 					// Grupo de Grupos
+				
+				System.out.println("-------------------- PEC | PO/Fluxo/Ação/Grupo: ----> " + PoNum + " / " + MsFluxo + " / " +  MsAcao + " / " +  MsGrupo);
+				
+				// Setando Valores na PO
+				
+				MboRemote mboPO = app.getDataBean("MAINRECORD").getMbo();
+					
+				mboPO.setValue("MSPECACAO", MsAcao);
+				mboPO.setValue("MSPECFLUXO", MsFluxo);
+				mboPO.setValue("MSPECGRUPO", MsGrupo);
+				
+				System.out.println("-------------------- PEC | Valores Setados na PO: ----> " + PoNum + " / " + MsFluxo + " / " +  MsAcao + " / " +  MsGrupo);
+				
 		// Fechar Dialog ACTION
 
 		WebClientEvent closeEvt = new WebClientEvent("dialogok", this.app.getCurrentPageId(), null, this.clientSession);
@@ -54,32 +78,6 @@ public class MsDistPEC extends DataBean {
 			director.allowAutoInit();
 			director.startInput(wcs.getCurrentAppId(), mbo, DirectorInput.workflow);
 		}
-		
-		// Setar Valores na PO
-		
-		MboRemote mboAcao;
-		mboAcao = getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0);
-		
-		MboRemote mboGrupo;
-		mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
-		
-		int PoNum = app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"); // Número da PO
-		int MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID"); 					// Fluxo de Ação
-		int MsAcao = getMbo(row).getInt("MSACAO"); 							// Ação de Opções
-		String MsGrupo = mboGrupo.getString("MSGRUPO"); 					// Grupo de Grupos
-		
-		System.out.println("-------------------- PEC | PO/Fluxo/Ação/Grupo: ----> " + PoNum + " / " + MsFluxo + " / " +  MsAcao + " / " +  MsGrupo);
-		
-		// Setando Valores na PO
-		
-		MboRemote mboPO = app.getDataBean("MAINRECORD").getMbo();
-			
-		mboPO.setValue("MSPECACAO", MsAcao);
-		mboPO.setValue("MSPECFLUXO", MsFluxo);
-		mboPO.setValue("MSPECGRUPO", MsGrupo);
-		
-		System.out.println("-------------------- PEC | Valores Setados na PO: ----> " + PoNum + " / " + MsFluxo + " / " +  MsAcao + " / " +  MsGrupo);
-		
 		
 		save();
 		
