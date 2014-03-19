@@ -1,5 +1,5 @@
 /**
- * CriaÃ§Ã£o de Classe App Bean para preencher relacionamento MSTBMEDPERSISTENTE unificando o SISMAT dos registro da tabela MSTBMEDICAMENTO.
+ * Criação de Classe App Bean para preencher relacionamento MSTBMEDPERSISTENTE unificando o SISMAT dos registro da tabela MSTBMEDICAMENTO.
  */
 package br.inf.ctis.ms.bean;
 
