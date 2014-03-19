@@ -62,12 +62,14 @@ public class MsNumFob extends MboValueAdapter {
 			// (3,5%(USD)), (3,5% + CIF(USD)) e TOTAL(USD)
 			if (!MSTBCOTSVS.isNull("MSNUMCIF")) {
 				
+				
 				double FOBeTAXA = MSTBCOTSVS.getFloat("MSNUMFOBUSD") * Taxa/100;
+				double CIFeTAXA = MSTBCOTSVS.getFloat("MSNUMCIF") + FOBeTAXA;
 				double CIFPorcent = MSTBCOTSVS.getFloat("MSNUMCIF") * Taxa/100;
 				double CIFPorcentCIF = MSTBCOTSVS.getFloat("MSNUMCIF") + CIFPorcent;			
 				
 				MSTBCOTSVS.setValue("MSNUMPERCENT", FOBeTAXA);
-				MSTBCOTSVS.setValue("MSNUMCIFEPERCENT", CIFPorcentCIF );
+				MSTBCOTSVS.setValue("MSNUMCIFEPERCENT", CIFeTAXA );
 				MSTBCOTSVS.setValue("MSNUMTOTALUSD", CIFPorcentCIF );
 				
 				System.out.print("CTIS # " + CIFPorcent + ", "+ CIFPorcentCIF);			
