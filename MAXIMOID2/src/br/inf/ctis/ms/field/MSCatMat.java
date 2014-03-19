@@ -95,7 +95,7 @@ public class MSCatMat extends MboValueAdapter {
 		} else if (status == "VER. PROGRAMA") {
 			System.out.println("#### CTIS - MSCatMat / Nova Linha: VER. PROGRAMA");
 			MboSet mboSetMedicamentosVW;
-			mboSetMedicamentosVW = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("VW_MEDICAMENTO_ESTOQUE", getMboValue().getMbo().getUserInfo());
+			mboSetMedicamentosVW = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSVWMEDICESTOQUE", getMboValue().getMbo().getUserInfo());
 			mboSetMedicamentosVW.setWhere("CO_CATMAT = '" + getMboValue().getMbo().getString("CATMAT") + "' and QT_SALDO_ATUAL > 0");
 			mboSetMedicamentosVW.reset();
 
