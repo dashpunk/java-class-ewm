@@ -3,6 +3,7 @@
  */
 package br.inf.ctis.ms.bean;
 
+
 import br.inf.ctis.ms.bean.Component;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 
 /**
- * @author Willians Andrade
+ * @author Willians Andrade 1
  */
 public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 	public MsCotacao() {
