@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
+import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 
 /**
@@ -28,11 +29,15 @@ public class MsNumPu extends MboValueAdapter {
 		super.validate();
 
 		MboRemote MSTBCOTSVS = getMboValue().getMbo();
+		
+		float ValorQnt = MSTBCOTSVS.getFloat("MSNUMQNT");
+		float FobUSD = MSTBCOTSVS.getFloat("MSNUMFOBUSD");
+		float qtdInsumo = MSTBCOTSVS.getMboSet("MSTBINSUMOS").getInt("MSNUMQNT");
 
 		if (!MSTBCOTSVS.isNull("MSNUMFOBUSD") && MSTBCOTSVS.getFloat("MSNUMQNT") != 0){
 
-			float ValorQnt = MSTBCOTSVS.getFloat("MSNUMQNT");
-			float FobUSD = MSTBCOTSVS.getFloat("MSNUMFOBUSD");
+			//float ValorQnt = MSTBCOTSVS.getFloat("MSNUMQNT");
+			//float FobUSD = MSTBCOTSVS.getFloat("MSNUMFOBUSD");
 			
 			float ValorUnit = FobUSD / ValorQnt;
 			
@@ -42,6 +47,9 @@ public class MsNumPu extends MboValueAdapter {
 		if (MSTBCOTSVS.getFloat("MSNUMQNT") == 0){
 			MSTBCOTSVS.setValue("MSNUMPU", "");
 		}
+		if (ValorQnt > qtdInsumo) {
+		    	throw new MXApplicationException("generica", "Quantidade superior a do Insumo");
+		    }
 	}
 
 }
