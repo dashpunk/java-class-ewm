@@ -22,12 +22,19 @@ public class ValidaQtdInsumoSVS extends MboValueAdapter{
 		System.out.print("********** Entrou na classe ValidaQtdInsumoSVS.");
 		super.validate();	    
 	      
-		int qtdCotacao = getMboValue().getMbo().getInt("MSNUMQNT");
-		int qtdInsumo = getMboValue().getMbo().getMboSet("MSTBINSUMOS").getMbo().getInt("MSNUMQNT");
-		
-	    if (qtdCotacao > qtdInsumo) {
-	    	throw new MXApplicationException("generica", "Quantidade superior a do Insumo");
-	    }		    
+		for (int i = 0; i < getMboValue().getMbo().getThisMboSet().count();i++){
+			
+			int qtdCotacao = getMboValue().getMbo().getInt("MSNUMQNT");
+			int qtdInsumo = getMboValue().getMbo().getMboSet("MSTBINSUMOS").getMbo().getInt("MSNUMQNT");
+			int qtdTotal =0;			
+			
+			qtdTotal += qtdCotacao;		
+			
+			 if (qtdTotal > qtdInsumo) {
+			    	throw new MXApplicationException("generica", "Quantidade superior a do Insumo");
+		     }	
+		}
+	   	    
 	  }
 
 }
