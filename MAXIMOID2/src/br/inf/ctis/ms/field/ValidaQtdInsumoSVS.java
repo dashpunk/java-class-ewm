@@ -18,10 +18,13 @@ public class ValidaQtdInsumoSVS extends MboValueAdapter{
 	
 	@Override
 	public void validate() throws MXException, RemoteException{
-	    
+		
+		System.out.print("********** Entrou na classe ValidaQtdInsumoSVS.");
+		super.validate();	    
 	      
 		int qtdCotacao = getMboValue().getMbo().getInt("MSNUMQNT");
 		int qtdInsumo = getMboValue().getMbo().getMboSet("MSTBINSUMOS").getInt("MSNUMQNT");
+		
 	    if (qtdCotacao > qtdInsumo) {
 	    	throw new MXApplicationException("generica", "Quantidade superior a do Insumo");
 	    }		    
