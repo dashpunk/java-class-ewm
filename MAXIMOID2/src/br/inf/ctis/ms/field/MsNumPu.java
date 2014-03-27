@@ -47,6 +47,7 @@ public class MsNumPu extends MboValueAdapter {
 		if (MSTBCOTSVS.getFloat("MSNUMQNT") == 0){
 			MSTBCOTSVS.setValue("MSNUMPU", "");
 		}
+		//Validacao da qtd de cotas em relacao a qtd insumo
 		if (ValorQnt > qtdInsumo) {
 		    	throw new MXApplicationException("generica", "Quantidade superior a do Insumo");
 		    }
