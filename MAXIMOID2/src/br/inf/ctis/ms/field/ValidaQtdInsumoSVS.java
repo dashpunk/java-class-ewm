@@ -23,7 +23,7 @@ public class ValidaQtdInsumoSVS extends MboValueAdapter{
 		super.validate();	    
 	      
 		int qtdCotacao = getMboValue().getMbo().getInt("MSNUMQNT");
-		int qtdInsumo = getMboValue().getMbo().getMboSet("MSTBINSUMOS").getInt("MSNUMQNT");
+		int qtdInsumo = getMboValue().getMbo().getMboSet("MSTBINSUMOS").getMbo().getInt("MSNUMQNT");
 		
 	    if (qtdCotacao > qtdInsumo) {
 	    	throw new MXApplicationException("generica", "Quantidade superior a do Insumo");
