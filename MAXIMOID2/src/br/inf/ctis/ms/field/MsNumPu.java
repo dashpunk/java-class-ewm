@@ -30,27 +30,17 @@ public class MsNumPu extends MboValueAdapter {
 
 		MboRemote MSTBCOTSVS = getMboValue().getMbo();
 		
-		float ValorQnt = MSTBCOTSVS.getFloat("MSNUMQNT");
-		float FobUSD = MSTBCOTSVS.getFloat("MSNUMFOBUSD");
-		float qtdInsumo = MSTBCOTSVS.getMboSet("MSTBINSUMOS").getInt("MSNUMQNT");
+		if ((!MSTBCOTSVS.isNull("MSNUMFOBUSD")) && (MSTBCOTSVS.getFloat("MSNUMQNT") != 0.0F))
+	    {
+	      float ValorQnt = MSTBCOTSVS.getFloat("MSNUMQNT");
+	      float FobUSD = MSTBCOTSVS.getFloat("MSNUMFOBUSD");
 
-		if (!MSTBCOTSVS.isNull("MSNUMFOBUSD") && MSTBCOTSVS.getFloat("MSNUMQNT") != 0){
+	      float ValorUnit = FobUSD / ValorQnt;
 
-			//float ValorQnt = MSTBCOTSVS.getFloat("MSNUMQNT");
-			//float FobUSD = MSTBCOTSVS.getFloat("MSNUMFOBUSD");
-			
-			float ValorUnit = FobUSD / ValorQnt;
-			
-			MSTBCOTSVS.setValue("MSNUMPU", ValorUnit);
-		}
-		
-		if (MSTBCOTSVS.getFloat("MSNUMQNT") == 0){
-			MSTBCOTSVS.setValue("MSNUMPU", "");
-		}
-		//Validacao da qtd de cotas em relacao a qtd insumo
-		if (ValorQnt > qtdInsumo) {
-		    	throw new MXApplicationException("generica", "Quantidade superior a do Insumo");
-		    }
-	}
+	      MSTBCOTSVS.setValue("MSNUMPU", ValorUnit);
+	    }
 
+	    if (MSTBCOTSVS.getFloat("MSNUMQNT") == 0.0F)
+	      MSTBCOTSVS.setValue("MSNUMPU", "");
+	  }
 }
