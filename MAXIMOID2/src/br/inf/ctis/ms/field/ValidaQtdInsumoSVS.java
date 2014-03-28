@@ -20,13 +20,15 @@ public class ValidaQtdInsumoSVS extends MboValueAdapter{
 	public void validate() throws MXException, RemoteException{
 		
 		System.out.print("********** Entrou na classe ValidaQtdInsumoSVS.");
-		super.validate();	    
+		super.validate();
+		
+		int qtdTotal =0;
 	      
 		for (int i = 0; i < getMboValue().getMbo().getThisMboSet().count();i++){
 			
 			int qtdCotacao = getMboValue().getMbo().getInt("MSNUMQNT");
 			int qtdInsumo = getMboValue().getMbo().getMboSet("MSTBINSUMOS").getMbo().getInt("MSNUMQNT");
-			int qtdTotal =0;			
+						
 			
 			qtdTotal += qtdCotacao;		
 			
