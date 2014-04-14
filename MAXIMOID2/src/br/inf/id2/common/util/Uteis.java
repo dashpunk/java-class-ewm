@@ -139,6 +139,16 @@ public class Uteis {
 
         return result.toString();
     }
+    
+    public static boolean isApenasNumeros(String value) {
+    	for (int i = 0; i < value.length(); i++) {
+            if (!Character.isDigit(value.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public static String getValorMascarado(String pMask, String pValue,
             boolean pReturnValueEmpty) {
