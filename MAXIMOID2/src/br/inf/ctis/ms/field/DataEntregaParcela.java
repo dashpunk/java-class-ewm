@@ -19,10 +19,8 @@ public class DataEntregaParcela extends MboValueAdapter {
 
 		Date dataInicial = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0).getDate("STARTDATE");
 						
-		if (getMboValue().getName().equals("MSNUNUMQUANTIDADEDIAS")) {
-			getMboValue("MSDTDTAENTREGA").setValue(Data.getDataAcrescimo(dataInicial, getMboValue().getMbo().getInt("MSNUNUMQUANTIDADEDIAS")));			
-		} else if (getMboValue().getName().equals("MSDTDTAENTREGA")) {
-			getMboValue("MSNUNUMQUANTIDADEDIAS").setValue(Data.recuperaDiasEntreDatas(dataInicial, getMboValue().getMbo().getDate("MSDTDTAENTREGA")));
-		}
+		System.out.println("########## DATA = " + getMboValue().getMbo().getDate("MSDTDTAENTREGA"));
+		System.out.println("########## QUANTIDADE DE DIAS DATA= " + Data.recuperaDiasEntreDatas(dataInicial, getMboValue().getMbo().getDate("MSDTDTAENTREGA")));
+		getMboValue("MSNUNUMQUANTIDADEDIAS").setValue(Data.recuperaDiasEntreDatas(dataInicial, getMboValue().getMbo().getDate("MSDTDTAENTREGA")));
 	}
 }
