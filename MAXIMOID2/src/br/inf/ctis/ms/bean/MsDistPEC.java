@@ -100,10 +100,6 @@ public class MsDistPEC extends DataBean {
 		MboRemote aMbo;
 		MboRemote bMbo;
 		
-		MsAcao = MsAcao + 1;
-		
-		System.out.println("จจจจจจจจจจจจจจValor do MsAcao:" + MsAcao);
-		
 		MboSet mboCampos;
 		mboCampos = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBPEC_CAMPOS", getMbo().getUserInfo());
 		mboCampos.setWhere("MSTBPEC_OPCOESID in (SELECT MSTBPEC_OPCOESID FROM MSTBPEC_OPCOES WHERE MSACAO = '"+MsAcao+"')");
