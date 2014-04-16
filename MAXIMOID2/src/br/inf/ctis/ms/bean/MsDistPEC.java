@@ -102,7 +102,7 @@ public class MsDistPEC extends DataBean {
 		
 		MsAcao = MsAcao + 1;
 		
-		System.out.println("Valor do MsAcao:" + MsAcao);
+		System.out.println("จจจจจจจจจจจจจจValor do MsAcao:" + MsAcao);
 		
 		MboSet mboCampos;
 		mboCampos = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBPEC_CAMPOS", getMbo().getUserInfo());
