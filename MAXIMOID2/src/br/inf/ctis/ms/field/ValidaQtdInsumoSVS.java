@@ -22,12 +22,13 @@ public class ValidaQtdInsumoSVS extends MboValueAdapter{
 		System.out.print("********** Entrou na classe ValidaQtdInsumoSVS.");
 		super.validate();
 		
-		int qtdTotal =0;
+		float qtdTotal =0;
+		
 	      
 		for (int i = 0; i < getMboValue().getMbo().getThisMboSet().count();i++){
 			
-			int qtdCotacao = getMboValue().getMbo().getInt("MSNUMQNT");
-			int qtdInsumo = getMboValue().getMbo().getMboSet("MSTBINSUMOS").getMbo().getInt("MSNUMQNT");
+			float qtdCotacao = getMboValue().getMbo().getInt("MSNUMQNT");
+			float qtdInsumo = getMboValue().getMbo().getMboSet("MSTBINSUMOS").getMbo(0).getInt("MSNUMQNT");
 						
 			
 			qtdTotal += qtdCotacao;		
