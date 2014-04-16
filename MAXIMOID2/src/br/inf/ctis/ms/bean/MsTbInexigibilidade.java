@@ -36,7 +36,25 @@ public class MsTbInexigibilidade extends AppBean {
 						System.out.println("########### MSTBINEXIGIBILIDADEID" + getMbo().getInt("MSTBINEXIGIBILIDADEID"));
 					}
 				}
+				super.save();
 				
+				MboRemote mbo1;
+				
+				
+				double valorglobal = 0d;
+				
+				for (int i = 0; ((mbo1 = getMbo().getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(i)) != null); i++) {
+					super.save();
+					if (!mbo1.getBoolean("MSNUFLGCANCELADOINEX")) {
+						mbo1.setValue("MSNUNUMVALORTOTALCONTRATADO", (mbo1.getDouble("MSNUNUMVALUNICONTRATADOINEX") * mbo1.getDouble("MSNUNUMQTDCONTRATADAINEX")));
+						super.save();
+						valorglobal += (mbo1.getDouble("MSNUNUMVALUNICONTRATADOINEX") * mbo1.getDouble("MSNUNUMQTDCONTRATADAINEX"));
+					}
+				}
+				
+				System.out.println("########## Valor Global = " + valorglobal);
+				getMbo().setValue("MSNUNUMVALORTOTAL", valorglobal);
+								
 				super.save();
 				
 			} else {
