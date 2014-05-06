@@ -25,7 +25,7 @@ public class MsNumPu extends MboValueAdapter {
 	@Override
 	public void validate() throws MXException, RemoteException {
 		
-		System.out.print("********** Entrou na classe MsNumPu.");
+		System.out.println("********** Entrou na classe MsNumPu.");
 		super.validate();
 
 		MboRemote MSTBCOTSVS = getMboValue().getMbo();
@@ -41,12 +41,13 @@ public class MsNumPu extends MboValueAdapter {
 	      
 	      
 	      float qtdTotal =0;
-	      float qtdTotalCot =0;
-	      for (int i = 0; i < getMboValue().getMbo().getThisMboSet().count();i++){
+	      
+	      for (int i = 0; i < MSTBCOTSVS.getThisMboSet().count();i++){
 	    	  qtdTotal += MSTBCOTSVS.getFloat("MSNUMQNT");
+	    	  System.out.println("-------------- Somatorio da Qtd p/ comparar com insumo:"+qtdTotal);
 	      }	      
 	      if (qtdTotal > MSTBCOTSVS.getMboSet("MSTBINSUMOS").getMbo(0).getInt("MSNUMQNT")) {
-	    	    System.out.print("-------------- IF de validacao Qtd por Insumo");
+	    	    System.out.println("-------------- IF de validacao Qtd por Insumo");
 				throw new MXApplicationException("generica", "Quantidade superior a do Insumo");
 			}
 	      
