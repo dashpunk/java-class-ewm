@@ -39,7 +39,13 @@ public class MsNumPu extends MboValueAdapter {
 
 	      MSTBCOTSVS.setValue("MSNUMPU", ValorUnit);
 	      
-	      if (MSTBCOTSVS.getFloat("MSNUMQNT") > MSTBCOTSVS.getMboSet("MSTBINSUMOS").getMbo(0).getInt("MSNUMQNT")) {
+	      
+	      float qtdTotal =0;
+	      float qtdTotalCot =0;
+	      for (int i = 0; i < getMboValue().getMbo().getThisMboSet().count();i++){
+	    	  qtdTotal += MSTBCOTSVS.getFloat("MSNUMQNT");
+	      }	      
+	      if (qtdTotal > MSTBCOTSVS.getMboSet("MSTBINSUMOS").getMbo(0).getInt("MSNUMQNT")) {
 	    	    System.out.print("-------------- IF de validacao Qtd por Insumo");
 				throw new MXApplicationException("generica", "Quantidade superior a do Insumo");
 			}
@@ -50,3 +56,4 @@ public class MsNumPu extends MboValueAdapter {
 	      MSTBCOTSVS.setValue("MSNUMPU", "");
 	  }
 }
+
