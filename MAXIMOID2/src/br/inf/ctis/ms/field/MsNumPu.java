@@ -5,7 +5,10 @@
 package br.inf.ctis.ms.field;
 
 import java.rmi.RemoteException;
+
+import psdi.mbo.Mbo;
 import psdi.mbo.MboRemote;
+import psdi.mbo.MboSetRemote;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
 import psdi.util.MXApplicationException;
@@ -43,7 +46,8 @@ public class MsNumPu extends MboValueAdapter {
 	      float qtdTotal =0;
 	      
 	      for (int i = 0; i < MSTBCOTSVS.getThisMboSet().count();i++){
-	    	  qtdTotal += MSTBCOTSVS.getFloat("MSNUMQNT");
+	    	  Mbo mboValor = (Mbo) ((MboSetRemote) MSTBCOTSVS).getMbo(i);
+	    	  qtdTotal += mboValor.getFloat("MSNUMQNT");
 	    	  System.out.println("-------------- Somatorio da Qtd p/ comparar com insumo:"+qtdTotal);
 	      }	      
 	      if (qtdTotal > MSTBCOTSVS.getMboSet("MSTBINSUMOS").getMbo(0).getInt("MSNUMQNT")) {
