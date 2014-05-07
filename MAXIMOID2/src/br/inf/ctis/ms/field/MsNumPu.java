@@ -47,7 +47,8 @@ public class MsNumPu extends MboValueAdapter {
 	      
 	      for (int i = 0; i < MSTBCOTSVS.getThisMboSet().count();i++){
 	    	  
-	    	  qtdTotal += MSTBCOTSVS.getFloat("MSNUMQNT");
+	    	  //qtdTotal += MSTBCOTSVS.getFloat("MSNUMQNT");
+	    	  qtdTotal += MSTBCOTSVS.getThisMboSet().getMbo(i).getFloat("MSNUMQNT");
 	    	  System.out.println("-------------- Somatorio da Qtd p/ comparar com insumo:"+qtdTotal);
 	    	  
 	      }	      
