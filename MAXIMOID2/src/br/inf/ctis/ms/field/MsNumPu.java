@@ -46,10 +46,10 @@ public class MsNumPu extends MboValueAdapter {
 	      float qtdTotal =0;
 	      
 	      for (int i = 0; i < MSTBCOTSVS.getThisMboSet().count();i++){
-	    	  Mbo mboValor = (Mbo) ((MboSetRemote) MSTBCOTSVS).getMbo(i);
-	    	  System.out.println("-------------- Valor do campo qtd por registro"+mboValor);
-	    	  qtdTotal += mboValor.getFloat("MSNUMQNT");
+	    	  
+	    	  qtdTotal += MSTBCOTSVS.getFloat("MSNUMQNT");
 	    	  System.out.println("-------------- Somatorio da Qtd p/ comparar com insumo:"+qtdTotal);
+	    	  
 	      }	      
 	      if (qtdTotal > MSTBCOTSVS.getMboSet("MSTBINSUMOS").getMbo(0).getInt("MSNUMQNT")) {
 	    	    System.out.println("-------------- IF de validacao Qtd por Insumo");
