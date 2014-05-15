@@ -66,7 +66,7 @@ public class MsDistPEC extends DataBean {
 				PoNum = app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"); 
 				MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID");
 				MsAcao = getMbo(row).getInt("MSACAO");
-				Statuspec = getMbo(row).getString("DESCRIPTION");
+				Statuspec = mboAcao.getString("DESCRIPTION");
 				System.out.println("Valor do Status PEC:" + Statuspec);
 				MsGrupo = mboGrupo.getString("MSGRUPO"); 		
 	}
