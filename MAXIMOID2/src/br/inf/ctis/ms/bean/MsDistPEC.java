@@ -59,6 +59,9 @@ public class MsDistPEC extends DataBean {
 
 				MboRemote mboAcao;
 				mboAcao = getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0);
+				
+				MboRemote mboStatus;
+				mboStatus = getMbo().getMboSet("MSTBPEC_ACOES2").getMbo(0);
 
 				MboRemote mboGrupo;
 				mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
@@ -66,8 +69,7 @@ public class MsDistPEC extends DataBean {
 				PoNum = app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"); 
 				MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID");
 				MsAcao = getMbo(row).getInt("MSACAO");
-				Statuspec = mboAcao.getString("DESCRIPTION");
-				System.out.println("Valor do Status PEC:" + Statuspec);
+				Statuspec = mboStatus.getString("DESCRIPTION");
 				MsGrupo = mboGrupo.getString("MSGRUPO"); 		
 	}
 
