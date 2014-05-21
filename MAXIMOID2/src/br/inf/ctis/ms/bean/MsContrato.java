@@ -3,13 +3,11 @@ package br.inf.ctis.ms.bean;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import psdi.mbo.MboRemote;
-import psdi.mbo.MboSetRemote;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 import psdi.webclient.beans.contpurch.ContPurchAppBean;
-import psdi.webclient.system.beans.AppBean;
+
 
 public class MsContrato extends ContPurchAppBean {
 
@@ -69,7 +67,7 @@ public class MsContrato extends ContPurchAppBean {
 					System.out.println("########## quantidade = " + quantidade);
 					super.save();
 					
-					for (int j = 0; ((mboParcelas= getMbo().getMboSet("MSTBPARCELASCONTRATO").getMbo(j)) != null); j++) {
+					for (int j = 0; ((mboParcelas = mboContractline.getMboSet("MSTBPARCELASCONTRATO").getMbo(j)) != null); j++) {
 						quantidade += mboParcelas.getDouble("MSNUNUMQUANTIDADEPARCELA");
 						System.out.println("########## qtdParcela = " + mboParcelas.getDouble("MSNUNUMQUANTIDADEPARCELA"));
 						System.out.println("########## quantidade = " + quantidade);
@@ -96,6 +94,8 @@ public class MsContrato extends ContPurchAppBean {
 			MboRemote mbo1;
 			
 			for (int j = 0; ((mbo1 = getMbo().getMboSet("MSTBNECONTRATO").getMbo(j)) != null); j++) {
+				System.out.println("########## X = " + getMbo().getMboSet("MSTBNECONTRATO").getMbo(j).getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MSALCODTIPO"));
+				
 				if (mbo1.getMboSet("MSTBNOTAEMPENHO").getMbo(0).getString("MSALCODTIPO").equalsIgnoreCase("REFORCO")) {
 					valorglobal += (mbo1.getMboSet("MSTBNOTAEMPENHO").getMbo(0).getDouble("MSNUNUMVALOREMPENHO"));
 					System.out.println("########## valorglobal REFORCO = " + valorglobal);
