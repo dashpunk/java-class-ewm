@@ -43,6 +43,7 @@ public class MsDistPEC extends DataBean {
 		
 		app.getDataBean("MAINRECORD").getMbo().setValue("MSFLAGMSG", "0", MboConstants.NOACCESSCHECK);
 		save();
+		//MboContants.NOACCESSCHECK força a inserção
 		
 		
 		linhaSelecionada();
