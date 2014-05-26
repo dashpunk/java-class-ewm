@@ -1,6 +1,6 @@
-/**
- * Classe para distribuição, iniciar e parar fluxo.
- */
+/*
+ * Classe Duplicada de "MsDistPEC" para Eliminar sobrecarga
+ * */
 package br.inf.ctis.ms.bean;
 
 import java.rmi.RemoteException;
@@ -19,12 +19,13 @@ import psdi.workflow.DirectorInput;
 import psdi.workflow.WorkflowDirector;
 
 /**
- * @author Willians L Andrade
+ * 
  * @author andrel.almeida
+ *
  */
 
-public class MsDistPEC extends DataBean {
-
+public class MsDistPecPregao extends DataBean {
+	
 	String camposObrigatorios = "";
 	
 	int PoNum = 0; 
@@ -34,9 +35,10 @@ public class MsDistPEC extends DataBean {
 	String MSFLAGMSG = "0";
 	String Statuspec ="";
 
-	public MsDistPEC() {	
+	public MsDistPecPregao (){
+		
 	}
-
+	
 	public int selectrecord() throws MXException, RemoteException {
 
 		super.selectrecord();
@@ -60,10 +62,10 @@ public class MsDistPEC extends DataBean {
 				int row = getRowIndexFromEvent(event);
 
 				MboRemote mboAcao;
-				mboAcao = getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0);
+				mboAcao = getMbo().getMboSet("MSTBPEC_ACOESPREG").getMbo(0);
 				
 				MboRemote mboStatus;
-				mboStatus = getMbo().getMboSet("MSTBPEC_ACOES2").getMbo(0);
+				mboStatus = getMbo().getMboSet("MSTBPEC_ACOESPREG2").getMbo(0);
 
 				MboRemote mboGrupo;
 				mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
@@ -189,5 +191,4 @@ public class MsDistPEC extends DataBean {
 			throws MXException, RemoteException {
 		return "";
 	}
-
 }
