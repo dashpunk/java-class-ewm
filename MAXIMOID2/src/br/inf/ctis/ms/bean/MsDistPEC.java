@@ -192,7 +192,7 @@ public class MsDistPEC extends DataBean {
 				
 		if(mboGrupo.getBoolean("MSHABDISTR")) {
 			
-			mboPO.setValue("MSPECGRUPO", MsDistDem);
+			mboPO.setValue("MSPECDIST", MsDistDem);
 			System.out.println(">>>>>>>>>>>>Setando Registro de Designação do Fluxo:" + MsDistDem);
 		}
 		else {
