@@ -183,13 +183,23 @@ public class MsDistPEC extends DataBean {
 	private void setarValores() throws RemoteException, MXException {
 
 		MboRemote mboPO = app.getDataBean("MAINRECORD").getMbo();
+		MboRemote mboGrupo;
+		mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
 
 		mboPO.setValue("MSPECACAO", MsAcao);
 		mboPO.setValue("MSPECFLUXO", MsFluxo);
-		mboPO.setValue("MSPECGRUPO", MsGrupo);
 		mboPO.setValue("STATUSPEC", Statuspec);
-		mboPO.setValue("MSPECFLUXSTA", MsDistDem);
-		System.out.println(">>>>>>>>>>>>Setando Registro de Designação do Fluxo:" + MsDistDem);
+				
+		if(mboGrupo.getBoolean("MSHABDISTR")) {
+			
+			mboPO.setValue("MSPECFLUXSTA", MsDistDem);
+			System.out.println(">>>>>>>>>>>>Setando Registro de Designação do Fluxo:" + MsDistDem);
+		}
+		else {
+			mboPO.setValue("MSPECGRUPO", MsGrupo); 
+			System.out.println(">>>>>>>>>>>>Setando Registro de Designação do Fluxo: " + MsGrupo);
+		}
+		
 
 	}
 
