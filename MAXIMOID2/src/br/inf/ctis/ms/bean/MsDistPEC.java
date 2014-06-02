@@ -34,6 +34,7 @@ public class MsDistPEC extends DataBean {
 	String MSFLAGMSG = "0";
 	String Statuspec ="";
 	String MsDistDem ="";
+	String MsDistDem2 ="";
 	
 	
 
@@ -83,7 +84,9 @@ public class MsDistPEC extends DataBean {
 				if(mboGrupo.getBoolean("MSHABDISTR")) {
 					
 					MsDistDem = mboGrupo.getString("MSMOMDIST");
-					System.out.println(">>>>>>>>>>>>Fluxo Habilitado para personalizado, grupo: " + MsDistDem);
+					MsDistDem2 = mboGrupo.getString("MSMOMDIST2");
+					System.out.println(">>>>>>>>>>>>Fluxo Habilitado para personalizado, Momento da Dest.: " + MsDistDem);
+					System.out.println(">>>>>>>>>>>>Fluxo Habilitado para personalizado, Qual Momento Dest: " + MsDistDem2);
 				}
 				else {
 					MsGrupo = mboGrupo.getString("MSGRUPO"); 
@@ -193,6 +196,7 @@ public class MsDistPEC extends DataBean {
 		if(mboGrupo.getBoolean("MSHABDISTR")) {
 			
 			mboPO.setValue("MSPECDIST", MsDistDem);
+			mboPO.setValue("MSPECDIST2", MsDistDem2);
 			System.out.println(">>>>>>>>>>>>Setando Registro de Designação do Fluxo:" + MsDistDem);
 		}
 		else {
