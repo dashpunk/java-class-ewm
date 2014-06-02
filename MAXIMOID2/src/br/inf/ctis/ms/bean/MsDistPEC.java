@@ -77,7 +77,6 @@ public class MsDistPEC extends DataBean {
 				MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID");
 				MsAcao = getMbo(row).getInt("MSACAO");
 				Statuspec = mboStatus.getString("DESCRIPTION");
-				MsGrupo = mboGrupo.getString("MSGRUPO"); 
 				System.out.println(">>>>>>>>>>>>Dentro do metodo Linha selecionada");
 				
 				
@@ -132,12 +131,12 @@ public class MsDistPEC extends DataBean {
 		
 		int retorno = 0;
 		
-		// Se Existir Campos Obrigatórios
+		// Se Existir Campos Obrigatorios
 		if (mboCampos.count() > 0) {
 		
 			for (int i = 0; (aMbo = mboCampos.getMbo(i)) != null; i++) {
 				
-				System.out.println("Campo Obrigatório " + i + ":" + aMbo.getString("MSALNCAMPOS"));
+				System.out.println("Campo Obrigatorio " + i + ":" + aMbo.getString("MSALNCAMPOS"));
 				
 				String Campo = aMbo.getString("MSALNCAMPOS");
 				String DescCampo = aMbo.getString("DESCRIPTION");
