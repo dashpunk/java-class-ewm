@@ -28,12 +28,14 @@ public class MsFinance extends AppBean {
 				double valorglobal = 0d;
 				double saldoinstrumento = 0d;
 				double valortotalap = 0d;
+				double valortotalapst = 0d;
 				
 				for (int i = 0; ((mbo1 = getMbo().getMboSet("INVOICE").getMbo(i)) != null); i++) {					
 					System.out.println("########## Count dos Objetos da Nota Fiscal (INVOICELINE) = " + mbo1.getMboSet("INVOICELINE").count());
 					if (mbo1.getMboSet("INVOICELINE").count() > 0) {
 						
 						double valortotalnf = 0d;
+						double valortotalnfst = 0d;
 						
 						for (int j = 0; ((mbo2 = mbo1.getMboSet("INVOICELINE").getMbo(j)) != null); j++) {
 							double valor = mbo2.getDouble("LINECOSTFORUI") - mbo2.getDouble("TAX1FORUI");
@@ -41,13 +43,16 @@ public class MsFinance extends AppBean {
 							System.out.println("########## Valor = " + valor);
 							if (!mbo2.toBeDeleted()) {
 								valortotalnf += valor;
+								valortotalnfst += mbo2.getDouble("LINECOSTFORUI");
 							}
 						}
 						System.out.println("########## Valor Total = " + valortotalnf);
 						mbo1.setValue("MSNUNUMVALORTOTAL", valortotalnf);
+						System.out.println("########## Valor Total ST = " + valortotalnfst);
+						mbo1.setValue("MSNUNUMVALORTOTALSEMTRIBUTO", valortotalnfst);
 						
-						valorglobal += mbo1.getDouble("MSNUNUMVALORTOTAL");
-						System.out.println("########## Valor Global = " + valorglobal);
+						valorglobal += mbo1.getDouble("MSNUNUMVALORTOTALSEMTRIBUTO");
+						System.out.println("########## Valor Global ST = " + valorglobal);
 							
 					} else {
 						throw new MXApplicationException("invoiceline", "SemInsumos");
@@ -61,13 +66,18 @@ public class MsFinance extends AppBean {
 						for (int j = 0; ((mbo2 = mbo1.getMboSet("MSTBAPNOTAFISCAL").getMbo(j)) != null); j++) {
 							if (!mbo2.toBeDeleted()) {
 								System.out.println("########## Valor total da NF = " + mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTAL"));
+								System.out.println("########## Valor total da NF = " + mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTALSEMTRIBUTO"));
 								valortotalap += mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTAL");
+								valortotalapst += mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTALSEMTRIBUTO");
 								System.out.println("########## Valor Total da AP (PARCIAL) = " + valortotalap);
+								System.out.println("########## Valor Total da AP ST (PARCIAL) = " + valortotalapst);
 							}
 						}
 						
 						System.out.println("########## Valor Total da AP = " + valortotalap);
+						System.out.println("########## Valor Total da AP ST = " + valortotalapst);
 						mbo1.setValue("MSNUNUMVALORTOTAL", valortotalap);
+						mbo1.setValue("MSNUNUMVALORTOTALSEMTRIBUTO", valortotalapst);
 						
 					} else {
 						throw new MXApplicationException("autorizacaopagamento", "SemNotasFiscais");
@@ -90,7 +100,7 @@ public class MsFinance extends AppBean {
 						
 						System.out.println("########## Valor Total das NEs = " + valortotalne);
 						
-						if (valortotalap > valortotalne){
+						if (valortotalapst > valortotalne){
 							throw new MXApplicationException("autorizacaopagamento", "ValorAPsuperiorNE");
 						}
 						
