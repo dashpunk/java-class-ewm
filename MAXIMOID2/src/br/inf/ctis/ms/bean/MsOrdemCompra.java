@@ -35,21 +35,27 @@ public class MsOrdemCompra extends DataBean {
 			System.out.println("CTIS # --- Entrou no GerarOrdem 1");
 			MboSet mboMedicamentos = (MboSet) app.getDataBean("MAINRECORD")
 					.getMbo().getMboSet("MSTBMEDICAMENTO");
-			if (getMbo().getString("MSFORNEC005").equals("S")){
+			
+			System.out.println("########## MSFORNEC005 = " + getMbo().getBoolean("MSFORNEC005"));
+			System.out.println("########## MSFORNEC001 = " + getMbo().getBoolean("MSFORNEC001"));
+			System.out.println("########## MSFORNEC002 = " + getMbo().getBoolean("MSFORNEC002"));
+			System.out.println("########## MSFORNEC003 = " + getMbo().getBoolean("MSFORNEC003"));
+			System.out.println("########## MSFORNEC004 = " + getMbo().getBoolean("MSFORNEC004"));
+			
+			if (getMbo().getBoolean("MSFORNEC005")){
 				
-				
-				if (getMbo().getString("MSFORNEC001").equals("S") 
-					|| getMbo().getString("MSFORNEC002").equals("S")
-					|| getMbo().getString("MSFORNEC003").equals("S")
-					|| getMbo().getString("MSFORNEC004").equals("S")){
+				if (getMbo().getBoolean("MSFORNEC001") 
+					|| getMbo().getBoolean("MSFORNEC002")
+					|| getMbo().getBoolean("MSFORNEC003")
+					|| getMbo().getBoolean("MSFORNEC004")){
 					throw new MXApplicationException("msco", "informeSomenteExclusivo");
 				}
 				
 				
-			} else if (getMbo().getString("MSFORNEC001").equals("N")
-					&& getMbo().getString("MSFORNEC002").equals("N")
-					&& getMbo().getString("MSFORNEC003").equals("N")
-					&& getMbo().getString("MSFORNEC004").equals("N")) {
+			} else if (!getMbo().getBoolean("MSFORNEC001")
+					&& !getMbo().getBoolean("MSFORNEC002")
+					&& !getMbo().getBoolean("MSFORNEC003")
+					&& !getMbo().getBoolean("MSFORNEC004")) {
 				throw new MXApplicationException("msco", "informeFornecedor");
 			}
 
