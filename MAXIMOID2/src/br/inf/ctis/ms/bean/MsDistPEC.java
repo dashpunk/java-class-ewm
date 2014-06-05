@@ -30,12 +30,13 @@ public class MsDistPEC extends DataBean {
 	int PoNum = 0; 
 	int MsFluxo = 0;
 	int MsAcao = 0; 
+	int qtdAnexoMsg = 0;
 	String MsGrupo = ""; 
 	String MSFLAGMSG = "0";
 	String Statuspec ="";
 	String MsDistDem ="";
 	String MsDistDem2 ="";
-	
+		
 	
 
 	public MsDistPEC() {	
@@ -53,12 +54,22 @@ public class MsDistPEC extends DataBean {
 		
 		linhaSelecionada();
 		validarCampos();
+		contaAnexosMsg();
 		setarValores();
 		fecharERotear();
 		
 		
 
 		return 1;
+	}
+
+	private void contaAnexosMsg()throws RemoteException, MXException  {
+		
+		System.out.println(">>>>>>>>>>>> Entrando no Metodo contaAnexosMsg ");
+
+		qtdAnexoMsg = app.getDataBean("MAINRECORD").getMbo().getMboSet("MSPECANEXOS").count();
+		
+		System.out.println(">>>>>>>>>>>> Quantidade de Anexos na App do PEC: "+qtdAnexoMsg);
 	}
 
 	private void linhaSelecionada() throws RemoteException, MXException  {
