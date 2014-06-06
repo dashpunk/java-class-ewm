@@ -104,16 +104,17 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
         return super.SAVE();
     }
 
-    @Override
+    @SuppressWarnings("null")
+	@Override
     protected void initialize() throws MXException, RemoteException {
     	super.initialize();
-    	System.out.println(">>>>>>>>>>>>Dentro do Initialize para os Anexos do PEC");
+    	MboRemote mboPec = null;    	  	
+    	    	
+    	System.out.println(">>>>>>>>>>>>Quantidade de registros na tabela de Anexos do PEC: "+ getMbo().getMboSet("MSPECANEXOS").count());
     	
-    	qtdAnexoMsg = getMbo().getMboSet("MSPECANEXOS").count();
-    	System.out.println(">>>>>>>>>>>>Quantidade de registros na tabela de Anexos do PEC: "+ qtdAnexoMsg);
-    	
-    	getMbo().setValue("MSQTDANEXOPEC",qtdAnexoMsg, MboConstants.NOACCESSCHECK);
+    	mboPec.setValue("MSQTDANEXOPEC",getMbo().getMboSet("MSPECANEXOS").count(), MboConstants.NOACCESSCHECK);
     	System.out.println(">>>>>>>>>>>>Setando a quantidade de anexos/mensagens");
+    	super.save();
     }
 
 }
