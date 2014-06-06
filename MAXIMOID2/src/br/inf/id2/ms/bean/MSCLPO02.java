@@ -110,7 +110,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
     	super.initialize();
     	MboRemote mboPec = null;    	  	
     	    	
-    	System.out.println(">>>>>>>>>>>>Quantidade de registros na tabela de Anexos do PEC: "+ getMbo().getMboSet("MSPECANEXOS").count());
+    	System.out.println(">>>>>>>>>>>>Quantidade de registros na tabela de Anexos/PEC: "+ getMbo().getMboSet("MSPECANEXOS").count());
     	
     	mboPec.setValue("MSQTDANEXOPEC",getMbo().getMboSet("MSPECANEXOS").count(), MboConstants.NOACCESSCHECK);
     	System.out.println(">>>>>>>>>>>>Setando a quantidade de anexos/mensagens");
