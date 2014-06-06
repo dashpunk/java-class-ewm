@@ -2,9 +2,15 @@ package br.inf.id2.ms.bean;
 
 import br.inf.id2.common.util.Executa;
 import java.rmi.RemoteException;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.Properties;
+
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboSet;
+import psdi.server.MXServer;
+import psdi.util.DBConnect;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 
@@ -108,13 +114,34 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	@Override
     protected void initialize() throws MXException, RemoteException {
     	super.initialize();
-    	MboRemote mboPec = null;    	  	
-    	    	
-    	System.out.println(">>>>>>>>>>>>Quantidade de registros na tabela de Anexos/PEC: "+ getMbo().getMboSet("MSPECANEXOS").count());
+    	try {
+            Properties prop;
+            prop = MXServer.getMXServer().getConfig();
+            String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
+            String url = prop.getProperty("mxe.db.url");
+            String username = prop.getProperty("mxe.db.user", "dbmaximo");
+            String password = prop.getProperty("mxe.db.password", "max894512");
+
+            Class.forName(driver).newInstance();
+            java.sql.Connection conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
+            Statement stmt = conexao.createStatement();
+            PreparedStatement ps = conexao.prepareStatement("UPDATE PO SET MSQTDANEXOPEC = ? WHERE PONUM = ?");
+            System.out.println("########## Quantidade de registros na tabela de Anexos/PEC: "+ getMbo().getMboSet("MSPECANEXOS").count());
+            ps.setInt(1, getMbo().getMboSet("MSPECANEXOS").count());
+            ps.setString(2, getMbo().getString("PONUM"));
+
+
+            System.out.println("########## updatePO execute b");
+            int r = ps.executeUpdate();
+            System.out.println("########## updatePO execute a " + r);
+            conexao.commit();
+            System.out.println("########## commit");
+
+            conexao.close();
+        } catch (Exception e) {
+            System.out.println("########## e = " + e.getMessage());
+        }
     	
-    	mboPec.setValue("MSQTDANEXOPEC",getMbo().getMboSet("MSPECANEXOS").count(), MboConstants.NOACCESSCHECK);
-    	System.out.println(">>>>>>>>>>>>Setando a quantidade de anexos/mensagens");
-    	super.save();
     }
 
 }
