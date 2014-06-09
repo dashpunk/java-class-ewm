@@ -136,6 +136,9 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
             System.out.println("########## updatePO execute a " + r);
             conexao.commit();
             System.out.println("########## commit");
+            
+            super.SAVE();
+            
 
             conexao.close();
         } catch (Exception e) {
