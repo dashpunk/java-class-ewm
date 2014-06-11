@@ -168,8 +168,20 @@ public class MsNotaEmp extends AppBean {
 									mboDestino.setValue("ID2ITEMNUM", mbo.getString("MSSISMAT"));
 									System.out.println("########### ID2ITEMNUM = " + mbo.getString("MSSISMAT"));
 									
-									mboDestino.setValue("POLINEID", mbo.getInt("MSTBOCID"));
-									System.out.println("############ POLINEID = " + mbo.getInt("MSTBOCID"));
+									mboDestino.setValue("POLINEID", mbo.getInt("MSTBCOTCDJUID"));
+									System.out.println("############ POLINEID = " + mbo.getInt("MSTBCOTCDJUID"));
+									
+									mboDestino.setValue("MSNUNUMQUANTIDADEREGISTRADA", mbo.getDouble("MSNUMQNT"));
+									System.out.println("############ MSNUNUMQUANTIDADEREGISTRADA = " + mbo.getDouble("MSNUMQNT"));
+									
+									mboDestino.setValue("MSNUNUMVALORUNITARIOREGISTRADO", mbo.getDouble("MSNUMPREC"));
+									System.out.println("############ MSNUNUMVALORUNITARIOREGISTRADO = " + mbo.getDouble("MSNUMPREC"));
+									
+									mboDestino.setValue("MSNUNUMVALORTOTALREGISTRADO", (mbo.getDouble("MSNUMPREC") * mbo.getDouble("MSNUMQNT")));
+									System.out.println("############ MSNUNUMVALORTOTALREGISTRADO = " + (mbo.getDouble("MSNUMPREC") * mbo.getDouble("MSNUMQNT")));
+									
+									mboDestino.setValue("MSALCODMOEDA", "REAL");
+									System.out.println("############ MSALCODMOEDA = REAL");
 									
 									mboDestino.setValue("MSALNFORNECEDOR", mbo.getString("MSFORNECEDOR"));
 									System.out.println("############ MSALNFORNECEDOR = " + mbo.getString("MSFORNECEDOR"));
@@ -178,28 +190,6 @@ public class MsNotaEmp extends AppBean {
 									System.out.println("############ MSALNFORNECEDOR = " + mbo.getString("MSFORNECEDOR"));									
 																	
 									mboDestino.setValue("MSNUNUMQUANTIDADEEMPENHADA", 0);
-									
-									
-									//INICIO: MUDAR STATUS DA ORDEM DE COMPRA SE TODOS ITENS TIVEREM NOTA DE EMPENHO	
-									MboSet mboSetMedicamento;
-									mboSetMedicamento = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBMEDICAMENTO", sessionContext.getUserInfo());
-
-									mboSetMedicamento.setWhere("MSTBOCID = '" + mbo.getInt("MSTBOCID") + "'");
-									mboSetMedicamento.reset();
-									
-									MboSet mboSetNotaEmp;
-									mboSetNotaEmp = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBITENSNOTAEMPENHO", sessionContext.getUserInfo());
-
-									mboSetNotaEmp.setWhere("POLINEID = '" + mbo.getInt("MSTBOCID") + "'");
-									mboSetNotaEmp.reset();	
-									
-									MboRemote mboOc = getMbo().getMboSet("MSTBOC").getMbo();
-											
-											
-							        if (mboSetMedicamento.count() == mboSetNotaEmp.count() ) {
-							        	mboOc.setValue("MSSTATUS", "FINALIZADA");
-							        }
-									//FIM: MUDAR STATUS DA ORDEM DE COMPRA SE TODOS ITENS TIVEREM NOTA DE EMPENHO	
 								}
 								//ORDEM DE COMPRA
 							} else if (getMbo().getString("MSALCODMODALIDADE").equals("ARP")) {
@@ -524,6 +514,35 @@ public class MsNotaEmp extends AppBean {
 					mbo.setValue("MSNUNUMVALORTOTALEMPENHADO", (mbo.getDouble("MSNUNUMQUANTIDADEEMPENHADA") * mbo.getDouble("MSNUNUMVALORUNITARIOREGISTRADO")));
 					
 				}
+				
+				if (getMbo().getString("MSALCODMODALIDADE").equals("OC")) {
+					for (int i = 0; ((mbo= getMbo().getMboSet("MSTBCOTCDJU").getMbo(i)) !=null); i++) {
+						System.out.println("########## Entrou : " + getMbo().getMboSet("MSTBCOTCDJU").getMbo(i));
+						System.out.println("########## Entrou 2: " + mbo.getInt("MSTBOCID"));
+						//INICIO: MUDAR STATUS DA ORDEM DE COMPRA SE TODOS ITENS TIVEREM NOTA DE EMPENHO	
+						MboSet mboSetMedicamento;
+						mboSetMedicamento = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBMEDICAMENTO", sessionContext.getUserInfo());
+
+						mboSetMedicamento.setWhere("MSTBOCID = '" + mbo.getInt("MSTBOCID") + "'");
+						mboSetMedicamento.reset();
+						
+						MboSet mboSetNotaEmp;
+						mboSetNotaEmp = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBITENSNOTAEMPENHO", sessionContext.getUserInfo());
+
+						mboSetNotaEmp.setWhere("POLINEID = '" + mbo.getInt("MSTBOCID") + "'");
+						mboSetNotaEmp.reset();	
+						
+						MboRemote mboOc = getMbo().getMboSet("MSTBOC").getMbo();
+								
+								
+				        if (mboSetMedicamento.count() == mboSetNotaEmp.count() ) {
+				        	mboOc.setValue("MSSTATUS", "FINALIZADA");
+				        }
+						//FIM: MUDAR STATUS DA ORDEM DE COMPRA SE TODOS ITENS TIVEREM NOTA DE EMPENHO
+					}
+					
+				}
+				
 				
 				getMbo().setValue("MSNUNUMVALOREMPENHO", valorglobal);
 				super.save();

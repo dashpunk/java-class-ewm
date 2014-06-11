@@ -1,7 +1,3 @@
-/**
- * Classe solicitada por Glaucio
- * Calcular o valor do PGMV Unitário
- */
 package br.inf.ctis.ms.field;
 
 import java.rmi.RemoteException;
@@ -18,9 +14,9 @@ import psdi.util.MXException;
  * @author willians.andrade
  * 
  */
-public class MsCotacaoPMGV extends MboValueAdapter {
+public class MsAlnConv extends MboValueAdapter {
 	
-	public MsCotacaoPMGV(MboValue mbv) {
+	public MsAlnConv(MboValue mbv) {
 		super(mbv);
 	}
 	
@@ -28,6 +24,14 @@ public class MsCotacaoPMGV extends MboValueAdapter {
 	public void validate() throws MXException, RemoteException {
 		System.out.println("#### CTIS - Entrou na MsCotacaoPMGV");
 		super.validate();
+		
+		 if (getMboValue().getString() == null) {
+			 getMboValue().getMbo().setValueNull("MSALNCONV2");
+			 getMboValue().getMbo().setValueNull("MSALNCONVENIO");
+		 } else if (getMboValue().getString().equalsIgnoreCase("SIM")) {
+			 getMboValue().getMbo().setValueNull("MSALNCONV2");
+			 getMboValue().getMbo().setValueNull("MSALNCONVENIO");
+		 }
 		
 		/*
 		 * Fator de Embalagem
@@ -53,12 +57,6 @@ public class MsCotacaoPMGV extends MboValueAdapter {
 			}
 		}
 		
-		/*
-		 * Valor Total
-		 */
-		/*if(!getMboValue().getMbo().isNull("MSNUMPREC") && !getMboValue().getMbo().isNull("MSNUMQNT")){
-			getMboValue().getMbo().setValue("MSPRECTOTAL", getMboValue().getMbo().getDouble("MSNUMPREC") * getMboValue().getMbo().getDouble("MSNUMQNT"));
-		}*/
 		
 		/*
 		 * PMGV
