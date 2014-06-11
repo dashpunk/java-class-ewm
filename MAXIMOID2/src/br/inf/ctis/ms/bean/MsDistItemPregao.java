@@ -47,7 +47,7 @@ public class MsDistItemPregao extends DataBean {
 		
 		
 		linhaSelecionada();
-		validarCampos();
+		//validarCampos();
 		setarValores();
 		fecharERotear();
 
