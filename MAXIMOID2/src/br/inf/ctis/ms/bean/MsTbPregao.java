@@ -36,6 +36,8 @@ public class MsTbPregao extends AppBean {
 						System.out.println("############ POLINEID = " + mbo.getInt("POLINEID"));
 						mboDestino.setValue("MSTBPREGAOID", getMbo().getInt("MSTBPREGAOID"));
 						System.out.println("########### MSTBPREGAOID" + getMbo().getInt("MSTBPREGAOID"));
+						mboDestino.setValue("MSPECACAO", 1);
+						System.out.println("########### MSPECACAO" + 1);
 					}
 				}
 				
