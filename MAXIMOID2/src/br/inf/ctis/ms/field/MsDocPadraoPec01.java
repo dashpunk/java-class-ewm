@@ -37,9 +37,9 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    StringBuilder val = new StringBuilder(); 
 
 	    // **
-	    val.append("<table>");
+	    val.append("<table style=\"margin-left: auto; margin-right: auto;\">");
 	    val.append("<tbody><tr>");
-	    val.append("<td>");
+	    val.append("<td width=\"655\">");
 	    val.append("<p><strong>MINISTÉRIO DA SAÚDE</strong></p>");
 	    val.append("<p><strong>SECRETARIA EXECUTIVA</strong></p>");
 	    val.append("<p><strong>DEPARTAMENTO DE LOGÍSTICA EM SAÚDE</strong></p>");
@@ -50,7 +50,9 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("</tr>");
 	    val.append("</tbody>");
 	    val.append("</table>");	    
-	    val.append("<p><strong>Ofício nº. 19/2014/CGIES/DLOG/SE/MS</strong></p>");   
+	    val.append("<p><strong>Ofício nº. 19/2014/CGIES/DLOG/SE/MS</strong></p>");
+	    
+	    getMboValue().setValue(val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
 	    
 	   
 	  }
