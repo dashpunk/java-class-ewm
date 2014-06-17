@@ -37,9 +37,10 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    StringBuilder val = new StringBuilder(); 
 
 	    // **
-	    val.append("<table style=\"margin-left: auto; margin-right: auto;\">");
+	    val.append("<table>");
 	    val.append("<tbody><tr>");
-	    val.append("<td width=\"655\">");
+	    val.append("<td width=\"300\">");
+	    val.append("img src=\"../webclient/images/ab_appimg_createdr.gif\"");
 	    val.append("<p><strong>MINISTÉRIO DA SAÚDE</strong></p>");
 	    val.append("<p><strong>SECRETARIA EXECUTIVA</strong></p>");
 	    val.append("<p><strong>DEPARTAMENTO DE LOGÍSTICA EM SAÚDE</strong></p>");
