@@ -56,9 +56,9 @@ public class MsCotacaoPMGV extends MboValueAdapter {
 		/*
 		 * Valor Total
 		 */
-		/*if(!getMboValue().getMbo().isNull("MSNUMPREC") && !getMboValue().getMbo().isNull("MSNUMQNT")){
+		if(!getMboValue().getMbo().isNull("MSNUMPREC") && !getMboValue().getMbo().isNull("MSNUMQNT")){
 			getMboValue().getMbo().setValue("MSPRECTOTAL", getMboValue().getMbo().getDouble("MSNUMPREC") * getMboValue().getMbo().getDouble("MSNUMQNT"));
-		}*/
+		}
 		
 		/*
 		 * PMGV
