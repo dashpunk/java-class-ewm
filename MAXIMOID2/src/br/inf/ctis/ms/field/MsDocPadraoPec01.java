@@ -42,14 +42,17 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<tr>");
 	    val.append("<td width=\"655\" valign=\"top\">");
 	    val.append("<p align=\"center\"><strong><img src=\"../webclient/imgpec/brasao.png\" alt=\"cabMS\" width=\"66\" height=\"76\" /></strong> <br/>");
-	    val.append("<strong>MINISTÉRIO DA SAÚDE</strong><br/>>");
+	    val.append("<strong>MINISTÉRIO DA SAÚDE</strong><br/>");
 	    val.append("<strong>SECRETARIA EXECUTIVA</strong><br />");
 	    val.append("<strong>DEPARTAMENTO DE LOGÍSTICA EM SAÚDE</strong><br />");
 	    val.append("<strong>COORDENAÇÃO-GERAL DE ANÁLISE DAS CONTRATAÇÕES DE INSUMOS ESTRATÉGICOS PARA SAÚDE – CGIES</strong><br />");
 	    val.append("Esplanada dos Ministérios. Bloco G, Anexo A, 4º Andar – Sala 471ª - CEP: 70.058-900 –    Brasília/DF<br />");
 	    val.append("Telefone: (61) 3315.3384   Fax: (61) 3315.3958<strong> </strong></p></td>");
 	    val.append("</tr>");
-	    val.append("</table>");	    
+	    val.append("</table>");
+	    val.append("<table>");
+	    val.append("<tr>");
+	    val.append("<td width=\"655\">");	    
 	    val.append("<p><strong>Ofício nº. 19/2014/CGIES/DLOG/SE/MS</strong></p>");
 	    val.append("<p align=\"right\">Brasília,      de fevereiro  de 2014.</p>");
 	    val.append("<p>&nbsp;</p>");
@@ -65,10 +68,13 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<p>Solicitamos que nos apresente proposta comercial, <u>via meio  eletrônico........</u>,");
 	    val.append("<p>Atenciosamente,</p>");
 	    val.append("<p align=\"center\"><strong>&nbsp;</strong></p>");
-	    val.append("<p align=\"center\"><strong>XXXXXXXXXXXXXXXXXXS</strong><br />");
+	    val.append("<p align=\"center\"><strong>XXXXXXXXXXXXXXXXXX</strong><br />");
 	    val.append("Coordenadora-Geral de Análise das Contratações<br/>");
 	    val.append("de Insumos Estratégicos para Saúde </p>");
 	    val.append("CGIES/DLOG/SE/MS");
+	    val.append("</td>");
+	    val.append("</tr>");
+	    val.append("</table>");
 	    val.append("</body>");
 	    
 	    getMboValue().setValue(val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
