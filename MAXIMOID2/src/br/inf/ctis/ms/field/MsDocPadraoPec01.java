@@ -41,7 +41,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\">");
 	    val.append("<tr>");
 	    val.append("<td width=\"655\" valign=\"top\">");
-	    val.append("<p align=\"center\"><strong><img src=\"../webclient/images/ab_appimg_createdr.gif\" alt=\"cabMS\" width=\"66\" height=\"76\" /></strong> <br/>");
+	    val.append("<p align=\"center\"><strong><img src=\"../webclient/imgpec/brasao.png\" alt=\"cabMS\" width=\"66\" height=\"76\" /></strong> <br/>");
 	    val.append("<strong>MINISTÉRIO DA SAÚDE</strong><br/>>");
 	    val.append("<strong>SECRETARIA EXECUTIVA</strong><br />");
 	    val.append("<strong>DEPARTAMENTO DE LOGÍSTICA EM SAÚDE</strong><br />");
