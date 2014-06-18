@@ -34,6 +34,9 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	  {
 	    super.initValue();
 
+	    MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0).getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0);
+	    System.out.println(">>>>>>>>>>>> Entrando na classe PEC/Anexos ");
+	    System.out.println(">>>>>>>>>>>> Nome do representante da inexigibilidade:  "+inex.getString("MSALDSCFORNECEDORINEX"));
 	    StringBuilder val = new StringBuilder(); 
 
 	    // **
@@ -56,8 +59,8 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<p><strong>Ofício nº. 19/2014/CGIES/DLOG/SE/MS</strong></p>");
 	    val.append("<p align=\"right\">Brasília,      de fevereiro  de 2014.</p>");
 	    val.append("<p>&nbsp;</p>");
-	    val.append("<p>À Senhora<br/>");
-	    val.append("Maria  Fernanda<br/>");
+	    val.append("<p>Ao Senhor<br/>");
+	    val.append(inex.getString("MSALDSCFORNECEDORINEX") + "<br/>");
 	    val.append("Representante da empresa Janssen-Cilag  Farmacêutica Ltda<br/>");
 	    val.append("Rodovia Presidente Dutra, s/n - Km 154  - Jd. das Indústrias<br/>");
 	    val.append("CEP: 12.20-909 - São José dos  Campos/SP<br/>");
