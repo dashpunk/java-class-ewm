@@ -49,7 +49,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<strong>SECRETARIA EXECUTIVA</strong><br />");
 	    val.append("<strong>DEPARTAMENTO DE LOGÍSTICA EM SAÚDE</strong><br />");
 	    val.append("Esplanada dos Ministérios. Bloco G, Anexo A, 4º Andar – Sala 471ª - CEP: 70.058-900 –    Brasília/DF<br />");
-	    val.append("Telefone: (61) 3315.3384   Fax: (61) 3315.3958<strong> </strong></p></td>");
+	    val.append("Telefone: (61) 3315-2110   Fax: (61) 3225.0206<strong> </strong></p></td>");
 	    val.append("</tr>");
 	    val.append("</table>");
 	    val.append("<table>");
@@ -63,8 +63,8 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append(inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getString("MSALDSCFORNECEDORINEX")+"<br/>");
 	    val.append(inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS1")+"<br/>");
 	    System.out.println(">>>>>>>>>>> Apresentando o endereco da empresa: "+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS1"));
-	    //val.append("CEP: "+ inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS4") +"<br/>");
-	    //val.append("Telefone/Fax: "+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("PHONE")+"/"+inex.getMboSet("COMPANIES").getMbo(0).getString("FAX")+"<br/></p>");
+	    val.append("CEP: "+ inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS4") +"<br/>");
+	    val.append("Telefone/Fax: "+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("PHONE")+"/"+inex.getMboSet("COMPANIES").getMbo(0).getString("FAX")+"<br/></p>");
 	    //val.append("<p>Assunto: Assinatura do Contrato n.°"+ purch.getInt("CONTRACTNUM") +"/"+purch.getDate("STARTDATE")+"e prestação da garantia</p>");
 	    val.append("<p>Ref.: Processo Eletrônico de Compras: n.° "+inex.getString("MS_SIPARNUM")+"</p>");
 	    val.append("<p>Senhor Representante </p>");
