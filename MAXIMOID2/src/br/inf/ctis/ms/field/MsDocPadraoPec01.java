@@ -48,7 +48,6 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<strong>MINISTÉRIO DA SAÚDE</strong><br/>");
 	    val.append("<strong>SECRETARIA EXECUTIVA</strong><br />");
 	    val.append("<strong>DEPARTAMENTO DE LOGÍSTICA EM SAÚDE</strong><br />");
-	    val.append("<strong>COORDENAÇÃO-GERAL DE ANÁLISE DAS CONTRATAÇÕES DE INSUMOS ESTRATÉGICOS PARA SAÚDE – CGIES</strong><br />");
 	    val.append("Esplanada dos Ministérios. Bloco G, Anexo A, 4º Andar – Sala 471ª - CEP: 70.058-900 –    Brasília/DF<br />");
 	    val.append("Telefone: (61) 3315.3384   Fax: (61) 3315.3958<strong> </strong></p></td>");
 	    val.append("</tr>");
