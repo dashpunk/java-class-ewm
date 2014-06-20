@@ -34,9 +34,8 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	  {
 	    super.initValue();
 
-	    MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0).getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0);
-	    System.out.println(">>>>>>>>>>>> Entrando na classe PEC/Anexos ");
-	    System.out.println(">>>>>>>>>>>> Nome do representante da inexigibilidade:  "+inex.getString("MSALDSCFORNECEDORINEX"));
+	    MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0);
+	    MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo();
 	    StringBuilder val = new StringBuilder(); 
 
 	    // **
@@ -56,25 +55,27 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<table>");
 	    val.append("<tr>");
 	    val.append("<td width=\"655\">");	    
-	    val.append("<p><strong>Ofício nº. 19/2014/CGIES/DLOG/SE/MS</strong></p>");
-	    val.append("<p align=\"right\">Brasília,      de fevereiro  de 2014.</p>");
+	    val.append("<p>Ofício n.°"+inex.getInt("PONUM")+"/"+inex.getDate("STARTDATE")+"/DCIES/CGLIS/DLOG/SE/MS</p>");
+	    val.append("<p align=\"right\">Brasília, de junho de 2014.</p>");
 	    val.append("<p>&nbsp;</p>");
 	    val.append("<p>Ao Senhor<br/>");
-	    val.append(inex.getString("MSALDSCFORNECEDORINEX") + "<br/>");
-	    val.append("Representante da empresa Janssen-Cilag  Farmacêutica Ltda<br/>");
-	    val.append("Rodovia Presidente Dutra, s/n - Km 154  - Jd. das Indústrias<br/>");
-	    val.append("CEP: 12.20-909 - São José dos  Campos/SP<br/>");
-	    val.append("Tel.: (62) 8152 2943  Fax: (62) 3945 9007  / Cel: (62) 8117 7777 <br/>");
-	    val.append("e-mail: <a href=\"mailto:ms@saude.gov.br\">ms@saude.gov.br</a>. </p>");
-	    val.append("<p><strong>Assunto</strong>: Solicitação de proposta comercial dos medicamentos <strong>TELAPREVIR 375MG, INCIVO</strong><strong>® </strong></p>");
-	    val.append("<p>Prezados Senhor(a), </p>");
-	    val.append("<p>Solicitamos que nos apresente proposta comercial, <u>via meio  eletrônico........</u>,");
+	    val.append(inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("MS_VW02PER").getMbo(0).getString("DISPLAYNAME") + "<br/>");
+	    val.append(inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getString("MSALDSCFORNECEDORINEX")+"<br/>");
+	    val.append(inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS1")+"<br/>");
+	    val.append("CEP: "+ inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS4") +"<br/>");
+	    val.append("Telefone/Fax: "+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("PHONE")+"/"+inex.getMboSet("COMPANIES").getMbo(0).getString("FAX")+"<br/></p>");
+	    val.append("<p>Assunto: Assinatura do Contrato n.°"+ purch.getInt("CONTRACTNUM") +"/"+purch.getDate("STARTDATE")+"e prestação da garantia</p>");
+	    val.append("<p>Ref.: Processo Eletrônico de Compras: n.° "+inex.getString("MS_SIPARNUM")+"</p>");
+	    val.append("<p>Senhor Representante </p>");
+	    val.append("<p>Comunicamos a Vossa Senhoria que essa empresa fica convocada, na forma prevista no Art. XX da Lei n.° 8.666/93, no prazo de XX (XXXXX) dias úteis, para assinatura do Contrato Administrativo n.°"+ purch.getInt("CONTRACTNUM") +"/"+purch.getDate("STARTDATE")+", cujo o objetivo é a aquisição de"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getString("MSNUNUMQTDCONTRATADAINEX")+" "+inex.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+" "+inex.getMboSet("POLINE").getMbo(0).getMboSet("ID2RELMEASUREUNIT").getString("DESCRIPTION")+", sob pena de aplicação das penalidades previstas em lei. </p>");
+	    val.append("<p>Informamos que essa empresa deverá apresentar, no prazo de 10 (dias) dias úteis. Contados da data de publicação do extrato do Contrato no Diário Oficial da União, comprovante de prestação de garantia, no valor de R$ "+purch.getFloat("MSNUNUMVALORGLOBAL") * 0.5+", correspondente a XX (XXXXXX) do valor do Contrato, conforme disposto no § 1°, artigo 56, da lei n.° 8666/93. A referida garantia deve ser apresentada com <u>vigência vinculada ao prazo de execução do Contrato</u>.</p>");
 	    val.append("<p>Atenciosamente,</p>");
 	    val.append("<p align=\"center\"><strong>&nbsp;</strong></p>");
 	    val.append("<p align=\"center\"><strong>XXXXXXXXXXXXXXXXXX</strong><br />");
-	    val.append("Coordenadora-Geral de Análise das Contratações<br/>");
-	    val.append("de Insumos Estratégicos para Saúde </p>");
-	    val.append("CGIES/DLOG/SE/MS");
+	    val.append("<p>Chefe da Divisão de Contratos do Insumos Estratégicos para Saúde</p>");
+	    val.append("<p align=\"center\"><strong>&nbsp;</strong></p>");
+	    val.append("<p align=\"center\"><strong>XXXXXXXXXXXXXXXXXX</strong><br />");
+	    val.append("<p>Coordenadora-Geral de Licitações e Contratos de Insumos Estratégicos para Saúde</p>");
 	    val.append("</td>");
 	    val.append("</tr>");
 	    val.append("</table>");
