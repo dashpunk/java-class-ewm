@@ -9,6 +9,7 @@ package br.inf.ctis.ms.field;
  */
 import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.Date;
@@ -25,6 +26,7 @@ import br.inf.id2.common.util.Data;
 
 public class MsDocPadraoPec01 extends MboValueAdapter {
 	
+		
 	public MsDocPadraoPec01(MboValue mbv) throws MXException
 	  {
 	    super(mbv);
@@ -36,9 +38,14 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 
 	    MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0);
 	    MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
+	    
+	    // Buscando apenas o ano na PO para o numero do Oficio
+	    SimpleDateFormat ano = new SimpleDateFormat("yyyy");
+	    ano.format(inex.getDate("STARTDATE"));
+	    
 	    StringBuilder val = new StringBuilder(); 
 	    System.out.println(">>>>>>>>>>> Dentro do metodo initValue da classe MsDocPadraoPec01");
-
+	    System.out.println(">>>>>>>>>>> Apresentando o Ano do Oficio: "+ano);
 	    // **
 	    val.append("<body>");
 	    val.append("<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\">");
@@ -55,7 +62,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<table>");
 	    val.append("<tr>");
 	    val.append("<td width=\"655\">");	    
-	    val.append("<p>Ofício n.°"+inex.getInt("PONUM")+"/2014/DCIES/CGLIS/DLOG/SE/MS</p>");
+	    val.append("<p>Ofício n.°"+inex.getInt("PONUM")+"/"+ano+"/DCIES/CGLIS/DLOG/SE/MS</p>");
 	    val.append("<p align=\"right\">Brasília, de junho de 2014.</p>");
 	    val.append("<p>&nbsp;</p>");
 	    val.append("<p>Ao Senhor<br/>");
@@ -65,7 +72,6 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("CEP: "+ inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS4") +"<br/>");
 	    val.append("Telefone/Fax: "+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("PHONE")+"/"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("FAX")+"<br/></p>");
 	    val.append("<p>Assunto: Assinatura do Contrato n.°"+ purch.getString("CONTRACTNUM") +"/"+purch.getDate("STARTDATE")+"e prestação da garantia</p>");
-	    System.out.println(">>>>>>>>>>> Apresentando a assinatura do contrato: "+purch.getString("CONTRACTNUM"));
 	    val.append("<p>Ref.: Processo Eletrônico de Compras: n.° "+inex.getString("MS_SIPARNUM")+"</p>");
 	    val.append("<p>Senhor Representante </p>");
 	    val.append("<p>Comunicamos a Vossa Senhoria que essa empresa fica convocada, na forma prevista no Art. XX da Lei n.° 8.666/93, no prazo de XX (XXXXX) dias úteis, para assinatura do Contrato Administrativo n.°"+ purch.getString("CONTRACTNUM") +"/"+purch.getDate("STARTDATE")+", cujo o objetivo é a aquisição de,"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getFloat("MSNUNUMQTDCONTRATADAINEX")+" "+inex.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+" "+inex.getMboSet("POLINE").getMbo(0).getMboSet("ID2RELMEASUREUNIT").getMbo(0).getString("DESCRIPTION")+" sob pena de aplicação das penalidades previstas em lei. </p>");
