@@ -60,7 +60,7 @@ public class MsGerOC extends psdi.webclient.system.beans.AppBean {
 			
 			for (int i = 0;  ((mbo = getMbo().getMboSet("MSTBMEDICAMENTO02").getMbo(i)) !=null); i++){
 				System.out.println("################# Entrou Medicamento: " + i);
-				for (int j = 0;  ((mbo1 = mbo.getMboSet("MSTBCOTCDJUALL").getMbo(j)) !=null); j++){
+				for (int j = 0;  ((mbo1 = mbo.getMboSet("MSVWCOTCDJUALL").getMbo(j)) !=null); j++){
 					System.out.println("################# Entrou Cotacao: " + i + "-" + j);
 					if(mbo1.getBoolean("MSFLVENC")){
 						System.out.println("################# Entrou Vencedor: " + mbo1.getString("MSSISMAT"));
