@@ -64,9 +64,8 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append(inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS1")+"<br/>");
 	    val.append("CEP: "+ inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS4") +"<br/>");
 	    val.append("Telefone/Fax: "+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("PHONE")+"/"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("FAX")+"<br/></p>");
-	    //val.append("<p>Assunto: Assinatura do Contrato n.°"+ purch.getFloat("CONTRACTNUM") +"/"+purch.getDate("STARTDATE")+"e prestação da garantia</p>");
-	    val.append("<p>Assunto: Assinatura do Contrato n.°"+purch.getDate("STARTDATE")+"e prestação da garantia</p>");
-	    System.out.println(">>>>>>>>>>> Apresentando a assinatura do contrato: "+purch.getDate("STARTDATE"));
+	    val.append("<p>Assunto: Assinatura do Contrato n.°"+ purch.getString("CONTRACTNUM") +"/"+purch.getDate("STARTDATE")+"e prestação da garantia</p>");
+	    System.out.println(">>>>>>>>>>> Apresentando a assinatura do contrato: "+purch.getString("CONTRACTNUM"));
 	    val.append("<p>Ref.: Processo Eletrônico de Compras: n.° "+inex.getString("MS_SIPARNUM")+"</p>");
 	    val.append("<p>Senhor Representante </p>");
 	    //val.append("<p>Comunicamos a Vossa Senhoria que essa empresa fica convocada, na forma prevista no Art. XX da Lei n.° 8.666/93, no prazo de XX (XXXXX) dias úteis, para assinatura do Contrato Administrativo n.°"+ purch.getInt("CONTRACTNUM") +"/"+purch.getDate("STARTDATE")+", cujo o objetivo é a aquisição de"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getString("MSNUNUMQTDCONTRATADAINEX")+" "+inex.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+" "+inex.getMboSet("POLINE").getMbo(0).getMboSet("ID2RELMEASUREUNIT").getString("DESCRIPTION")+", sob pena de aplicação das penalidades previstas em lei. </p>");
