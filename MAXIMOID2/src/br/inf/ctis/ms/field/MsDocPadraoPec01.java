@@ -9,6 +9,7 @@ package br.inf.ctis.ms.field;
  */
 import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
@@ -40,13 +41,16 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
 	    
 	    // Buscando apenas o ano na PO para o numero do Oficio
-	    Calendar calendar = Calendar.getInstance();
-		calendar.setTime(inex.getDate("STARTDATE"));
-		int anoOf = calendar.get(Calendar.YEAR);
+	    DateFormat dateFormat = new SimpleDateFormat("yyyy");
+        Calendar ano = Calendar.getInstance();
+        ano.setTime(inex.getDate("STARTDATE"));
+        //dateFormat.format(ano.getTime(inex.getDate("")));
+        
+        
 			    
 	    StringBuilder val = new StringBuilder(); 
 	    System.out.println(">>>>>>>>>>> Dentro do metodo initValue da classe MsDocPadraoPec01");
-	    System.out.println(">>>>>>>>>>> Apresentando o Ano do Oficio: "+anoOf);
+	    System.out.println(">>>>>>>>>>> Apresentando o Ano do Oficio: "+dateFormat.format(ano));
 	    // **
 	    val.append("<body>");
 	    val.append("<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\">");
@@ -63,7 +67,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<table>");
 	    val.append("<tr>");
 	    val.append("<td width=\"655\">");	    
-	    val.append("<p>Ofício n.°"+inex.getInt("PONUM")+"/"+anoOf+"/DCIES/CGLIS/DLOG/SE/MS</p>");
+	    val.append("<p>Ofício n.°"+inex.getInt("PONUM")+"/"+dateFormat.format(ano)+"/DCIES/CGLIS/DLOG/SE/MS</p>");
 	    val.append("<p align=\"right\">Brasília, de junho de 2014.</p>");
 	    val.append("<p>&nbsp;</p>");
 	    val.append("<p>Ao Senhor<br/>");
