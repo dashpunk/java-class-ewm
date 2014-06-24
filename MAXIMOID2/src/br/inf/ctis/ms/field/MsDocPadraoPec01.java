@@ -40,12 +40,13 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
 	    
 	    // Buscando apenas o ano na PO para o numero do Oficio
-	    SimpleDateFormat ano = new SimpleDateFormat("yyyy");
-	    ano.format(inex.getDate("STARTDATE"));
-	    
+	    Calendar calendar = Calendar.getInstance();
+		calendar.setTime(inex.getDate("STARTDATE"));
+		int anoOf = calendar.get(Calendar.YEAR);
+			    
 	    StringBuilder val = new StringBuilder(); 
 	    System.out.println(">>>>>>>>>>> Dentro do metodo initValue da classe MsDocPadraoPec01");
-	    System.out.println(">>>>>>>>>>> Apresentando o Ano do Oficio: "+ano);
+	    System.out.println(">>>>>>>>>>> Apresentando o Ano do Oficio: "+anoOf);
 	    // **
 	    val.append("<body>");
 	    val.append("<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\">");
@@ -62,7 +63,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<table>");
 	    val.append("<tr>");
 	    val.append("<td width=\"655\">");	    
-	    val.append("<p>Ofício n.°"+inex.getInt("PONUM")+"/"+ano+"/DCIES/CGLIS/DLOG/SE/MS</p>");
+	    val.append("<p>Ofício n.°"+inex.getInt("PONUM")+"/"+anoOf+"/DCIES/CGLIS/DLOG/SE/MS</p>");
 	    val.append("<p align=\"right\">Brasília, de junho de 2014.</p>");
 	    val.append("<p>&nbsp;</p>");
 	    val.append("<p>Ao Senhor<br/>");
