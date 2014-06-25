@@ -47,7 +47,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    
 	    // Gerando a Data para o Documento******************
 	    Calendar DtDoc = Calendar.getInstance();
-	    DtDoc.setTime(new Date());
+	    DtDoc.setTime(getMboValue().getMbo().getDate("MSDATA"));
 	    int dia = DtDoc.get(Calendar.DAY_OF_YEAR);
 	    int mes = DtDoc.get(Calendar.MONTH);        
 	    int ano = DtDoc.get(Calendar.YEAR);
@@ -59,7 +59,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<body>");
 	    val.append("<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\">");
 	    val.append("<tr>");
-	    val.append("<td width=\"655\" valign=\"top\">");
+	    val.append("<td width=\"900\" valign=\"top\">");
 	    val.append("<p align=\"center\"><strong><img src=\"../webclient/imgpec/brasao.png\" alt=\"cabMS\" width=\"66\" height=\"76\" /></strong> <br/>");
 	    val.append("<strong>MINISTÉRIO DA SAÚDE</strong><br/>");
 	    val.append("<strong>SECRETARIA EXECUTIVA</strong><br />");
@@ -70,8 +70,8 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("</table>");
 	    val.append("<table>");
 	    val.append("<tr>");
-	    val.append("<td width=\"655\">");	    
-	    val.append("<p>Ofício n.°"+inex.getInt("PONUM")+"/"+AnoOf+"/DCIES/CGLIS/DLOG/SE/MS</p>");
+	    val.append("<td width=\"900\">");	    
+	    val.append("<p>Ofício n.° "+inex.getInt("PONUM")+"/"+AnoOf+"/DCIES/CGLIS/DLOG/SE/MS</p>");
 	    val.append("<p align=\"right\">Brasília, "+dia+" de "+mes+" de "+ano+".</p>");
 	    val.append("<p>&nbsp;</p>");
 	    val.append("<p>Ao Senhor<br/>");
@@ -80,10 +80,10 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append(inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS1")+"<br/>");
 	    val.append("CEP: "+ inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("ADDRESS4") +"<br/>");
 	    val.append("Telefone/Fax: "+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("PHONE")+"/"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("FAX")+"<br/></p>");
-	    val.append("<p>Assunto: Assinatura do Contrato n.°"+ purch.getString("CONTRACTNUM") +"/"+purch.getDate("STARTDATE")+"e prestação da garantia</p>");
+	    val.append("<p>Assunto: Assinatura do Contrato n.°"+ purch.getString("CONTRACTNUM") +"/"+ano+"e prestação da garantia</p>");
 	    val.append("<p>Ref.: Processo Eletrônico de Compras: n.° "+inex.getString("MS_SIPARNUM")+"</p>");
 	    val.append("<p>Senhor Representante </p>");
-	    val.append("<p>Comunicamos a Vossa Senhoria que essa empresa fica convocada, na forma prevista no Art. XX da Lei n.° 8.666/93, no prazo de XX (XXXXX) dias úteis, para assinatura do Contrato Administrativo n.°"+ purch.getString("CONTRACTNUM") +"/"+purch.getDate("STARTDATE")+", cujo o objetivo é a aquisição de,"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getFloat("MSNUNUMQTDCONTRATADAINEX")+" "+inex.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+" "+inex.getMboSet("POLINE").getMbo(0).getMboSet("ID2RELMEASUREUNIT").getMbo(0).getString("DESCRIPTION")+" sob pena de aplicação das penalidades previstas em lei. </p>");
+	    val.append("<p>Comunicamos a Vossa Senhoria que essa empresa fica convocada, na forma prevista no Art. XX da Lei n.° 8.666/93, no prazo de XX (XXXXX) dias úteis, para assinatura do Contrato Administrativo n.°"+ purch.getString("CONTRACTNUM") +"/"+ano+", cujo o objetivo é a aquisição de,"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getFloat("MSNUNUMQTDCONTRATADAINEX")+" "+inex.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+" "+inex.getMboSet("POLINE").getMbo(0).getMboSet("ID2RELMEASUREUNIT").getMbo(0).getString("DESCRIPTION")+" sob pena de aplicação das penalidades previstas em lei. </p>");
 	    val.append("<p>Informamos que essa empresa deverá apresentar, no prazo de 10 (dias) dias úteis. Contados da data de publicação do extrato do Contrato no Diário Oficial da União, comprovante de prestação de garantia, no valor de R$ "+purch.getFloat("MSNUNUMVALORGLOBAL") * 0.5+", correspondente a XX (XXXXXX) do valor do Contrato, conforme disposto no § 1°, artigo 56, da lei n.° 8666/93. A referida garantia deve ser apresentada com <u>vigência vinculada ao prazo de execução do Contrato</u>.</p>");
 	    val.append("<p>Atenciosamente,</p>");
 	    val.append("<p align=\"center\"><strong>&nbsp;</strong></p>");
