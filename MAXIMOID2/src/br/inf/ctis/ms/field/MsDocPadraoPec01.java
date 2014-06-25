@@ -41,8 +41,11 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
 	    
 	    // Buscando apenas o ano na PO para o numero do Oficio******************
+	    Date dtInicio = inex.getDate("STARTDATE");
+	    System.out.println("########## STARTDATE: " + inex.getDate("STARTDATE"));
+	    System.out.println("########## dtInicio: " + dtInicio);
 	    Calendar ano = Calendar.getInstance();
-	    ano.setTime(inex.getDate("STARTDATE"));
+	    ano.setTime(dtInicio);
 	    int Dtof = ano.get(Calendar.YEAR);
         
         
