@@ -91,7 +91,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<tr>");
 	    val.append("<td width=\"900\">");	    
 	    val.append("<p>Ofício n.° "+inex.getInt("PONUM")+"/"+AnoOf+"/DCIES/CGLIS/DLOG/SE/MS</p>");
-	    val.append("<p align=\"right\">Brasília, "+dia+" de "+mes+" de "+ano+".</p>");
+	    val.append("<p align=\"right\">Brasília, 27 de junho "+ano+".</p>");
 	    val.append("<p>&nbsp;</p>");
 	    val.append("<p>Ao Senhor<br/>");
 	    val.append(inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("MS_VW02PER").getMbo(0).getString("DISPLAYNAME") + "<br/>");
