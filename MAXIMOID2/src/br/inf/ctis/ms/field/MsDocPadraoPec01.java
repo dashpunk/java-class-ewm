@@ -129,7 +129,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		    val.append("<tr>");
 		    val.append("<td width=\"900\" valign=\"top\">");
 		    val.append("</br></br>");
-		    val.append("<p align=\"center\">Despacho referente ao PEC número do fluxo.... e SIPAR n.° .....<br/>");
+		    val.append("<p align=\"center\"><strong>Despacho referente ao PEC número do fluxo.... e SIPAR n.° .....<strong><br/>");
 		    val.append("</tr>");
 		    val.append("</table>");
 		    val.append("<table>");
