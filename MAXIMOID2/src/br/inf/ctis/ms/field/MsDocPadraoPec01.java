@@ -32,11 +32,17 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	  {
 	    super(mbv);
 	  }
+	
+	public void initValue() throws MXException, RemoteException {
+		super.initValue();
+		if(getMboValue().getMbo().isNew()){
+			define();
+		}
+	}
 
-	public void initValue() throws MXException, RemoteException
+	public void define() throws MXException, RemoteException
 	  {
-	    super.initValue();
-
+	    	    
 	    MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0);
 	    MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
 	    
