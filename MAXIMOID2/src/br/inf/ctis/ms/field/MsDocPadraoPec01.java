@@ -42,8 +42,21 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 
 	public void define() throws MXException, RemoteException
 	  {
-	    	    
-	    MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0);
+	    
+		MboRemote po = getMboValue().getMbo().getMboSet("PO").getMbo(0);
+		
+		if(po.getString("STATUSPEC").equals("Processo de compra iniciado")){
+			oficio();
+		}else{
+		
+			despacho();
+		}	    
+	   
+	  }
+	
+	public void oficio() throws MXException, RemoteException{
+		
+		MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0);
 	    MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
 	    
 	    // Buscando apenas o ano na PO para o numero do Oficio******************
@@ -104,7 +117,41 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("</body>");
 	    
 	    getMboValue().setValue(val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
-	    
-	   
-	  }
+	}
+	
+	public void despacho() throws MXException, RemoteException{
+		
+		 StringBuilder val = new StringBuilder(); 
+		    System.out.println(">>>>>>>>>>> Dentro do metodo despacho da classe MsDocPadraoPec01");
+		    // **
+		    val.append("<body>");
+		    val.append("<table>");
+		    val.append("<tr>");
+		    val.append("<td width=\"900\" valign=\"top\">");
+		    val.append("Despacho referente ao PEC número do fluxo.... e SIPAR n.° .....<br/>");
+		    val.append("</tr>");
+		    val.append("</table>");
+		    val.append("<table>");
+		    val.append("<tr>");
+		    val.append("<td width=\"900\">");	    
+		    val.append("<p>Assunto: Recomendações à área demandante – Parecer CONJUR/MS</p>");
+		    val.append("<p>À Coordenação-Geral de Assistência Farmacêutica e Medicamentos Estratégicos – CGAFME</p>");
+		    val.append("<p>Trata-se de processo eletrônico de compras para aquisição do medicamento Tipranavir (TPV) 250mg, em atendimento à solicitação do Departamento de Vigilância, Prevenção e Controle das DST, AIDS e Hepatites Virais – DDAHV/SVS.</p>");
+		    val.append("<p>	2.		Em cumprimento ao disposto no art. 38, parágrafo único, da Lei nº. 8.666/93, os autos foram encaminhados à d. Consultoria Jurídica para análise da minuta de contrato e dos procedimentos administrativos de aquisição.</p>");
+		    val.append("<p>	3.		Em resposta, a CONJUR/MS proferiu o Parecer nº 1774/2014/CODELICI/ AGU/CONJUR-MS/CGU/RAB, no qual se manifestou favorável à celebração do contrato, desde que observadas às recomendações exaradas no bojo daquele opinativo (T29 – anexada 15/05/2014), ao que foi aprovado pela Coordenadora Geral da CODELICI/CONJUR (T29.3 – anexada 09/06/2014)</p>");
+		    val.append("<p>	4.		Ante o exposto, encaminho o processo para conhecimento do inteiro teor do parecer encimado e manifestação quanto às recomendações de competência dessa área, em especial quanto aos parágrafos 25 a 27, 55, 78 e 88 subitem 1, 3 e 4 do referido parecer.</p>");
+		    val.append("<p>Atenciosamente,</p></br>");
+		    val.append("<p align=\"right\">Brasília, 27 de junho de 2014.</p>");
+		    val.append("<p align=\"center\"><strong>&nbsp;</strong></p>");
+		    val.append("<p align=\"center\"><strong>XXXXXXXXXXXXXXXXXX</strong><br />");
+		    val.append("<p align=\"center\">Coordenador Geral de Análise das Contratações de</p>");
+		    val.append("<p align=\"center\">Insumos Estratégicos para Saúde -Substituto</p>");
+		    val.append("<p align=\"center\">CGIES/DLOG/SE/MS</p>");
+		    val.append("</td>");
+		    val.append("</tr>");
+		    val.append("</table>");
+		    val.append("</body>");
+		    
+		    getMboValue().setValue(val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
+	}
 }
