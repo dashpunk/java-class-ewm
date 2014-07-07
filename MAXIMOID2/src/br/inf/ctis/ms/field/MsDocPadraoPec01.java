@@ -49,10 +49,10 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 			oficio();
 		}
 		if (po.getString("STATUSPEC").equals("004 - Inserir Pesquisa de Preço")){
-			portaria();
+			oficio();
 		}else{
 		
-			despacho();
+			oficio();
 		}	    
 	   
 	  }
@@ -106,7 +106,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("<p>Senhor Representante </p>");
 	    //val.append("<p style=\"text-align: justify;\">	Comunicamos a Vossa Senhoria que essa empresa fica convocada, na forma prevista no Art. XX da Lei n.° 8.666/93, no prazo de XX (XXXXX) dias úteis, para assinatura do Contrato Administrativo n.°"+ purch.getString("CONTRACTNUM") +"/"+ano+", cujo o objetivo é a aquisição de,"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getFloat("MSNUNUMQTDCONTRATADAINEX")+" "+inex.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+" "+inex.getMboSet("POLINE").getMbo(0).getMboSet("ID2RELMEASUREUNIT").getMbo(0).getString("DESCRIPTION")+" sob pena de aplicação das penalidades previstas em lei. </p>");
 	    //val.append("<p style=\"text-align: justify;\">	Informamos que essa empresa deverá apresentar, no prazo de 10 (dias) dias úteis. Contados da data de publicação do extrato do Contrato no Diário Oficial da União, comprovante de prestação de garantia, no valor de R$ "+purch.getFloat("MSNUNUMVALORGLOBAL") * 0.5+", correspondente a XX (XXXXXX) do valor do Contrato, conforme disposto no § 1°, artigo 56, da lei n.° 8666/93. A referida garantia deve ser apresentada com <u>vigência vinculada ao prazo de execução do Contrato</u>.</p>");
-	    val.append("<p style=\"text-align: justify;\">"+inex.getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCLAUPAR").getMbo(0).getMboSet("MSTBCONTE").getMbo(0).getString("DESCRIPTION")+"</p>");
+	    val.append("<p style=\"text-align: justify;\"><span style=\"background-color: #ffff00;\">"+inex.getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCLAUPAR").getMbo(0).getMboSet("MSTBCONTE").getMbo(0).getString("DESCRIPTION")+"</span></p>");
 	    val.append("<p>Atenciosamente,</p>");
 	    val.append("<p align=\"center\"><strong>&nbsp;</strong></p>");
 	    val.append("<p align=\"center\"><strong>XXXXXXXXXXXXXXXXXX</strong><br />");
