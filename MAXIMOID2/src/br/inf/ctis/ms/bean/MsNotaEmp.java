@@ -138,6 +138,57 @@ public class MsNotaEmp extends AppBean {
 									mboDestino.setValue("MSNUNUMQUANTIDADEEMPENHADA", 0);
 								}
 								//INEXIGIBILIDADE
+							} else if (getMbo().getString("MSALCODMODALIDADE").equals("DISPENSA")) {
+								//DISPENSA
+								
+								System.out.println("########## MS_CREDORC" + getMbo().getMboSet("MSTBDISPENSA").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_CREDORC"));
+								getMbo().setValue("MS_CREDORC", getMbo().getMboSet("MSTBDISPENSA").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_CREDORC"));
+								System.out.println("########## MS_ELEDESP" + getMbo().getMboSet("MSTBDISPENSA").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));
+								getMbo().setValue("MS_ELEDESP", getMbo().getMboSet("MSTBDISPENSA").getMbo(0).getMboSet("PO").getMbo(0).getString("MS_ELEDESP"));
+								
+								for (int i = 0; ((mbo= getMbo().getMboSet("MSTBITENSDISPENSA").getMbo(i)) !=null); i++) {
+									mboDestino = getMbo().getMboSet("MSTBITENSNOTAEMPENHO").add();
+									System.out.println("############ add() na itens da nota de empenho - DISPENSA");
+									
+									mboDestino.setValue("MSTBNOTAEMPENHOID", getMbo().getInt("MSTBNOTAEMPENHOID"));
+									System.out.println("########### MSTBNOTAEMPENHOID = " + getMbo().getInt("MSTBNOTAEMPENHOID"));
+									
+									mboDestino.setValue("MSALCODMODALIDADE", getMbo().getString("MSALCODMODALIDADE"));
+									System.out.println("########### MSALCODMODALIDADE = " + getMbo().getString("MSALCODMODALIDADE"));
+									
+									mboDestino.setValue("MSALNUMMODALIDADE", getMbo().getString("MSALNUMMODALIDADE"));
+									System.out.println("########### MSALNUMMODALIDADE = " + getMbo().getString("MSALNUMMODALIDADE"));
+									
+									mboDestino.setValue("ID2ITEMNUM", mbo.getMboSet("POLINE").getMbo(0).getString("ID2ITEMNUM"));
+									System.out.println("########### ID2ITEMNUM = " + mbo.getMboSet("POLINE").getMbo(0).getString("ID2ITEMNUM"));
+									
+									mboDestino.setValue("POLINEID", mbo.getString("POLINEID"));
+									System.out.println("############ POLINEID = " + mbo.getInt("POLINEID"));
+									
+									mboDestino.setValue("MSNUNUMTABELAORIGEMID", mbo.getInt("MSTBITENSDISPENSAID"));
+									System.out.println("############ MSNUNUMTABELAORIGEMID = " + mbo.getInt("MSTBITENSDISPENSAID"));
+									
+									mboDestino.setValue("COMPANY", mbo.getString("COMPANY"));
+									System.out.println("############ COMPANY = " + mbo.getString("COMPANY"));
+									
+									mboDestino.setValue("PERSONID", mbo.getString("MSALCODREPRESENTANTE"));
+									System.out.println("############ PERSONID = " + mbo.getString("MSALCODREPRESENTANTE"));
+									
+									mboDestino.setValue("MSNUNUMQUANTIDADEREGISTRADA", mbo.getDouble("MSNUNUMQUANTIDADECONTRATADA"));
+									System.out.println("############ MSNUNUMQUANTIDADEREGISTRADA = " + mbo.getDouble("MSNUNUMQUANTIDADECONTRATADA"));
+									
+									mboDestino.setValue("MSNUNUMVALORUNITARIOREGISTRADO", mbo.getDouble("MSNUNUMVALORUNITARIOCONTRATADO"));
+									System.out.println("############ MSNUNUMVALORUNITARIOREGISTRADO = " + mbo.getDouble("MSNUNUMVALORUNITARIOCONTRATADO"));
+									
+									mboDestino.setValue("MSNUNUMVALORTOTALREGISTRADO", (mbo.getDouble("MSNUNUMVALORUNITARIOCONTRATADO") * mbo.getDouble("MSNUNUMQUANTIDADECONTRATADA")));
+									System.out.println("############ MSNUNUMVALORTOTALREGISTRADO = " + (mbo.getDouble("MSNUNUMVALORUNITARIOCONTRATADO") * mbo.getDouble("MSNUNUMQUANTIDADECONTRATADA")));
+									
+									mboDestino.setValue("MSALCODMOEDA", mbo.getString("MSALCODMOEDA"));
+									System.out.println("############ MSALCODMOEDA = " + mbo.getString("MSALCODMOEDA"));
+									
+									mboDestino.setValue("MSNUNUMQUANTIDADEEMPENHADA", 0);
+								}
+								//DISPENSA
 							} else if (getMbo().getString("MSALCODMODALIDADE").equals("OC")) {
 								//ORDEM DE COMPRA
 									
