@@ -1,6 +1,6 @@
 package br.inf.ctis.ms.bean;
 
-import java.rmi.RemoteException;
+
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Properties;
@@ -18,7 +18,7 @@ public class MsDocPec extends AppBean {
 	public MsDocPec (){
 		
 	}
-	public int SAVE() throws MXException, RemoteException {
+	public void save() throws MXException {
     	
     	System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
     	try {
@@ -50,7 +50,7 @@ public class MsDocPec extends AppBean {
         } catch (Exception e) {
             System.out.println(">>>>>>>>> e = " + e.getMessage());
         }
-    	return super.SAVE();
+    	return;
 	}
 
 }
