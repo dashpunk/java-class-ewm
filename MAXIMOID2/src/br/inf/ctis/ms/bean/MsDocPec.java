@@ -22,7 +22,7 @@ public class MsDocPec extends AppBean {
 	public void save() throws MXException {
     	
     	System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
-    	try {
+    	/*try {
             Properties prop;
             prop = MXServer.getMXServer().getConfig();
             String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
@@ -50,7 +50,7 @@ public class MsDocPec extends AppBean {
             conexao.close();
         } catch (Exception e) {
             System.out.println(">>>>>>>>> e = " + e.getMessage());
-        }
+        }*/
     	super.save();
 	}
 
