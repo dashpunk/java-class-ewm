@@ -18,6 +18,7 @@ public class MsDocPec extends AppBean {
 	public MsDocPec (){
 		
 	}
+	@Override
 	public void save() throws MXException {
     	
     	System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
@@ -44,13 +45,13 @@ public class MsDocPec extends AppBean {
             conexao.commit();
             System.out.println(">>>>>>>>> commit");
             
-                      
+            super.save();          
 
             conexao.close();
         } catch (Exception e) {
             System.out.println(">>>>>>>>> e = " + e.getMessage());
         }
-    	return;
+    	super.save();
 	}
 
 }
