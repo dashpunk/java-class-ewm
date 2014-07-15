@@ -24,6 +24,7 @@ public class MsDocPec extends psdi.webclient.system.beans.AppBean {
 	public MsDocPec (){
 		
 	}
+	@Override
 	public int SAVE() throws MXException, RemoteException {
     	
     	System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
