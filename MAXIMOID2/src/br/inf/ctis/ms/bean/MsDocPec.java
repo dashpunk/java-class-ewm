@@ -40,10 +40,11 @@ public class MsDocPec extends DataBean {
             Class.forName(driver).newInstance();
             java.sql.Connection conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
             Statement stmt = conexao.createStatement();
-            PreparedStatement ps = conexao.prepareStatement("INSERT INTO MSTBCONTE(DESCRIPTION,MSPOSICAO) VALUES () ");
-            ps.setString(1, getMbo().getString("DESCRIPTION"));
-            ps.setString(2, getMbo().getString("MSPOSICAO"));
-
+            PreparedStatement ps = conexao.prepareStatement("INSERT INTO MSTBCONTE(MSTBCONTEID,DESCRIPTION,HASLD,MSTBCLAPARID,ROWSTAMP,MSBLOQUEADO,MSPOSICAO) VALUES (mstbconteidseq.NEXTVAL,?,0,null,'123456',0,?) ");
+            //ps.setString(1, getMbo().getString("DESCRIPTION"));
+            //ps.setString(2, getMbo().getString("MSPOSICAO"));
+            ps.setString(1,getMbo().getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(0).getString("DESCRIPTION"));
+            ps.setString(2,getMbo().getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(0).getString("MSPOSICAO"));
 
             System.out.println(">>>>>>>>> Insert MSTBCONTE execute b");
             int r = ps.executeUpdate();
