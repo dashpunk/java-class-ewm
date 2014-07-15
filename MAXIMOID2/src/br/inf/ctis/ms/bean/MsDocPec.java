@@ -4,6 +4,9 @@ import java.beans.Statement;
 import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import psdi.mbo.MboConstants;
 import psdi.server.MXServer;
 import psdi.util.DBConnect;
@@ -20,9 +23,18 @@ public class MsDocPec extends AppBean {
 	}
 	
 	@Override
+	public void save() throws MXException {
+		System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
+		super.save();
+	}
+}
+	
+	
+	
+	/*@Override
     public int SAVE() throws MXException, RemoteException {
 		
-		System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
+		
     	try {
             Properties prop;
             prop = MXServer.getMXServer().getConfig();
@@ -59,5 +71,5 @@ public class MsDocPec extends AppBean {
 	}
 
 	
-}
+}*/
 
