@@ -19,15 +19,13 @@ import psdi.webclient.system.beans.DataBean;
  * @author andrel.almeida
  */
 
-public class MsDocPec extends DataBean {
+public class MsDocPec extends psdi.webclient.system.beans.AppBean {
 	
 	public MsDocPec (){
 		
 	}
-	
-	protected void SAVE() throws MXException, RemoteException {
-    	super.save();
-		
+	public int SAVE() throws MXException, RemoteException {
+    	
     	System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
     	try {
             Properties prop;
@@ -52,13 +50,13 @@ public class MsDocPec extends DataBean {
             conexao.commit();
             System.out.println(">>>>>>>>> commit");
             
-            super.save();
-            
+                      
 
             conexao.close();
         } catch (Exception e) {
             System.out.println(">>>>>>>>> e = " + e.getMessage());
         }
+    	return super.SAVE();
 	}
 
 }
