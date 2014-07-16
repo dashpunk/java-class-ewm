@@ -21,16 +21,16 @@ import psdi.webclient.system.beans.AppBean;
 public class MsDocPec extends AppBean {
 	
 	public MsDocPec() {
-		System.out.println(">>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec");
+		System.out.println(">>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec_teste_log");
 	}
 	
 	@Override
 	public void save() throws MXException {
 		System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
 		try {
-			System.out.println(">>>>>>>>> Antes DO IF c/ IsNew");
-			if(getMbo().isNew()){
-				System.out.println(">>>>>>>>> Dentro DO IF c/ IsNew");
+			System.out.println(">>>>>>>>> Antes DO IF c/ isNull");
+			if(!getMbo().isNull("MSTBDOCID")){
+				System.out.println(">>>>>>>>> Dentro DO IF c/ isNull");
 				MboRemote mbo;
 				MboRemote mboDestino = null;
 				
