@@ -45,8 +45,10 @@ public class MsDocPec extends AppBean {
 						mboDestino.setValue("MSPOSICAO", mbo.getString("MSPOSICAO"));
 						;
 						mboDestino.setValue("MSTBDOCID", getMbo().getInt("MSTBDOCID"));
+						System.out.println(">>>>>>>>> Antes da checagem do item bloqueado");
 						if(mbo.getBoolean("MSBLOQUEADO")){
 							mboDestino.setValue("MSTATUS", "BLOQUADO");
+							System.out.println(">>>>>>>>> Setando BLOQUEADO em mstatus");
 						}
 						else{
 							mboDestino.setValue("MSTATUS", "LIBERADO");
