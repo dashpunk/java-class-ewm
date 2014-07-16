@@ -19,23 +19,13 @@ import psdi.webclient.system.beans.AppBean;
 public class MsDocPec extends AppBean {
 	
 	public MsDocPec() {
-		System.out.print(">>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec");
+		System.out.println(">>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec");
 	}
 	
 	@Override
 	public void save() throws MXException {
 		System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
-		super.save();
-	}
-}
-	
-	
-	
-	/*@Override
-    public int SAVE() throws MXException, RemoteException {
-		
-		
-    	try {
+		try {
             Properties prop;
             prop = MXServer.getMXServer().getConfig();
             String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
@@ -49,9 +39,11 @@ public class MsDocPec extends AppBean {
             PreparedStatement ps = conexao.prepareStatement("INSERT INTO MSTBCONTE(MSTBCONTEID,DESCRIPTION,HASLD,MSTBCLAPARID,ROWSTAMP,MSBLOQUEADO,MSPOSICAO) VALUES (mstbconteidseq.NEXTVAL,?,0,null,'123456',0,?) ");
             //ps.setString(1, getMbo().getString("DESCRIPTION"));
             //ps.setString(2, getMbo().getString("MSPOSICAO"));
+            System.out.println(">>>>>>>>> Antes dos parametros para o INSERT");
             ps.setString(1,getMbo().getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(0).getString("DESCRIPTION"));
             ps.setString(2,getMbo().getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(0).getString("MSPOSICAO"));
-
+            System.out.println(">>>>>>>>> Depois dos parametros para o INSERT");           
+            
             System.out.println(">>>>>>>>> Insert MSTBCONTE execute b");
             int r = ps.executeUpdate();
             System.out.println(">>>>>>>>> Insert MSTBCONTE execute a " + r);
@@ -64,12 +56,11 @@ public class MsDocPec extends AppBean {
         } catch (Exception e) {
             System.out.println(">>>>>>>>> e = " + e.getMessage());
         }
-		
-		
-        return super.SAVE();
-
+		super.save();
 	}
-
+}
 	
-}*/
+	
+	
+	
 
