@@ -36,6 +36,7 @@ public class MsDocPec extends AppBean {
             Class.forName(driver).newInstance();
             java.sql.Connection conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
             Statement stmt = (Statement) conexao.createStatement();
+            System.out.println(">>>>>>>>> Antes de montar o INSERT");
             PreparedStatement ps = conexao.prepareStatement("INSERT INTO MSTBCONTE(MSTBCONTEID,DESCRIPTION,HASLD,MSTBCLAPARID,ROWSTAMP,MSBLOQUEADO,MSPOSICAO) VALUES (mstbconteidseq.NEXTVAL,?,0,null,'123456',0,?) ");
             //ps.setString(1, getMbo().getString("DESCRIPTION"));
             //ps.setString(2, getMbo().getString("MSPOSICAO"));
