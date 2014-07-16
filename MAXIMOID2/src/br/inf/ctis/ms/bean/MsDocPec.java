@@ -28,6 +28,7 @@ public class MsDocPec extends AppBean {
 	public void save() throws MXException {
 		System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
 		try {
+			System.out.println(">>>>>>>>> Antes DO IF c/ IsNew");
 			if(getMbo().isNew()){
 				System.out.println(">>>>>>>>> Dentro DO IF c/ IsNew");
 				MboRemote mbo;
