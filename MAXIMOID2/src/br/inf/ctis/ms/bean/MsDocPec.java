@@ -21,36 +21,43 @@ import psdi.webclient.system.beans.AppBean;
 public class MsDocPec extends AppBean {
 	
 	public MsDocPec() {
-		System.out.println(">>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec_teste_log");
+		System.out.println(">>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec");
 	}
 	
 	@Override
 	public void save() throws MXException {
-		System.out.println(">>>>>>>>> Dentro do metodo Save, classe: br.inf.ctis.ms.bean.MsDocPec");
+		
 		try {
-			System.out.println(">>>>>>>>> Antes DO IF c/ isNull");
+			
 			if(!getMbo().isNull("MSTBDOCID")){
-				System.out.println(">>>>>>>>> Dentro DO IF c/ isNull");
+				
 				MboRemote mbo;
 				MboRemote mboDestino = null;
 				
 				
 				if (getMbo().getMboSet("MSTBCONTE").isEmpty()){
-					System.out.println(">>>>>>>>> Dentro DO IF c/ isEmpty");
+					
 					for (int i = 0; ((mbo= getMbo().getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(i)) !=null); i++) {
 						mboDestino = getMbo().getMboSet("MSTBCONTE").add();
-						System.out.println(">>>>>>>>>>>> add() clausula do documento");
+						
 						mboDestino.setValue("DESCRIPTION", mbo.getString("DESCRIPTION"));
-						System.out.println(">>>>>>>>>>>> DESCRIPTION = " + mbo.getString("DESCRIPTION"));
+						
 						mboDestino.setValue("MSPOSICAO", mbo.getString("MSPOSICAO"));
-						System.out.println(">>>>>>>>>>>> MSPOSICAO" + mbo.getString("MSPOSICAO"));
+						;
 						mboDestino.setValue("MSTBDOCID", getMbo().getInt("MSTBDOCID"));
-						System.out.println(">>>>>>>>>>>> MSTBDOCID" + getMbo().getInt("MSTBDOCID"));
+						if(mbo.getBoolean("MSBLOQUEADO")){
+							mboDestino.setValue("MSTATUS", "BLOQUADO");
+						}
+						else{
+							mboDestino.setValue("MSTATUS", "LIBERADO");
+						}
+						
+						
 					}
 				}
 				
 				super.save();
-				System.out.println(">>>>>>>>> Salvando..");								
+											
 			}
 		}
 				
