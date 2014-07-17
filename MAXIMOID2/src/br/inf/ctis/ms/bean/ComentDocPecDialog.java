@@ -23,7 +23,7 @@ public class ComentDocPecDialog extends AppBean {
 		System.out.println(">>>>>>>>> Dentro do metodo defineCampo");
 		WebClientEvent event = sessionContext.getCurrentEvent();
 		Utility.sendEvent(new WebClientEvent("dialogclose", event.getTargetId(), event.getValue(), sessionContext));
-		
+		save();
 		app.getDataBean("MAINRECORD").save();
 		app.getDataBean("MAINRECORD").refreshTable();
 		app.getDataBean("MAINRECORD").reloadTable();
