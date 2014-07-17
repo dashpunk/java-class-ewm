@@ -105,14 +105,14 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
         
         
         
-        MboRemote mbodoc = getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCONTE").getMbo(0);
+       /* MboRemote mbodoc = getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCONTE").getMbo(0);
         System.out.println(">>>>>>>>>>>>> Carregando a Mbo para a tabela MSTBCONTE ");
         if(!mbodoc.isNew()){
         	MboRemote mboDestinodoc = getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCONTE").getMbo(0).getMboSet("MSTBCONTEOBS").getMbo(0);
-        	mboDestinodoc.setValue("", mboDestinodoc.getString("DESCRIPTION"));
+        	mboDestinodoc.setValue("DESCRIPTION", mboDestinodoc.getString("DESCRIPTION"));
         	System.out.println(">>>>>>>>>>>>> Setando observações para conteúdo: "+mboDestinodoc.getString("DESCRIPTION"));
         	super.SAVE();
-        }
+        }*/
         
 
         return super.SAVE();
