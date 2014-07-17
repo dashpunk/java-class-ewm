@@ -23,7 +23,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	int qtdAnexoMsg = 0;
 	
     public MSCLPO02() {
-    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02");
+    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste2");
     }
 
     /**
@@ -105,14 +105,14 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
         
         
         
-       /* MboRemote mbodoc = getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCONTE").getMbo(0);
+        MboRemote mboAuDoc = getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCONTE").getMbo(0);
         System.out.println(">>>>>>>>>>>>> Carregando a Mbo para a tabela MSTBCONTE ");
-        if(!mbodoc.isNew()){
-        	MboRemote mboDestinodoc = getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCONTE").getMbo(0).getMboSet("MSTBCONTEOBS").getMbo(0);
-        	mboDestinodoc.setValue("DESCRIPTION", mboDestinodoc.getString("DESCRIPTION"));
-        	System.out.println(">>>>>>>>>>>>> Setando observações para conteúdo: "+mboDestinodoc.getString("DESCRIPTION"));
+        if(mboAuDoc.getMboSet("A_MSTBCONTE").getMbo(0).getString("EAUDITTYPE").equalsIgnoreCase("U")){
+        	MboRemote mboDestinodoc = getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCONTE").getMbo(0);
+        	mboDestinodoc.setValue("MSTATUS", "EDITADO");
+        	System.out.println(">>>>>>>>>>>>> Setando Editado para o STATUS em MSTBCONTE");
         	super.SAVE();
-        }*/
+        }
         
 
         return super.SAVE();
