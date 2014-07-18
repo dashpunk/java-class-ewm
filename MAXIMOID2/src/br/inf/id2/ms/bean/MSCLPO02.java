@@ -128,7 +128,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
         	}*/
        // }
         
-
+        System.out.println(">>>>>>>>> Metodo save executado");
         return super.SAVE();
     }
 
