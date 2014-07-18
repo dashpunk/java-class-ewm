@@ -104,13 +104,15 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
         }
         
         
-        
+        if(!getMbo().getMboSet("MSTBCONTE").getMbo().isNew()){
+        	System.out.println(">>>>>>>>> Dentro do If para o objeto MSTBCONTE");
+        /*
         MboRemote mboAuDoc = getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE").getMbo(0);
         System.out.println(">>>>>>>>>>>>> Carregando a Mbo para a tabela MSTBCONTE com o valor da auditoria: "+mboAuDoc.getString("EAUDITTYPE"));
         System.out.println(">>>>>>>>>>>>> Carregando a Mbo para a tabela MSTBCONTE com o MSTBCONTEID: "+mboAuDoc.getInt("MSTBCONTEID"));
         if(mboAuDoc.getString("EAUDITTYPE").equalsIgnoreCase("U")){
         	System.out.println(">>>>>>>>>>>>> Dentro do IF para mstbconte ");
-        	/*MboRemote mbofor = null;
+        	MboRemote mbofor = null;
         	for(int i = 0; ((mbofor = getMbo().getMboSet("MSTBCONTE").getMbo(i)) !=null); i++){
         		System.out.println(">>>>>>>>>>>>> Dentro do For para o Status EDITADO/LIBERADO ");
         		if(getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE").getMbo(i).getString("EAUDITTYPE").equalsIgnoreCase("U")){
