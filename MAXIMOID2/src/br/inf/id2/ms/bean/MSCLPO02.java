@@ -105,13 +105,19 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
         
         
         
-        MboRemote mboAuDoc = getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCONTE").getMbo(0);
+        MboRemote mboAuDoc = getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE").getMbo(0);
         System.out.println(">>>>>>>>>>>>> Carregando a Mbo para a tabela MSTBCONTE ");
-        if(mboAuDoc.getMboSet("A_MSTBCONTE").getMbo(0).getString("EAUDITTYPE").equalsIgnoreCase("U")){
-        	MboRemote mboDestinodoc = getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCONTE").getMbo(0);
-        	mboDestinodoc.setValue("MSTATUS", "EDITADO");
-        	System.out.println(">>>>>>>>>>>>> Setando Editado para o STATUS em MSTBCONTE");
-        	super.SAVE();
+        if(mboAuDoc.getString("EAUDITTYPE").equalsIgnoreCase("U")){
+        	MboRemote mbofor = null;
+        	for(int i = 0; ((mbofor = getMbo().getMboSet("MSTBCONTE").getMbo(i)) !=null); i++){
+        		System.out.println(">>>>>>>>>>>>> Dentro do For para o Status EDITADO/LIBERADO ");
+        		if(getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE").getMbo(i).getString("EAUDITTYPE").equalsIgnoreCase("U")){
+        			
+        			MboRemote mboDestinodoc = getMbo().getMboSet("MSTBCONTE").getMbo(i);
+                	mboDestinodoc.setValue("MSTATUS", "EDITADO/LIBERADO");
+                	System.out.println(">>>>>>>>>>>>> Setando EDITADO/LIBERADO para o STATUS em MSTBCONTE"+mboDestinodoc);
+        		}        		
+        	}
         }
         
 
