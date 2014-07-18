@@ -21,7 +21,7 @@ import psdi.webclient.system.beans.AppBean;
 public class MsDocPec extends AppBean {
 	
 	public MsDocPec() {
-		System.out.println(">>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec");
 	}
 	
 	@Override
