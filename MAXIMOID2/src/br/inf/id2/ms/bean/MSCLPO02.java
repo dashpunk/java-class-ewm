@@ -23,7 +23,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	int qtdAnexoMsg = 0;
 	
     public MSCLPO02() {
-    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste5");
+    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste7");
     }
 
     /**
@@ -103,30 +103,33 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
             }
         }
         
-        /* 
-        if(!getMbo().getMboSet("MSTBCONTE").getMbo().isNew()){
+         
+        if(!getMbo().getMboSet("MSTBCONTE").getMbo(0).isNew()){
         	System.out.println(">>>>>>>>> Dentro do If para o objeto MSTBCONTE");
         	for(int i=0;i < getMbo().getMboSet("MSTBCONTE").count();i++){
-        		System.out.println(">>>>>>>>> Valor da Auditoria para aquele registro: "+getMbo().getMboSet("MSTBCONTE").getMbo(0).getInt("MSTBCONTEID")+getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE").getMbo(0).getString("EAUDITTYPE"));
-        	}
-        	
-        
-        MboRemote mboAuDoc = getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE").getMbo(0);
-        System.out.println(">>>>>>>>>>>>> Carregando a Mbo para a tabela MSTBCONTE com o valor da auditoria: "+mboAuDoc.getString("EAUDITTYPE"));
-        System.out.println(">>>>>>>>>>>>> Carregando a Mbo para a tabela MSTBCONTE com o MSTBCONTEID: "+mboAuDoc.getInt("MSTBCONTEID"));
-        if(mboAuDoc.getString("EAUDITTYPE").equalsIgnoreCase("U")){
-        	System.out.println(">>>>>>>>>>>>> Dentro do IF para mstbconte ");
-        	MboRemote mbofor = null;
-        	for(int i = 0; ((mbofor = getMbo().getMboSet("MSTBCONTE").getMbo(i)) !=null); i++){
-        		System.out.println(">>>>>>>>>>>>> Dentro do For para o Status EDITADO/LIBERADO ");
-        		if(getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE").getMbo(i).getString("EAUDITTYPE").equalsIgnoreCase("U")){
+        		
+        		System.out.println(">>>>>>>>> Dentro do I: "+getMbo().getMboSet("MSTBCONTE").getMbo(i).getInt("MSTBCONTEID"));
+        		
+        		for(int j=0;j < getMbo().getMboSet("MSTBCONTE").getMbo(i).getMboSet("A_MSTBCONTE3").count();j++){
         			
+        			System.out.println(">>>>>>>>> Valor da Auditoria para o MSTBCONTEID: "+getMbo().getMboSet("MSTBCONTE").getMbo(i).getMboSet("A_MSTBCONTE3").getMbo(j).getString("EAUDITTYPE"));
+        			if(getMbo().getMboSet("MSTBCONTE").getMbo(i).getMboSet("A_MSTBCONTE3").getMbo(j).getString("EAUDITTYPE").equalsIgnoreCase("U")){
+        				System.out.println(">>>>>>>>> Dentro do IF para setar valor ");
+        				MboRemote mboDestinodoc = getMbo().getMboSet("MSTBCONTE").getMbo(i);
+        				mboDestinodoc.setValue("MSTATUS", "EDITADO/LIBERADO");
+        				System.out.println(">>>>>>>>> Valor setado ");
+        			}
+        		}
+        		 		
+        		
+        		/*if(getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE3").getMbo(i).getString("EAUDITTYPE").equalsIgnoreCase("U")){
+        			System.out.println(">>>>>>>>> Dentro do if para setar valor ");
         			MboRemote mboDestinodoc = getMbo().getMboSet("MSTBCONTE").getMbo(i);
                 	mboDestinodoc.setValue("MSTATUS", "EDITADO/LIBERADO");
-                	System.out.println(">>>>>>>>>>>>> Setando EDITADO/LIBERADO para o STATUS em MSTBCONTE"+mboDestinodoc);
-        		}        		
-        	}*/
-       // }
+        		}*/
+        	}        	
+        	
+        }
         
         System.out.println(">>>>>>>>> Metodo save executado");
         return super.SAVE();
