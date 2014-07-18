@@ -103,14 +103,14 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
             }
         }
         
-        
+        /* 
         if(!getMbo().getMboSet("MSTBCONTE").getMbo().isNew()){
         	System.out.println(">>>>>>>>> Dentro do If para o objeto MSTBCONTE");
         	for(int i=0;i < getMbo().getMboSet("MSTBCONTE").count();i++){
         		System.out.println(">>>>>>>>> Valor da Auditoria para aquele registro: "+getMbo().getMboSet("MSTBCONTE").getMbo(0).getInt("MSTBCONTEID")+getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE").getMbo(0).getString("EAUDITTYPE"));
         	}
         	
-        /*
+        
         MboRemote mboAuDoc = getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE").getMbo(0);
         System.out.println(">>>>>>>>>>>>> Carregando a Mbo para a tabela MSTBCONTE com o valor da auditoria: "+mboAuDoc.getString("EAUDITTYPE"));
         System.out.println(">>>>>>>>>>>>> Carregando a Mbo para a tabela MSTBCONTE com o MSTBCONTEID: "+mboAuDoc.getInt("MSTBCONTEID"));
@@ -126,7 +126,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
                 	System.out.println(">>>>>>>>>>>>> Setando EDITADO/LIBERADO para o STATUS em MSTBCONTE"+mboDestinodoc);
         		}        		
         	}*/
-        }
+       // }
         
 
         return super.SAVE();
