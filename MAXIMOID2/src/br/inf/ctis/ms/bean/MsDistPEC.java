@@ -4,6 +4,8 @@
 package br.inf.ctis.ms.bean;
 
 import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
@@ -40,6 +42,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -57,10 +60,53 @@ public class MsDistPEC extends DataBean {
 		contaAnexosMsg();
 		setarValores();
 		fecharERotear();
+		setarDocPec();
 		
 		
 
 		return 1;
+	}
+	// metodo para carregar o edital/contrato em determinado status
+	private void setarDocPec() throws MXException {
+		try{
+
+			System.out.println(">>>>>>>>> Dentro do metodo setarDocPec()");
+			
+			if(!app.getDataBean("MAINRECORD").getMbo().isNull("MSTBDOCID")){
+				
+				System.out.println(">>>>>>>>> Dentro do if que verifica se o MSTBDOCID da PO esta vazio");
+				MboRemote mbo;
+				MboRemote mboDestino = null;
+				if (app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBCONTE").isEmpty()){
+					
+					System.out.println(">>>>>>>>> Dentro do if que verifica se o MSTBCONTE esta vazio");
+					
+					for (int i = 0; ((mbo= app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(i)) !=null); i++) {
+						
+						
+						mboDestino = app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBCONTE").add();
+						mboDestino.setValue("DESCRIPTION", mbo.getString("DESCRIPTION"));
+						
+						mboDestino.setValue("MSPOSICAO", mbo.getString("MSPOSICAO"));
+						
+						mboDestino.setValue("MSTBDOCID", getMbo().getInt("MSTBDOCID"));
+						System.out.println(">>>>>>>>> Fim do FOR que carrega a tabela MSTBCONTE");
+						
+						if(mbo.getBoolean("MSBLOQUEADO")){
+							mboDestino.setValue("MSTATUS", "BLOQUEADO");
+							System.out.println(">>>>>>>>> Setando BLOQUEADO em mstatus");
+						}
+						else{
+							mboDestino.setValue("MSTATUS", "LIBERADO");
+						}
+					}
+					
+				}
+			}
+		}
+		 catch (RemoteException ex) {
+	            Logger.getLogger(MsTbPregao.class.getName()).log(Level.SEVERE, null, ex);
+	        }
 	}
 
 	private void contaAnexosMsg()throws RemoteException, MXException  {
