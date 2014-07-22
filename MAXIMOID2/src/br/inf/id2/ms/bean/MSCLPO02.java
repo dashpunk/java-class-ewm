@@ -103,7 +103,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
             }
         }
         
-         
+        super.save(); 
         if(!getMbo().getMboSet("MSTBCONTE").getMbo(0).isNew()){
         	System.out.println(">>>>>>>>> Dentro do If para o objeto MSTBCONTE");
         	for(int i=0;i < getMbo().getMboSet("MSTBCONTE").count();i++){
