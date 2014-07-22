@@ -103,9 +103,10 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
             }
         }
         
+        // IF p/ setar o STATUS=EDITADO/LIBERADO nas cláusulas que tiveram alterações(Trabalhando c/ auditoria, por isso o super.save)
         super.save(); 
-        if(!getMbo().getMboSet("MSTBCONTE").getMbo(0).isNew()){
-        	System.out.println(">>>>>>>>> Dentro do If para o objeto MSTBCONTE");
+       // if(!getMbo().getMboSet("MSTBCONTE").getMbo(0).isNew()){
+        //	System.out.println(">>>>>>>>> Dentro do If para o objeto MSTBCONTE");
         	for(int i=0;i < getMbo().getMboSet("MSTBCONTE").count();i++){
         		
         		System.out.println(">>>>>>>>> Dentro do I: "+getMbo().getMboSet("MSTBCONTE").getMbo(i).getInt("MSTBCONTEID"));
@@ -113,23 +114,19 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
         		for(int j=0;j < getMbo().getMboSet("MSTBCONTE").getMbo(i).getMboSet("A_MSTBCONTE3").count();j++){
         			
         			System.out.println(">>>>>>>>> Valor da Auditoria para o MSTBCONTEID: "+getMbo().getMboSet("MSTBCONTE").getMbo(i).getMboSet("A_MSTBCONTE3").getMbo(j).getString("EAUDITTYPE"));
+        			
         			if(getMbo().getMboSet("MSTBCONTE").getMbo(i).getMboSet("A_MSTBCONTE3").getMbo(j).getString("EAUDITTYPE").equalsIgnoreCase("U")){
+        				
         				System.out.println(">>>>>>>>> Dentro do IF para setar valor ");
         				MboRemote mboDestinodoc = getMbo().getMboSet("MSTBCONTE").getMbo(i);
         				mboDestinodoc.setValue("MSTATUS", "EDITADO/LIBERADO");
         				System.out.println(">>>>>>>>> Valor setado ");
         			}
-        		}
-        		 		
+        		}        		
         		
-        		/*if(getMbo().getMboSet("MSTBCONTE").getMbo(0).getMboSet("A_MSTBCONTE3").getMbo(i).getString("EAUDITTYPE").equalsIgnoreCase("U")){
-        			System.out.println(">>>>>>>>> Dentro do if para setar valor ");
-        			MboRemote mboDestinodoc = getMbo().getMboSet("MSTBCONTE").getMbo(i);
-                	mboDestinodoc.setValue("MSTATUS", "EDITADO/LIBERADO");
-        		}*/
         	}        	
         	
-        }
+        //}
         
         System.out.println(">>>>>>>>> Metodo save executado");
         return super.SAVE();
