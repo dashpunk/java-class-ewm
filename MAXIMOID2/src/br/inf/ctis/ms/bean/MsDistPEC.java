@@ -54,13 +54,13 @@ public class MsDistPEC extends DataBean {
 		save();
 		//MboContants.NOACCESSCHECK força a inserção
 		
-		
+		setarDocPec();
 		linhaSelecionada();
 		validarCampos();
 		contaAnexosMsg();
 		setarValores();
 		fecharERotear();
-		setarDocPec();
+		
 		
 		
 
@@ -81,7 +81,7 @@ public class MsDistPEC extends DataBean {
 					
 					System.out.println(">>>>>>>>> Dentro do if que verifica se o MSTBCONTE esta vazio");
 					
-					for (int i = 0; ((mbo= app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(i)) !=null); i++) {
+					for (int i = 0; ((mbo= app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(i)) !=null); i++) {
 						
 						
 						mboDestino = app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBCONTE").add();
