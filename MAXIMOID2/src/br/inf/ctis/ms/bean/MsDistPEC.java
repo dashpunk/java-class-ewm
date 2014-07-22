@@ -42,7 +42,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste1");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
