@@ -23,7 +23,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	int qtdAnexoMsg = 0;
 	
     public MSCLPO02() {
-    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste7");
+    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste8");
     }
 
     /**
