@@ -42,7 +42,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste3");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste0");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -54,130 +54,52 @@ public class MsDistPEC extends DataBean {
 		save();
 		//MboContants.NOACCESSCHECK força a inserção
 		
-		setarDocPec();
+		
 		linhaSelecionada();
 		validarCampos();
 		contaAnexosMsg();
 		setarValores();
-		fecharERotear();
-		
-		
+		DefineDoc();
+		fecharERotear();	
+				
 		
 
 		return 1;
 	}
-	// metodo para carregar o edital/contrato em determinado status
-	private void setarDocPec() throws MXException {
-		try{
-
-			System.out.println(">>>>>>>>> Dentro do metodo setarDocPec()");
-			
-			if(!app.getDataBean("MAINRECORD").getMbo().isNull("MSTBDOCID")){
-				
-				System.out.println(">>>>>>>>> Dentro do if que verifica se o MSTBDOCID da PO esta vazio");
-				MboRemote mbo;
-				MboRemote mboDestino = null;
-				if (app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBCONTE").isEmpty()){
-					
-					System.out.println(">>>>>>>>> Dentro do if que verifica se o MSTBCONTE esta vazio");
-					
-					for (int i = 0; ((mbo= app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(i)) !=null); i++) {
-						
-						
-						mboDestino = app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBCONTE").add();
-						mboDestino.setValue("DESCRIPTION", mbo.getString("DESCRIPTION"));
-						
-						mboDestino.setValue("MSPOSICAO", mbo.getString("MSPOSICAO"));
-						
-						mboDestino.setValue("MSTBDOCID", app.getDataBean("MAINRECORD").getMbo().getInt("MSTBDOCID"));
-						System.out.println(">>>>>>>>> Fim do FOR que carrega a tabela MSTBCONTE");
-						
-						if(mbo.getBoolean("MSBLOQUEADO")){
-							mboDestino.setValue("MSTATUS", "BLOQUEADO");
-							System.out.println(">>>>>>>>> Setando BLOQUEADO em mstatus");
-						}
-						else{
-							mboDestino.setValue("MSTATUS", "LIBERADO");
-						}
-					}
-					
-				}
-			}
-		}
-		 catch (RemoteException ex) {
-	            Logger.getLogger(MsTbPregao.class.getName()).log(Level.SEVERE, null, ex);
-	        }
-	}
-
-	private void contaAnexosMsg()throws RemoteException, MXException  {
-		
-		System.out.println(">>>>>>>>>>>> Entrando no Metodo contaAnexosMsg ");
-
-		qtdAnexoMsg = app.getDataBean("MAINRECORD").getMbo().getMboSet("MSPECANEXOS").count();
-		
-		System.out.println(">>>>>>>>>>>> Quantidade de Anexos na App do PEC: "+qtdAnexoMsg);
-	}
-
-	private void linhaSelecionada() throws RemoteException, MXException  {
-				WebClientEvent event = this.app.getWebClientSession().getCurrentEvent();
-				int row = getRowIndexFromEvent(event);
-
-				MboRemote mboAcao;
-				mboAcao = getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0);
-				
-				MboRemote mboStatus;
-				mboStatus = getMbo().getMboSet("MSTBPEC_ACOES2").getMbo(0);
-
-				MboRemote mboGrupo;
-				mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
-
-				PoNum = app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"); 
-				MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID");
-				MsAcao = getMbo(row).getInt("MSACAO");
-				Statuspec = mboStatus.getString("DESCRIPTION");
-				System.out.println(">>>>>>>>>>>>Dentro do metodo Linha selecionada");
-				
-				
-				if(mboGrupo.getBoolean("MSHABDISTR")) {
-					
-					MsDistDem = mboGrupo.getString("MSMOMDIST");
-					MsDistDem2 = mboGrupo.getString("MSMOMDIST2");
-					System.out.println(">>>>>>>>>>>>Fluxo Habilitado para personalizado, Momento da Dest.: " + MsDistDem);
-					System.out.println(">>>>>>>>>>>>Fluxo Habilitado para personalizado, Qual Momento Dest: " + MsDistDem2);
-				}
-				else {
-					MsGrupo = mboGrupo.getString("MSGRUPO"); 
-					System.out.println(">>>>>>>>>>>>Fluxo Habilitado para padrao, grupo: " + MsGrupo);
-				}
-						
-	}
-
-	private void fecharERotear() throws RemoteException, MXException {
-
-		// Fechar Dialog ACTION
-
-		WebClientEvent closeEvt = new WebClientEvent("dialogok",
-				this.app.getCurrentPageId(), null, this.clientSession);
-
-		WebClientRuntime.sendEvent(closeEvt);
-
-		// Auto Iniciar WORKFLOW
-
-		DataBean ownerBean = this.app.getDataBean();
-		
-		if (ownerBean != null) {
-			MboRemote mbo = ownerBean.getMbo();
-
-			WebClientSession wcs = this.clientSession;
-			WorkflowDirector director = wcs.getWorkflowDirector();
-			director.allowAutoInit();
-			director.startInput(wcs.getCurrentAppId(), mbo,	DirectorInput.workflow);
-		}
-
-		save();
-
-	}
 	
+	private void linhaSelecionada() throws RemoteException, MXException  {
+		WebClientEvent event = this.app.getWebClientSession().getCurrentEvent();
+		int row = getRowIndexFromEvent(event);
+
+		MboRemote mboAcao;
+		mboAcao = getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0);
+		
+		MboRemote mboStatus;
+		mboStatus = getMbo().getMboSet("MSTBPEC_ACOES2").getMbo(0);
+
+		MboRemote mboGrupo;
+		mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
+
+		PoNum = app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"); 
+		MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID");
+		MsAcao = getMbo(row).getInt("MSACAO");
+		Statuspec = mboStatus.getString("DESCRIPTION");
+		System.out.println(">>>>>>>>>>>>Dentro do metodo Linha selecionada");
+		
+		
+		if(mboGrupo.getBoolean("MSHABDISTR")) {
+			
+			MsDistDem = mboGrupo.getString("MSMOMDIST");
+			MsDistDem2 = mboGrupo.getString("MSMOMDIST2");
+			System.out.println(">>>>>>>>>>>>Fluxo Habilitado para personalizado, Momento da Dest.: " + MsDistDem);
+			System.out.println(">>>>>>>>>>>>Fluxo Habilitado para personalizado, Qual Momento Dest: " + MsDistDem2);
+		}
+		else {
+			MsGrupo = mboGrupo.getString("MSGRUPO"); 
+			System.out.println(">>>>>>>>>>>>Fluxo Habilitado para padrao, grupo: " + MsGrupo);
+		}
+				
+}
 	private void validarCampos() throws MXException, RemoteException  {
 		System.out.println("applyCustomAction");
 
@@ -239,7 +161,14 @@ public class MsDistPEC extends DataBean {
 		app.getDataBean("MAINRECORD").getMbo().setValue("MSFLAGMSG", "0", MboConstants.NOACCESSCHECK);
 		save();
 	}
+	private void contaAnexosMsg()throws RemoteException, MXException  {
+		
+		System.out.println(">>>>>>>>>>>> Entrando no Metodo contaAnexosMsg ");
 
+		qtdAnexoMsg = app.getDataBean("MAINRECORD").getMbo().getMboSet("MSPECANEXOS").count();
+		
+		System.out.println(">>>>>>>>>>>> Quantidade de Anexos na App do PEC: "+qtdAnexoMsg);
+	}
 	private void setarValores() throws RemoteException, MXException {
 
 		MboRemote mboPO = app.getDataBean("MAINRECORD").getMbo();
@@ -261,10 +190,111 @@ public class MsDistPEC extends DataBean {
 			mboPO.setValue("MSPECGRUPO", MsGrupo); 
 			System.out.println(">>>>>>>>>>>>Setando Registro de Designação do Fluxo: " + MsGrupo);
 		}
-		
+		super.save(); 
 
 	}
+	private void DefineDoc() throws RemoteException, MXException {
+		
+		System.out.println(">>>>>>>>> Dentro do Metodo DefineDoc() ");
+		String StsPec="";
+		String StsAcoes="";
+		StsPec= app.getDataBean("MAINRECORD").getMbo().getString("STATUSPEC");
+		StsAcoes= getMbo().getMboSet("MSTBPEC_ACOES3").getMbo(0).getString("DESCRIPTION");
+		
+		System.out.println(">>>>>>>>> Valor do STATUSPEC da PO:"+StsPec);
+		System.out.println(">>>>>>>>> Valor da descricao para Acoes:"+StsAcoes);
+		
+		if(StsPec==StsAcoes){
+			
+			if(!getMbo().getMboSet("MSTBPEC_ACOES3").getMbo(0).getMboSet("MSTBPEC_DOC").isEmpty()){
+				
+				System.out.println(">>>>>>>>> Tabela de Documentos para acao populada! ");
+				
+				for(int i=0;i < app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").count();i++){
+					
+					System.out.println(">>>>>>>>> Modelo de Documento: "+app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").getMbo(i).getString("DESCRIPTION"));
+					
+					for(int j=0;j < app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").getMbo(i).getMboSet("MSTBCLACAP").count();j++){
+						
+						System.out.println(">>>>>>>>> Clausula: "+app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").getMbo(i).getMboSet("MSTBCLACAP").getMbo(j).getString("MSPOSICAO"));
+					}
+				}
+				
+				//setarDocPec();
+			}
+			
+		}		
+		
+	}
+	private void fecharERotear() throws RemoteException, MXException {
 
+		// Fechar Dialog ACTION
+
+		WebClientEvent closeEvt = new WebClientEvent("dialogok",
+				this.app.getCurrentPageId(), null, this.clientSession);
+
+		WebClientRuntime.sendEvent(closeEvt);
+
+		// Auto Iniciar WORKFLOW
+
+		DataBean ownerBean = this.app.getDataBean();
+		
+		if (ownerBean != null) {
+			MboRemote mbo = ownerBean.getMbo();
+
+			WebClientSession wcs = this.clientSession;
+			WorkflowDirector director = wcs.getWorkflowDirector();
+			director.allowAutoInit();
+			director.startInput(wcs.getCurrentAppId(), mbo,	DirectorInput.workflow);
+		}
+
+		save();
+
+	}
+	
+	
+	// metodo para carregar o edital/contrato em determinado status
+	private void setarDocPec() throws MXException {
+		try{
+
+			System.out.println(">>>>>>>>> Dentro do metodo setarDocPec()");
+			
+			if(!app.getDataBean("MAINRECORD").getMbo().isNull("MSTBDOCID")){
+				
+				System.out.println(">>>>>>>>> Dentro do if que verifica se o MSTBDOCID da PO esta vazio");
+				MboRemote mbo;
+				MboRemote mboDestino = null;
+				if (app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBCONTE").isEmpty()){
+					
+					System.out.println(">>>>>>>>> Dentro do if que verifica se o MSTBCONTE esta vazio");
+					
+					for (int i = 0; ((mbo= app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(i)) !=null); i++) {
+						
+						
+						mboDestino = app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBCONTE").add();
+						mboDestino.setValue("DESCRIPTION", mbo.getString("DESCRIPTION"));
+						
+						mboDestino.setValue("MSPOSICAO", mbo.getString("MSPOSICAO"));
+						
+						mboDestino.setValue("MSTBDOCID", app.getDataBean("MAINRECORD").getMbo().getInt("MSTBDOCID"));
+						System.out.println(">>>>>>>>> Fim do FOR que carrega a tabela MSTBCONTE");
+						
+						if(mbo.getBoolean("MSBLOQUEADO")){
+							mboDestino.setValue("MSTATUS", "BLOQUEADO");
+							System.out.println(">>>>>>>>> Setando BLOQUEADO em mstatus");
+						}
+						else{
+							mboDestino.setValue("MSTATUS", "LIBERADO");
+						}
+					}
+					
+				}
+			}
+		}
+		 catch (RemoteException ex) {
+	            Logger.getLogger(MsTbPregao.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+	}
 	private void setResultadoCampoObrigatorio(String string) {
 		if (string.equals("")) {
 			camposObrigatorios = "";
@@ -274,10 +304,10 @@ public class MsDistPEC extends DataBean {
 			}
 		}
 	}
-
 	public String toWhereClause(Object arg0, MboSetRemote arg1)
 			throws MXException, RemoteException {
 		return "";
 	}
+	
 
 }
