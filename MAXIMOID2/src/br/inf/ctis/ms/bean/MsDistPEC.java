@@ -42,7 +42,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste2");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste3");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -89,7 +89,7 @@ public class MsDistPEC extends DataBean {
 						
 						mboDestino.setValue("MSPOSICAO", mbo.getString("MSPOSICAO"));
 						
-						mboDestino.setValue("MSTBDOCID", getMbo().getInt("MSTBDOCID"));
+						mboDestino.setValue("MSTBDOCID", app.getDataBean("MAINRECORD").getMbo().getInt("MSTBDOCID"));
 						System.out.println(">>>>>>>>> Fim do FOR que carrega a tabela MSTBCONTE");
 						
 						if(mbo.getBoolean("MSBLOQUEADO")){
