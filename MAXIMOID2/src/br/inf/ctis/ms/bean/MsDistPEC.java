@@ -208,7 +208,7 @@ public class MsDistPEC extends DataBean {
 			
 			if(!getMbo().getMboSet("MSTBPEC_ACOES3").getMbo(0).getMboSet("MSTBPEC_DOC").isEmpty()){
 				
-				System.out.println(">>>>>>>>> Tabela de Documentos para acao populada! ");
+				System.out.println(">>>>>>>>> Tabela de Documentos para as acoes esta populada! ");
 				
 				for(int i=0;i < app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").count();i++){
 					
