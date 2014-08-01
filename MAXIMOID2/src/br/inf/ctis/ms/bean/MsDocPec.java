@@ -26,6 +26,7 @@ public class MsDocPec extends AppBean {
 		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec2");
 	}
 	
+	@SuppressWarnings("null")
 	@Override
 	public void save() throws MXException {
 		
@@ -69,7 +70,7 @@ public class MsDocPec extends AppBean {
 					 
 					 
 					 Teste2 = WebClientRuntime.decodeSafevalue(Description);
-					        mboTeste.setValue("MSASSUNTO", Teste2 );
+					        getMbo().setValue("MSASSUNTO", Teste2 );
 					        System.out.println(">>>>>>>>> Valor da clausula where da Tela"+Teste2);
 					
 					
