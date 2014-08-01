@@ -14,6 +14,8 @@ import psdi.util.DBConnect;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 import psdi.webclient.system.beans.AppBean;
+import psdi.webclient.system.beans.DataBean;
+import psdi.webclient.system.runtime.WebClientRuntime;
 /**
  * @author andrel.almeida
  */
@@ -32,6 +34,7 @@ public class MsDocPec extends AppBean {
 			if(!getMbo().isNull("MSTBDOCID")){
 				
 				MboRemote mbo;
+				MboRemote mboTeste = null;
 				MboRemote mboDestino = null;
 				
 				
@@ -56,6 +59,23 @@ public class MsDocPec extends AppBean {
 						
 						
 					}
+				}
+				
+				if(!getMbo().isNull("DESCRIPTION")){
+					
+					System.out.println(">>>>>>>>> Dentro do IF description, do metodo save");
+					 DataBean daBean = this.app.getResultsBean();
+					 if (daBean == null) {
+					      daBean = this.app.getAppBean();
+					      System.out.println(">>>>>>>>> Apresentando o daBean da Tela"+daBean);
+					 }
+					 String userAndQbeWhere = daBean.getUserAndQbeWhere();
+					 if (userAndQbeWhere != null) {
+					        userAndQbeWhere = WebClientRuntime.decodeSafevalue(userAndQbeWhere);
+					        mboTeste.setValue("MSASSUNTO", userAndQbeWhere );
+					        System.out.println(">>>>>>>>> Valor da clausula where da Tela"+userAndQbeWhere);
+					 }
+					
 				}
 				
 				super.save();
