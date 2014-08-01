@@ -63,18 +63,15 @@ public class MsDocPec extends AppBean {
 				
 				if(!getMbo().isNull("DESCRIPTION")){
 					
+					String Teste2 ="";
 					System.out.println(">>>>>>>>> Dentro do IF description, do metodo save");
-					 DataBean daBean = this.app.getResultsBean();
-					 if (daBean == null) {
-					      daBean = this.app.getAppBean();
-					      System.out.println(">>>>>>>>> Apresentando o daBean da Tela"+daBean);
-					 }
-					 String userAndQbeWhere = daBean.getUserAndQbeWhere();
-					 if (userAndQbeWhere != null) {
-					        userAndQbeWhere = WebClientRuntime.decodeSafevalue(userAndQbeWhere);
-					        mboTeste.setValue("MSASSUNTO", userAndQbeWhere );
-					        System.out.println(">>>>>>>>> Valor da clausula where da Tela"+userAndQbeWhere);
-					 }
+					 String Description = getMbo().getString("DESCRIPTION");					 
+					 
+					 
+					 Teste2 = WebClientRuntime.decodeSafevalue(Description);
+					        mboTeste.setValue("MSASSUNTO", Teste2 );
+					        System.out.println(">>>>>>>>> Valor da clausula where da Tela"+Teste2);
+					
 					
 				}
 				
