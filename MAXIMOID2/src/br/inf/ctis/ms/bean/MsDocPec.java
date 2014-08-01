@@ -23,7 +23,7 @@ import psdi.webclient.system.runtime.WebClientRuntime;
 public class MsDocPec extends AppBean {
 	
 	public MsDocPec() {
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec2");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec3");
 	}
 	
 	@SuppressWarnings("null")
