@@ -23,7 +23,7 @@ import psdi.webclient.system.runtime.WebClientRuntime;
 public class MsDocPec extends AppBean {
 	
 	public MsDocPec() {
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec5");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec6");
 	}
 	
 	@SuppressWarnings("null")
@@ -71,7 +71,7 @@ public class MsDocPec extends AppBean {
 					 
 					// Teste2 = WebClientRuntime.decodeSafevalue(Description);
 					    //    getMbo().setValue("MSASSUNTO", Teste2 );
-					 System.out.println(">>>>>>>>> Valor da clausula where da Tela"+Description);
+					 System.out.println(">>>>>>>>> Valor da clausula where da Tela "+WebClientRuntime.decodeSafevalue(Description));
 					
 					
 				}
