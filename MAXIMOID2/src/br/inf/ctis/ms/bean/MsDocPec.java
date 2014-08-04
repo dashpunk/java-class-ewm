@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
+import psdi.mbo.MboSetRemote;
 import psdi.server.MXServer;
 import psdi.util.DBConnect;
 import psdi.util.MXApplicationException;
@@ -66,12 +67,17 @@ public class MsDocPec extends AppBean {
 					
 					String Teste2 ="";
 					System.out.println(">>>>>>>>> Dentro do IF description, do metodo save p/ para regra de parametro");
-					String Description = getMbo().getString("DESCRIPTION");					 
-					 
+					String Description = getMbo().getString("DESCRIPTION");	
+					
+					MboSetRemote qfr = ((AppBean)this.app.getAppBean()).getQuickFindRemote();
+					qfr.resetQbe(); 
+					qfr.setUserWhereAfterParse(Description);
+					qfr.reset();
 					 
 					// Teste2 = WebClientRuntime.decodeSafevalue(Description);
 					    //    getMbo().setValue("MSASSUNTO", Teste2 );
-					 System.out.println(">>>>>>>>> Valor da clausula where da Tela "+WebClientRuntime.decodeSafevalue(Description));
+					 System.out.println(">>>>>>>>> Valor da clausula where da Tela "+qfr.getMbo(0));
+					 
 					
 					
 				}
