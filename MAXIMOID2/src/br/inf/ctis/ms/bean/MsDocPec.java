@@ -30,7 +30,7 @@ public class MsDocPec extends AppBean {
 	
 	
 	public MsDocPec() {
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec7");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec8");
 	}
 	
 	@SuppressWarnings("null")
