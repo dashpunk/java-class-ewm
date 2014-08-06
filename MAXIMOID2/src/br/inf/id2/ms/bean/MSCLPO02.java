@@ -23,7 +23,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	int qtdAnexoMsg = 0;
 	
     public MSCLPO02() {
-    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste9");
+    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste10");
     }
 
     /**
@@ -136,7 +136,16 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	@Override
     protected void initialize() throws MXException, RemoteException {
     	super.initialize();
+    	
+    	
     	try {
+    		System.out.println(">>>>>>>>> Entrando no set para PONUM em MSTBCONTE");
+    		MboRemote Mstbconte =null;
+        	Mstbconte = getMbo().getMboSet("MSTBCONTE").getMbo(0);
+        	Mstbconte.setValue("PONUM", getMbo().getInt("PONUM"));
+        	System.out.println(">>>>>>>>> Valor do PONUM: "+getMbo().getInt("PONUM"));
+        	System.out.println(">>>>>>>>> Saindo do set para PONUM em MSTBCONTE");
+    		
             Properties prop;
             prop = MXServer.getMXServer().getConfig();
             String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
