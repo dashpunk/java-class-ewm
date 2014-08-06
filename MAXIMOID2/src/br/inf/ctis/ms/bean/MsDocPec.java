@@ -72,7 +72,7 @@ public class MsDocPec extends AppBean {
 					}
 				}
 				
-				if(!getMbo().isNull("DESCRIPTION")){
+				/*if(!getMbo().isNull("DESCRIPTION")){
 					
 					 DataBean daBean = this.app.getResultsBean();
 					 String userAndQbeWhere = daBean.getUserAndQbeWhere();
@@ -93,7 +93,7 @@ public class MsDocPec extends AppBean {
 					 
 					
 					
-				}
+				}*/
 				
 				super.save();
 											
