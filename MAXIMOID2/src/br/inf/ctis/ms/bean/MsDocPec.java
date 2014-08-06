@@ -17,14 +17,20 @@ import psdi.util.MXException;
 import psdi.webclient.system.beans.AppBean;
 import psdi.webclient.system.beans.DataBean;
 import psdi.webclient.system.runtime.WebClientRuntime;
+
+
 /**
  * @author andrel.almeida
  */
 
 public class MsDocPec extends AppBean {
 	
+	
+	protected MboSetRemote mboSetRemote = null;
+	
+	
 	public MsDocPec() {
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec6");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec7");
 	}
 	
 	@SuppressWarnings("null")
@@ -50,6 +56,9 @@ public class MsDocPec extends AppBean {
 						mboDestino.setValue("MSPOSICAO", mbo.getString("MSPOSICAO"));
 						;
 						mboDestino.setValue("MSTBDOCID", getMbo().getInt("MSTBDOCID"));
+						
+						mboDestino.setValue("MSTBCLACAPID", getMbo().getInt("MSTBCLACAPID"));
+						
 						System.out.println(">>>>>>>>> Antes da checagem do item bloqueado");
 						if(mbo.getBoolean("MSBLOQUEADO")){
 							mboDestino.setValue("MSTATUS", "BLOQUEADO");
@@ -64,6 +73,10 @@ public class MsDocPec extends AppBean {
 				}
 				
 				if(!getMbo().isNull("DESCRIPTION")){
+					
+					 DataBean daBean = this.app.getResultsBean();
+					 String userAndQbeWhere = daBean.getUserAndQbeWhere();
+					 userAndQbeWhere = WebClientRuntime.decodeSafevalue(userAndQbeWhere);
 					
 					String Teste2 ="";
 					System.out.println(">>>>>>>>> Dentro do IF description, do metodo save p/ para regra de parametro");
