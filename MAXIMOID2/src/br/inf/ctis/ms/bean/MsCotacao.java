@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import psdi.mbo.MboConstants;
+import psdi.mbo.MboRemote;
 import psdi.mbo.MboSet;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
@@ -26,7 +25,17 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 
 	public int SAVE() throws MXException, RemoteException {
 		System.out.print("CTIS # --- Entrou na Classe AppBean MsCotacao SAVE()");
-
+		
+		MboRemote mbo1;
+		
+		for (int i = 0; ((mbo1 = getMbo().getMboSet("MSTBMEDICPERSISTENTE").getMbo(i)) != null); i++) {
+						
+			System.out.println("########## Count Cotacoes do Medicamento = " + mbo1.getMboSet("MSTBCOTCDJU").count());
+			if (mbo1.getMboSet("MSTBCOTCDJU").count() > 1) {
+				throw new MXApplicationException("cotacao", "MaisQueUmaCotacaoPorMedicamento");
+			}
+		}
+		
 		tempMedicamentos();
 
 		super.save();
