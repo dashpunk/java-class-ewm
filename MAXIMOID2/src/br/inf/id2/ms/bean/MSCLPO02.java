@@ -23,7 +23,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	int qtdAnexoMsg = 0;
 	
     public MSCLPO02() {
-    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste10");
+    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste01");
     }
 
     /**
@@ -139,12 +139,24 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
     	
     	
     	try {
-    		System.out.println(">>>>>>>>> Entrando no set para PONUM em MSTBCONTE");
-    		MboRemote Mstbconte =null;
-        	Mstbconte = getMbo().getMboSet("MSTBCONTE").getMbo(0);
-        	Mstbconte.setValue("PONUM", getMbo().getInt("PONUM"));
-        	System.out.println(">>>>>>>>> Valor do PONUM: "+getMbo().getInt("PONUM"));
-        	System.out.println(">>>>>>>>> Saindo do set para PONUM em MSTBCONTE");
+    		
+    		if(!getMbo().getMboSet("MSTBCONTE").isEmpty()){
+    			MboRemote mboConte;
+    			for(int i=0;(mboConte=getMbo().getMboSet("MSTBCONTE").getMbo(i))!=null;i++){
+    				
+    				System.out.println(">>>>>>>>> Dentro do FOR para setar PONUM em MSTBCONTE"+mboConte.getString("MSPOSICAO"));
+    				if(!mboConte.isNull("PONUM")){
+    					System.out.println(">>>>>>>>> Entrando no IF para setar o PONUM em MSTBCONTE");
+                		
+                    	mboConte.setValue("PONUM", getMbo().getInt("PONUM"));
+                    	System.out.println(">>>>>>>>> Valor do PONUM: "+getMbo().getInt("PONUM"));                    	
+    				}
+    				
+    			
+    			}
+    			
+    		}
+    		
     		
             Properties prop;
             prop = MXServer.getMXServer().getConfig();
