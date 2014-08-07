@@ -145,7 +145,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
     			for(int i=0;(mboConte=getMbo().getMboSet("MSTBCONTE").getMbo(i))!=null;i++){
     				
     				System.out.println(">>>>>>>>> Dentro do FOR para setar PONUM em MSTBCONTE"+mboConte.getString("MSPOSICAO"));
-    				if(!mboConte.isNull("PONUM")){
+    				if(mboConte.isNull("PONUM")){
     					System.out.println(">>>>>>>>> Entrando no IF para setar o PONUM em MSTBCONTE");
                 		
                     	mboConte.setValue("PONUM", getMbo().getInt("PONUM"));
