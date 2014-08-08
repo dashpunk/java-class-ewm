@@ -207,6 +207,7 @@ public class MsDistPEC extends DataBean {
 			//mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0)
 			
 			app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getInt("MSTBDOCID"));
+			super.save();
 		}
 			
 		
