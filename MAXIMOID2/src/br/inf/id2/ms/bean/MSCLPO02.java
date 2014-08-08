@@ -23,7 +23,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	int qtdAnexoMsg = 0;
 	
     public MSCLPO02() {
-    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste05");
+    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste06");
     }
 
     /**
@@ -148,7 +148,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 					System.out.println(">>>>>>>>> Entrando no IF para setar o PONUM em MSTBCONTE");
             		
 					System.out.println(">>>>>>>>> Valor do PONUM: "+getMbo().getInt("PONUM"));        
-                	//mboConte1.setValue("PONUM", getMbo().getInt("PONUM"));
+                	mboConte1.setValue("PONUM", getMbo().getInt("PONUM"));
                 	            	
 				}
 				
