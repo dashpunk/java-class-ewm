@@ -225,11 +225,11 @@ public class MsDistPEC extends DataBean {
 					
 					mboDestino.setValue("MSPOSICAO", mboDoc.getString("MSPOSICAO"));
 					;
-					mboDestino.setValue("MSTBDOCID", getMbo().getInt("MSTBDOCID"));
+					mboDestino.setValue("MSTBDOCID", app.getDataBean("MAINRECORD").getMbo(0).getInt("MSTBDOCID"));
 					
 					mboDestino.setValue("MSTBCLACAPID", mboDoc.getInt("MSTBCLACAPID"));
 					
-					mboDestino.setValue("PONUM",  app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"));
+					mboDestino.setValue("PONUM",  app.getDataBean("MAINRECORD").getMbo(0).getInt("PONUM"));
 					
 					System.out.println(">>>>>>>>> Antes da checagem do item bloqueado");
 					if(mboDoc.getBoolean("MSBLOQUEADO")){
