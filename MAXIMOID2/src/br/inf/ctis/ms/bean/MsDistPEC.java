@@ -206,7 +206,7 @@ public class MsDistPEC extends DataBean {
 			System.out.println(">>>>>>>>> Existe Documento para Inserir neste momento, O DOCUMENTO E: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getString("DESCRIPTION"));
 			//mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0)
 			
-			app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getInt("MSTBDOCID") );
+			app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getInt("MSTBDOCID"));
 		}
 			
 		
