@@ -43,7 +43,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste1");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste2");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -198,16 +198,17 @@ public class MsDistPEC extends DataBean {
 		
 		
 		MboRemote mboAcaoDoc;
-		mboAcaoDoc = getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0);
+		mboAcaoDoc = getMbo().getMboSet("MSTBPEC_ACOES2").getMbo(0);
 		
 		System.out.println(">>>>>>>>> Dentro do Metodo DefineDoc() ");
-		String StsPec="";
-		String StsAcoes="";
-		StsPec= app.getDataBean("MAINRECORD").getMbo().getString("STATUSPEC");
-				
-		System.out.println(">>>>>>>>> Status do Registro nesse momento:  "+StsPec);
-		System.out.println(">>>>>>>>> Status da Acao:  "+mboAcaoDoc.getString("DESCRIPTION"));
-		System.out.println(">>>>>>>>> Opcao do momento:  "+getMbo().getString("DESCRIPTION"));			
+		
+		if(!mboAcaoDoc.getMboSet("MSTBPEC_DOC").isEmpty()){
+			System.out.println(">>>>>>>>> Existe Documento para Inserir neste momento, O DOCUMENTO E: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getString("DESCRIPTION"));
+			//mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0)
+			
+			app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getInt("MSTBDOCID") );
+		}
+			
 		
 		
 		
