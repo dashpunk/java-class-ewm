@@ -18,6 +18,7 @@ import psdi.webclient.system.controller.WebClientEvent;
 import psdi.webclient.system.runtime.WebClientRuntime;
 import psdi.webclient.system.session.WebClientSession;
 import psdi.workflow.DirectorInput;
+import psdi.workflow.WFNotification;
 import psdi.workflow.WorkflowDirector;
 
 /**
@@ -42,7 +43,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste0");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste1");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -195,15 +196,30 @@ public class MsDistPEC extends DataBean {
 	}
 	private void DefineDoc() throws RemoteException, MXException {
 		
+		
+		MboRemote mboAcaoDoc;
+		mboAcaoDoc = getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0);
+		
 		System.out.println(">>>>>>>>> Dentro do Metodo DefineDoc() ");
 		String StsPec="";
 		String StsAcoes="";
 		StsPec= app.getDataBean("MAINRECORD").getMbo().getString("STATUSPEC");
-		StsAcoes= getMbo().getMboSet("MSTBPEC_ACOES3").getMbo(0).getString("DESCRIPTION");
+				
+		System.out.println(">>>>>>>>> Status do Registro nesse momento:  "+StsPec);
+		System.out.println(">>>>>>>>> Status da Acao:  "+mboAcaoDoc.getString("DESCRIPTION"));
+		System.out.println(">>>>>>>>> Opcao do momento:  "+getMbo().getString("DESCRIPTION"));			
 		
-		System.out.println(">>>>>>>>> Valor do STATUSPEC da PO:"+StsPec);
-		System.out.println(">>>>>>>>> Valor da descricao para Acoes:"+StsAcoes);
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*System.out.println(">>>>>>>>> Valor do STATUSPEC da PO:"+StsPec+"=="+StsAcoes);
+		StsAcoes= getMbo().getMboSet("MSTBPEC_ACOES3").getMbo(0).getString("DESCRIPTION");		
 		if(StsPec==StsAcoes){
 			
 			if(!getMbo().getMboSet("MSTBPEC_ACOES3").getMbo(0).getMboSet("MSTBPEC_DOC").isEmpty()){
@@ -223,7 +239,8 @@ public class MsDistPEC extends DataBean {
 				//setarDocPec();
 			}
 			
-		}		
+		}*/
+		
 		
 	}
 	private void fecharERotear() throws RemoteException, MXException {
