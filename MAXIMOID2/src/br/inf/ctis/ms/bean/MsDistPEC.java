@@ -211,7 +211,7 @@ public class MsDistPEC extends DataBean {
 			
 			
 			
-			if (getMbo().getMboSet("MSTBCONTE").isEmpty()){
+			if (app.getDataBean("MAINRECORD").getMbo(0).getMboSet("MSTBCONTE").isEmpty()){
 				
 				System.out.println(">>>>>>>>> Dentro do if MSTBCONTE ");
 				
