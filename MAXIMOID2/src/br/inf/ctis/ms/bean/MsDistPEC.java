@@ -244,40 +244,7 @@ public class MsDistPEC extends DataBean {
 				}
 			}
 		}
-			
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*System.out.println(">>>>>>>>> Valor do STATUSPEC da PO:"+StsPec+"=="+StsAcoes);
-		StsAcoes= getMbo().getMboSet("MSTBPEC_ACOES3").getMbo(0).getString("DESCRIPTION");		
-		if(StsPec==StsAcoes){
-			
-			if(!getMbo().getMboSet("MSTBPEC_ACOES3").getMbo(0).getMboSet("MSTBPEC_DOC").isEmpty()){
 				
-				System.out.println(">>>>>>>>> Tabela de Documentos para as acoes esta populada! ");
-				
-				for(int i=0;i < app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").count();i++){
-					
-					System.out.println(">>>>>>>>> Modelo de Documento: "+app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").getMbo(i).getString("DESCRIPTION"));
-					
-					for(int j=0;j < app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").getMbo(i).getMboSet("MSTBCLACAP").count();j++){
-						
-						System.out.println(">>>>>>>>> Clausula: "+app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").getMbo(i).getMboSet("MSTBCLACAP").getMbo(j).getString("MSPOSICAO"));
-					}
-				}
-				
-				//setarDocPec();
-			}
-			
-		}*/
-		
 		
 	}
 	private void fecharERotear() throws RemoteException, MXException {
