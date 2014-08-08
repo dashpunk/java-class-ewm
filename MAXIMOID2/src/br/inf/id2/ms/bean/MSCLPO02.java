@@ -23,7 +23,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	int qtdAnexoMsg = 0;
 	
     public MSCLPO02() {
-    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste04");
+    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste05");
     }
 
     /**
@@ -137,30 +137,29 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
     protected void initialize() throws MXException, RemoteException {
     	super.initialize();
     	
+    	if(!getMbo().getMboSet("MSTBCONTE").isEmpty()){
+			
+			for(int i=0;i < getMbo().getMboSet("MSTBCONTE").count();i++){
+				    				
+				MboRemote mboConte1 = getMbo().getMboSet("MSTBCONTE").getMbo(i);
+				   				
+				System.out.println(">>>>>>>>> Dentro do FOR para setar PONUM em MSTBCONTE"+mboConte1.getString("MSPOSICAO"));
+				if(mboConte1.isNull("PONUM")){
+					System.out.println(">>>>>>>>> Entrando no IF para setar o PONUM em MSTBCONTE");
+            		
+					System.out.println(">>>>>>>>> Valor do PONUM: "+getMbo().getInt("PONUM"));        
+                	//mboConte1.setValue("PONUM", getMbo().getInt("PONUM"));
+                	            	
+				}
+				
+			
+			}
+			
+		}
     	
     	try {
     		
-    		if(!getMbo().getMboSet("MSTBCONTE").isEmpty()){
-    			MboRemote mboConte;
-    			
-    			for(int i=0;i < getMbo().getMboSet("MSTBCONTE").count();i++){
-    				    				
-    				MboRemote mboConte1 = getMbo().getMboSet("MSTBCONTE").getMbo(i);
-    				   				
-    				System.out.println(">>>>>>>>> Dentro do FOR para setar PONUM em MSTBCONTE"+mboConte1.getString("MSPOSICAO"));
-    				if(mboConte1.isNull("PONUM")){
-    					System.out.println(">>>>>>>>> Entrando no IF para setar o PONUM em MSTBCONTE");
-                		
-    					System.out.println(">>>>>>>>> Valor do PONUM: "+getMbo().getInt("PONUM"));        
-                    	mboConte1.setValue("PONUM", getMbo().getInt("PONUM"));
-                    	            	
-    				}
-    				
-    			
-    			}
-    			
-    		}
-    		
+    		  		
     		
             Properties prop;
             prop = MXServer.getMXServer().getConfig();
