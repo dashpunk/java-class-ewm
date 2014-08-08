@@ -43,7 +43,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste2");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste03");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -196,7 +196,8 @@ public class MsDistPEC extends DataBean {
 	}
 	private void DefineDoc() throws RemoteException, MXException {
 		
-		
+		MboRemote mboDoc;
+		MboRemote mboDestino = null;
 		MboRemote mboAcaoDoc;
 		mboAcaoDoc = getMbo().getMboSet("MSTBPEC_ACOES2").getMbo(0);
 		
@@ -204,10 +205,44 @@ public class MsDistPEC extends DataBean {
 		
 		if(!mboAcaoDoc.getMboSet("MSTBPEC_DOC").isEmpty()){
 			System.out.println(">>>>>>>>> Existe Documento para Inserir neste momento, O DOCUMENTO E: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getString("DESCRIPTION"));
-			//mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0)
-			
+						
 			app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getInt("MSTBDOCID"));
-			super.save();
+			super.save();		
+			
+			
+			
+			if (getMbo().getMboSet("MSTBCONTE").isEmpty()){
+				
+				System.out.println(">>>>>>>>> Dentro do if MSTBCONTE ");
+				
+				for (int i = 0; ((mboDoc= app.getDataBean("MAINRECORD").getMbo(0).getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBMOD").getMbo(0).getMboSet("MSTBCLACAP").getMbo(i)) !=null); i++) {
+					
+					System.out.println(">>>>>>>>> Posicao da Clausula:  "+mboDoc.getString("MSPOSICAO"));
+					
+					mboDestino = getMbo().getMboSet("MSTBCONTE").add();
+					
+					mboDestino.setValue("DESCRIPTION", mboDoc.getString("DESCRIPTION"));
+					
+					mboDestino.setValue("MSPOSICAO", mboDoc.getString("MSPOSICAO"));
+					;
+					mboDestino.setValue("MSTBDOCID", getMbo().getInt("MSTBDOCID"));
+					
+					mboDestino.setValue("MSTBCLACAPID", mboDoc.getInt("MSTBCLACAPID"));
+					
+					mboDestino.setValue("PONUM",  app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"));
+					
+					System.out.println(">>>>>>>>> Antes da checagem do item bloqueado");
+					if(mboDoc.getBoolean("MSBLOQUEADO")){
+						mboDestino.setValue("MSTATUS", "BLOQUEADO");
+						System.out.println(">>>>>>>>> Setando BLOQUEADO em mstatus");
+					}
+					else{
+						mboDestino.setValue("MSTATUS", "LIBERADO");
+					}
+					
+					
+				}
+			}
 		}
 			
 		
