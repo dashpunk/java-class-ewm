@@ -203,6 +203,19 @@ public class MsDistPEC extends DataBean {
 		
 		System.out.println(">>>>>>>>> Dentro do Metodo DefineDoc() ");
 		
+		System.out.println(">>>>>>>>> Em po, String statuspec: "+Statuspec);
+		System.out.println(">>>>>>>>> Em po,Statuspec retirado do banco: "+app.getDataBean("MAINRECORD").getMbo(0).getString("STATUSPEC"));
+		System.out.println(">>>>>>>>> Em po, MSPECACAO: "+app.getDataBean("MAINRECORD").getMbo(0).getInt("MSPECACAO"));
+		System.out.println(">>>>>>>>> Em Opcoes, acoesid e: "+getMbo().getInt("MSTBPEC_ACOESID"));
+		System.out.println(">>>>>>>>> Em Opcoes, msacao e: "+getMbo().getInt("MSACAO"));
+		System.out.println(">>>>>>>>> Em Opcoes, Description e: "+getMbo().getString("DESCRIPTION"));
+		System.out.println(">>>>>>>>> Em acoes, acoesid e: "+getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0).getInt("MSTBPEC_ACOESID"));
+		System.out.println(">>>>>>>>> Em acoes, msacao e: "+getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0).getInt("MSACAOID"));
+		System.out.println(">>>>>>>>> Em acoes, Description e: "+getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0).getString("DESCRIPTION"));
+		
+		
+		
+		
 		if(!mboAcaoDoc.getMboSet("MSTBPEC_DOC").isEmpty()){
 			System.out.println(">>>>>>>>> Existe Documento para Inserir neste momento, O DOCUMENTO E: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getString("DESCRIPTION"));
 						
@@ -229,7 +242,7 @@ public class MsDistPEC extends DataBean {
 					
 					mboDestino.setValue("MSTBCLACAPID", mboDoc.getInt("MSTBCLACAPID"));
 					
-					//mboDestino.setValue("PONUM",  app.getDataBean("MAINRECORD").getMbo(0).getInt("PONUM"));
+					mboDestino.setValue("PONUM",  app.getDataBean("MAINRECORD").getMbo(0).getString("PONUM"));
 					
 					System.out.println(">>>>>>>>> Antes da checagem do item bloqueado");
 					if(mboDoc.getBoolean("MSBLOQUEADO")){
