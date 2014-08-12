@@ -43,7 +43,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste01");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste02");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -215,7 +215,7 @@ public class MsDistPEC extends DataBean {
 				System.out.println(">>>>>>>>> Dentro do for de verificação de documentos");
 				System.out.println(">>>>>>>>> Valor do Tipo na DOCFLUXO: "+TipDocFlux);
 				System.out.println(">>>>>>>>> Valor da Tipo na PO: "+TipDocPo);
-				if(TipDocFlux==TipDocPo){
+				if(TipDocPo.equals(TipDocFlux)){
 					
 					System.out.println(">>>>>>>>> Dentro do if de INEXIGIBILIDADE, valor: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
 					app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
@@ -223,15 +223,12 @@ public class MsDistPEC extends DataBean {
 					
 				}
 				else{
-					System.out.println(">>>>>>>>> Não Entrou no IF");
+					System.out.println(">>>>>>>>> Não Existe Documento Criado para o Modelo!");
 				}
 				
-			}
-			
-			
-					
-			
-			
+			}		
+						
+				
 			
 			if (app.getDataBean("MAINRECORD").getMbo(0).getMboSet("MSTBCONTE").isEmpty()){
 				
