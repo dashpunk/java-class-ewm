@@ -25,9 +25,12 @@ public class MsGuiaReme extends AppBean {
 	@Override
 	public void save() throws MXException {
 		Properties prop;
+		Connection conexao = null;
+		Statement st2 = null;
+		ResultSet idMax = null;
+		
 		try {
 			if(getMbo().isNew()){
-				
 				prop = MXServer.getMXServer().getConfig();
 				
 				String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
@@ -36,11 +39,12 @@ public class MsGuiaReme extends AppBean {
 	            String password = prop.getProperty("mxe.db.password", "max894512");
 				Class.forName(driver).newInstance();
 				
-				Connection conexao;
 				conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
 				
-				Statement st2 = conexao.createStatement();
-				ResultSet idMax = st2.executeQuery("select nvl(max(TO_NUMBER(ltrim(MSCODREMESSA))),0) from MSREMESSA");
+				st2 = conexao.createStatement();
+				idMax = st2.executeQuery("select nvl(max(TO_NUMBER(ltrim(MSCODREMESSA))),0) from MSREMESSA");
+				
+				
 				if (idMax.next()) {
 					ultimoNumero = idMax.getInt(1);
 				}
@@ -69,6 +73,10 @@ public class MsGuiaReme extends AppBean {
             Logger.getLogger(MsTbArp.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+		    try { conexao.close(); } catch (Exception e) { /**/ }
+		    try { st2.close(); } catch (Exception e) { /**/ }
+		    try { idMax.close(); } catch (Exception e) { /**/ }
 		}
 	}
 }

@@ -27,11 +27,24 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 		System.out.print("CTIS # --- Entrou na Classe AppBean MsCotacao SAVE()");
 		
 		MboRemote mbo1;
+		MboRemote mbo2;
+		int contador = 0;
 		
 		for (int i = 0; ((mbo1 = getMbo().getMboSet("MSTBMEDICPERSISTENTE").getMbo(i)) != null); i++) {
 						
 			System.out.println("########## Count Cotacoes do Medicamento = " + mbo1.getMboSet("MSTBCOTCDJU").count());
-			if (mbo1.getMboSet("MSTBCOTCDJU").count() > 1) {
+			if (mbo1.getMboSet("MSTBCOTCDJU").count() > 0) {
+				
+				for(int j = 0; ((mbo2 = mbo1.getMboSet("MSTBCOTCDJU").getMbo(j)) != null); j++) {
+					System.out.println("########## Posicao  = " + j);
+					if (!mbo2.toBeDeleted()) {
+						System.out.println("########## Posicao !toBeDeleted() = " + j);
+						contador++;
+					}
+				}
+			}
+									
+			if (contador > 1) {
 				throw new MXApplicationException("cotacao", "MaisQueUmaCotacaoPorMedicamento");
 			}
 		}
