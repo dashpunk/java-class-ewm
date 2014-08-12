@@ -210,7 +210,7 @@ public class MsDistPEC extends DataBean {
 			for(int k=0;k < mboAcaoDoc.getMboSet("MSTBPEC_DOC").count();k++){
 				
 				System.out.println(">>>>>>>>> Dentro do for de verificação de documentos");
-				System.out.println(">>>>>>>>> Valor do Description da DOCFLUXO: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getString("DESCRIPTION"));
+				System.out.println(">>>>>>>>> Valor do Description da DOCFLUXO: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getString("MSTIPDOC"));
 				System.out.println(">>>>>>>>> Valor da Modalidade na PO: "+app.getDataBean("MAINRECORD").getMbo().getString("MSALCODTIPOCONTRATACAO"));
 				if(mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getString("MSTIPDOC")==app.getDataBean("MAINRECORD").getMbo().getString("MSALCODTIPOCONTRATACAO")){
 					
