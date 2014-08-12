@@ -43,7 +43,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste04");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste05");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -203,24 +203,30 @@ public class MsDistPEC extends DataBean {
 		
 		System.out.println(">>>>>>>>> Dentro do Metodo DefineDoc() ");
 		
-		System.out.println(">>>>>>>>> Em po, String statuspec: "+Statuspec);
-		System.out.println(">>>>>>>>> Em po,Statuspec retirado do banco: "+app.getDataBean("MAINRECORD").getMbo(0).getString("STATUSPEC"));
-		System.out.println(">>>>>>>>> Em po, MSPECACAO: "+app.getDataBean("MAINRECORD").getMbo(0).getInt("MSPECACAO"));
-		System.out.println(">>>>>>>>> Em Opcoes, acoesid e: "+getMbo().getInt("MSTBPEC_ACOESID"));
-		System.out.println(">>>>>>>>> Em Opcoes, msacao e: "+getMbo().getInt("MSACAO"));
-		System.out.println(">>>>>>>>> Em Opcoes, Description e: "+getMbo().getString("DESCRIPTION"));
-		System.out.println(">>>>>>>>> Em acoes, acoesid e: "+getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0).getInt("MSTBPEC_ACOESID"));
-		System.out.println(">>>>>>>>> Em acoes, msacao e: "+getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0).getInt("MSACAOID"));
-		System.out.println(">>>>>>>>> Em acoes, Description e: "+getMbo().getMboSet("MSTBPEC_ACOES").getMbo(0).getString("DESCRIPTION"));
-		
-		
-		
-		
+				
 		if(!mboAcaoDoc.getMboSet("MSTBPEC_DOC").isEmpty()){
 			System.out.println(">>>>>>>>> Existe Documento para Inserir neste momento, O DOCUMENTO E: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getString("DESCRIPTION"));
 						
-			app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getInt("MSTBDOCID"));
-			super.save();		
+			for(int k=0;k < mboAcaoDoc.getMboSet("MSTBPEC_DOC").count();k++){
+				
+				System.out.println(">>>>>>>>> Dentro do for de verificação de documentos");
+				if(mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getString("DESCRIPTION").equalsIgnoreCase("INEXIGIBILIDADE")){
+					
+					System.out.println(">>>>>>>>> Dentro do if de INEXIGIBILIDADE, valor: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
+					app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
+					super.save();
+					
+				}
+				else{
+					System.out.println(">>>>>>>>> Dentro do if de DISPENSA, valor: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
+					app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
+					super.save();
+				}
+				
+			}
+			
+			
+					
 			
 			
 			
