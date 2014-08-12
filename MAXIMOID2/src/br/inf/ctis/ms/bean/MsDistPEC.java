@@ -43,7 +43,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste06");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste01");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -206,13 +206,16 @@ public class MsDistPEC extends DataBean {
 				
 		if(!mboAcaoDoc.getMboSet("MSTBPEC_DOC").isEmpty()){
 			System.out.println(">>>>>>>>> Existe Documento para Inserir neste momento, O DOCUMENTO E: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(0).getString("DESCRIPTION"));
-						
+			String TipDocPo="";
+			String TipDocFlux="";	
 			for(int k=0;k < mboAcaoDoc.getMboSet("MSTBPEC_DOC").count();k++){
 				
+				TipDocPo = app.getDataBean("MAINRECORD").getMbo().getString("MSALCODTIPOCONTRATACAO");
+				TipDocFlux = mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getString("MSTIPDOC");
 				System.out.println(">>>>>>>>> Dentro do for de verificação de documentos");
-				System.out.println(">>>>>>>>> Valor do Description da DOCFLUXO: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getString("MSTIPDOC"));
-				System.out.println(">>>>>>>>> Valor da Modalidade na PO: "+app.getDataBean("MAINRECORD").getMbo().getString("MSALCODTIPOCONTRATACAO"));
-				if(mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getString("MSTIPDOC")==app.getDataBean("MAINRECORD").getMbo().getString("MSALCODTIPOCONTRATACAO")){
+				System.out.println(">>>>>>>>> Valor do Tipo na DOCFLUXO: "+TipDocFlux);
+				System.out.println(">>>>>>>>> Valor da Tipo na PO: "+TipDocPo);
+				if(TipDocFlux==TipDocPo){
 					
 					System.out.println(">>>>>>>>> Dentro do if de INEXIGIBILIDADE, valor: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
 					app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
