@@ -210,7 +210,7 @@ public class MsDistPEC extends DataBean {
 			for(int k=0;k < mboAcaoDoc.getMboSet("MSTBPEC_DOC").count();k++){
 				
 				System.out.println(">>>>>>>>> Dentro do for de verificação de documentos");
-				if(mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getString("DESCRIPTION").equalsIgnoreCase("INEXIGIBILIDADE")){
+				if(mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getString("DESCRIPTION")==app.getDataBean("MAINRECORD").getMbo().getString("MSALCODTIPOCONTRATACAO")){
 					
 					System.out.println(">>>>>>>>> Dentro do if de INEXIGIBILIDADE, valor: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
 					app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
@@ -218,9 +218,7 @@ public class MsDistPEC extends DataBean {
 					
 				}
 				else{
-					System.out.println(">>>>>>>>> Dentro do if de DISPENSA, valor: "+mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
-					app.getDataBean("MAINRECORD").getMbo().setValue("MSTBDOCID",mboAcaoDoc.getMboSet("MSTBPEC_DOC").getMbo(k).getInt("MSTBDOCID"));
-					super.save();
+					System.out.println(">>>>>>>>> Não Entrou no IF");
 				}
 				
 			}
