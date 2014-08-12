@@ -43,7 +43,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste02");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste03");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -241,6 +241,8 @@ public class MsDistPEC extends DataBean {
 					mboDestino = app.getDataBean("MAINRECORD").getMbo(0).getMboSet("MSTBCONTE").add();
 					
 					mboDestino.setValue("DESCRIPTION", mboDoc.getString("DESCRIPTION"));
+					
+					mboDestino.setValue("MSTITULO", mboDoc.getString("MSTITULO"));
 					
 					mboDestino.setValue("MSPOSICAO", mboDoc.getString("MSPOSICAO"));
 					;
