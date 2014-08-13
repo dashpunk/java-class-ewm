@@ -1,6 +1,7 @@
 package br.inf.ctis.ms.field;
 
 import java.rmi.RemoteException;
+import java.util.Calendar;
 import java.util.Date;
 import br.inf.id2.common.util.Data;
 import psdi.mbo.MboValue;
@@ -17,9 +18,13 @@ public class MsDtDtaAtualizacao extends MboValueAdapter{
 	public void validate() throws MXException, RemoteException {
 		super.validate();
 
-		Date dataAtualizacao = getMboValue().getDate();
+		Calendar dataAtualizacao = Calendar.getInstance(); 
+		dataAtualizacao.setTime(getMboValue().getDate());
+		
 		System.out.println("########## dataAtesto = " + dataAtualizacao);
-		String mesAno = dataAtualizacao.getMonth()+"/"+dataAtualizacao.getYear();
+		System.out.println("########## dataAtesto.MONTH = " + dataAtualizacao.get(Calendar.MONTH));
+		System.out.println("########## dataAtesto.YEAR = " + dataAtualizacao.get(Calendar.YEAR));
+		String mesAno = dataAtualizacao.get(Calendar.MONTH)+"/"+dataAtualizacao.get(Calendar.YEAR);
 		System.out.println("########## mesAno = " + mesAno);
 		getMboValue("MSALCODMESANO").setValue(mesAno);
 		
