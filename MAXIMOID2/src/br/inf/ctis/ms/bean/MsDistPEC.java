@@ -43,7 +43,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste03");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste01");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -251,6 +251,16 @@ public class MsDistPEC extends DataBean {
 					mboDestino.setValue("MSTBCLACAPID", mboDoc.getInt("MSTBCLACAPID"));
 					
 					mboDestino.setValue("PONUM",  app.getDataBean("MAINRECORD").getMbo(0).getString("PONUM"));
+					
+					System.out.println(">>>>>>>>> Antes de verificar se o PAI e NULL");
+					if(mboDoc.isNull("MSPAI")){
+						mboDestino.setValue("MSPAI", "0");
+						System.out.println(">>>>>>>>> PAI NULL");
+					}
+					if(!mboDoc.isNull("MSPAI")){
+						mboDestino.setValue("MSPAI",mboDoc.getString("MSPAI"));
+						System.out.println(">>>>>>>>> PAI"+mboDoc.getString("MSPAI"));
+					}
 					
 					System.out.println(">>>>>>>>> Antes da checagem do item bloqueado");
 					if(mboDoc.getBoolean("MSBLOQUEADO")){
