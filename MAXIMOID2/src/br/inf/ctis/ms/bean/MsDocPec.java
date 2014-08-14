@@ -30,7 +30,7 @@ public class MsDocPec extends AppBean {
 	
 	
 	public MsDocPec() {
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec8");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDocPec1");
 	}
 	
 	@SuppressWarnings("null")
@@ -59,11 +59,14 @@ public class MsDocPec extends AppBean {
 						
 						mboDestino.setValue("MSTBCLACAPID", mbo.getInt("MSTBCLACAPID"));
 						
+						System.out.println(">>>>>>>>> Antes de verificar se o PAI e NULL");
 						if(mbo.isNull("MSPAI")){
 							mboDestino.setValue("MSPAI", 0);
+							System.out.println(">>>>>>>>> PAI NULL");
 						}
 						if(!mbo.isNull("MSPAI")){
 							mboDestino.setValue("MSPAI",mbo.getString("MSPAI"));
+							System.out.println(">>>>>>>>> PAI"+mbo.getString("MSPAI"));
 						}
 						
 						
