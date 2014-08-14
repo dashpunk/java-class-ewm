@@ -1,6 +1,10 @@
 package br.inf.ctis.ms.field;
 
 import java.rmi.RemoteException;
+import java.util.Calendar;
+
+import psdi.mbo.Mbo;
+import psdi.mbo.MboRemote;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
 import psdi.util.MXException;
@@ -13,22 +17,51 @@ public class DespachosCdju extends MboValueAdapter {
 
 	public void initValue() throws MXException, RemoteException {
 		super.initValue();
-		if (getMboValue().getMbo().isNew()) {
+		if(getMboValue().getMbo().isNew()) {
 			define();
 		}
 	}
 
 	private void define() throws MXException {
 		try {
-			despacho1();
-
+			if(getMboValue().getName().equalsIgnoreCase("MSCLOBDESPACHO01")) {
+				despacho1();
+			} else if(getMboValue().getName().equalsIgnoreCase("MSCLOBDESPACHO02")) {
+				despacho2();
+			} else if(getMboValue().getName().equalsIgnoreCase("MSCLOBDESPACHO03")) {
+				despacho3();
+			} else if(getMboValue().getName().equalsIgnoreCase("MSCLOBDESPACHO04")) {
+				despacho4();
+			} else if(getMboValue().getName().equalsIgnoreCase("MSCLOBDESPACHO05")) {
+				despacho5();
+			}
+			
 		} catch (RemoteException re) {
-			System.out
-					.println("######## Despacho invalido: " + re.getMessage());
+			System.out.println("######## Despacho invalido: " + re.getMessage());
 		}
 	}
 
 	private void despacho1() throws MXException, RemoteException {
+		
+		
+	}
+
+	private void despacho2() throws MXException, RemoteException {
+		
+		
+	}
+
+	private void despacho3() throws MXException, RemoteException {
+		
+		
+	}
+
+	private void despacho4() throws MXException, RemoteException {
+		
+		
+	}
+
+	private void despacho5() throws MXException, RemoteException {
 
 		MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0);
 		MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
@@ -82,10 +115,8 @@ public class DespachosCdju extends MboValueAdapter {
 		// val.append("<p style=\"text-align: justify;\">  Informamos que essa empresa deverá apresentar, no prazo de 10 (dias) dias úteis. Contados da data de publicação do extrato do Contrato no Diário Oficial da União, comprovante de prestação de garantia, no valor de R$ "+purch.getFloat("MSNUNUMVALORGLOBAL")
 		// *
 		// 0.5+", correspondente a XX (XXXXXX) do valor do Contrato, conforme disposto no § 1°, artigo 56, da lei n.° 8666/93. A referida garantia deve ser apresentada com <u>vigência vinculada ao prazo de execução do Contrato</u>.</p>");
-		val.append("<p style=\"text-align: justify;\"><span style=\"background-color: #ffff00;\">"
-				+ inex.getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCLAUPAR")
-						.getMbo(0).getMboSet("MSTBCONTE").getMbo(0)
-						.getString("DESCRIPTION") + "</span></p>");
+		val.append("<p style=\"text-align: justify;\"><span style=\"background-color: #ffff00;\">" 
+				+ inex.getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCLAUPAR").getMbo(0).getMboSet("MSTBCONTE").getMbo(0).getString("DESCRIPTION") + "</span></p>");
 		val.append("<p>Atenciosamente,</p>");
 		val.append("<p align=\"center\"><strong>&nbsp;</strong></p>");
 		val.append("<p align=\"center\"><strong>XXXXXXXXXXXXXXXXXX</strong><br />");
@@ -98,8 +129,7 @@ public class DespachosCdju extends MboValueAdapter {
 		val.append("</table>");
 		val.append("</body>");
 
-		getMboValue().setValue(val.toString(),
-				Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
+		getMboValue().setValue(val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
 
 	}
 }
