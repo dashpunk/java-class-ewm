@@ -3,7 +3,6 @@ package br.inf.ctis.ms.field;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.Date;
-import br.inf.id2.common.util.Data;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
 import psdi.util.MXException;
@@ -18,13 +17,19 @@ public class MsDtDtaAtualizacao extends MboValueAdapter{
 	public void validate() throws MXException, RemoteException {
 		super.validate();
 
+		Date data = getMboValue().getDate();
 		Calendar dataAtualizacao = Calendar.getInstance(); 
-		dataAtualizacao.setTime(getMboValue().getDate());
+		dataAtualizacao.setTime(data);
+		String mesAno;
 		
-		System.out.println("########## dataAtesto = " + dataAtualizacao);
-		System.out.println("########## dataAtesto.MONTH = " + dataAtualizacao.get(Calendar.MONTH));
+		System.out.println("########## dataAtesto = " + data);
+		System.out.println("########## dataAtesto.MONTH = " + dataAtualizacao.get(Calendar.MONTH)+1);
 		System.out.println("########## dataAtesto.YEAR = " + dataAtualizacao.get(Calendar.YEAR));
-		String mesAno = dataAtualizacao.get(Calendar.MONTH)+"/"+dataAtualizacao.get(Calendar.YEAR);
+		if(dataAtualizacao.get(Calendar.MONTH) < 10) {
+			mesAno = "0"+(dataAtualizacao.get(Calendar.MONTH)+1)+"/"+dataAtualizacao.get(Calendar.YEAR);
+		} else {
+			mesAno = (dataAtualizacao.get(Calendar.MONTH)+1)+"/"+dataAtualizacao.get(Calendar.YEAR);
+		}
 		System.out.println("########## mesAno = " + mesAno);
 		getMboValue("MSALCODMESANO").setValue(mesAno);
 		
