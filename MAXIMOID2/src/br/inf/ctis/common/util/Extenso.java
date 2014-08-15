@@ -138,7 +138,7 @@ public class Extenso {
 	            while (buf.toString().endsWith(" "))  
 	                buf.setLength(buf.length()-1);  
 	            if (ehPrimeiroGrupoUm())  
-	                buf.insert(0, "h");  
+	                buf.insert(0, "");  
 	            if (nro.size() == 2 && ((Integer)nro.get(1)).intValue() == 1) {  
 	                buf.append(" real");  
 	            } else {  
