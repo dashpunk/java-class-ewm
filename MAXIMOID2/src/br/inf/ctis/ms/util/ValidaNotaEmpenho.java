@@ -1,6 +1,6 @@
 package br.inf.ctis.ms.util;
 
-public class VerificaArp {
+public class ValidaNotaEmpenho {
 
 	/**
 	 * @param args

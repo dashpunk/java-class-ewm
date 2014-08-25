@@ -1,6 +1,6 @@
 package br.inf.ctis.ms.util;
 
-public class VerificaNotaEmpenho {
+public class ValidaInexigibilidade {
 
 	/**
 	 * @param args
