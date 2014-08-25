@@ -1,6 +1,6 @@
 package br.inf.ctis.ms.util;
 
-public class VerificaInexigibilidade {
+public class ValidaArp {
 
 	/**
 	 * @param args

@@ -1,6 +1,6 @@
 package br.inf.ctis.ms.util;
 
-public class VerificaPregao {
+public class ValidaPregao {
 
 	/**
 	 * @param args
