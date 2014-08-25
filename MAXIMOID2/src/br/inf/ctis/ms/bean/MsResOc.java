@@ -54,7 +54,7 @@ public class MsResOc extends AppBean {
         val.append("<tr>");
 		val.append("<td width=\"900\" valign=\"top\">");
 		val.append("<p align=\"left\"><strong>Despacho Referente ao Processo<strong><br/>");
-		val.append("<p align=\"left\">Registro SIPAR n.º: " + sipar + " – Ação Judicial – <strong>XXXXXXXXXX<strong><br/>");
+		val.append("<p align=\"left\">Registro SIPAR n.º: " + sipar + " - Ação Judicial - <strong>XXXXXXXXXX<strong><br/>");
 		val.append("</td>");
 		val.append("</tr>");
 		val.append("</table>");
@@ -110,7 +110,7 @@ public class MsResOc extends AppBean {
         val.append("<tr>");
 		val.append("<td width=\"900\" valign=\"top\">");
 		val.append("<p align=\"left\"><strong>Despacho Referente ao Processo<strong><br/>");
-		val.append("<p align=\"left\">Registro SIPAR n.º: " + sipar + " – Ação Judicial – <strong>XXXXXXXXXX<strong><br/>");
+		val.append("<p align=\"left\">Registro SIPAR n.º: " + sipar + " - Ação Judicial - <strong>XXXXXXXXXX<strong><br/>");
 		val.append("</td>");
 		val.append("</tr>");
 		val.append("</table>");
@@ -173,7 +173,7 @@ public class MsResOc extends AppBean {
         val.append("<tr>");
 		val.append("<td width=\"900\" valign=\"top\">");
 		val.append("<p align=\"left\"><strong>Despacho Referente ao Processo<strong><br/>");
-		val.append("<p align=\"left\">Registro SIPAR n.º: " + sipar + " – Ação Judicial – <strong>XXXXXXXXXX<strong><br/>");
+		val.append("<p align=\"left\">Registro SIPAR n.º: " + sipar + " - Ação Judicial - <strong>XXXXXXXXXX<strong><br/>");
 		val.append("</td>");
 		val.append("</tr>");
 		val.append("</table>");

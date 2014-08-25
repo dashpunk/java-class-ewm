@@ -53,17 +53,17 @@ public class VerificaValidade implements CustomCondition  {
 
 				// Calculos
 				
-				int Dias1 = (int) ((DataEntrega.getTime() - DataValidade.getTime()) / (1000 * 60 * 60 * 24));
+				int Dias1 = (int) ((DataEntrega.getTime() - DataFabricacao.getTime()) / (1000 * 60 * 60 * 24));
 				int Dias2 = (int) ((DataValidade.getTime() - DataFabricacao.getTime()) / (1000 * 60 * 60 * 24));
 				
-				System.out.println("Diferença de Dias: Data de Entrega  -  Data de Validade = " + Dias1);
+				System.out.println("Diferença de Dias: Data de Entrega  -  Data de Fabricação = " + Dias1);
 				System.out.println("Diferença de Dias: Data de Validade  -  Data de Fabricação = " + Dias2);
 				
-				int PercentDias = (100 * Dias1) / Dias2;
+				int PercentDias = (Dias2 * 30) / 100;
 				
 				System.out.println("Porcentagem: " + PercentDias);
 				
-				if (PercentDias > 30){
+				if (Dias1 > PercentDias){
 					System.out.println("Retorno: FALSE");
 					retorno = retorno + 1;
 				} else {
