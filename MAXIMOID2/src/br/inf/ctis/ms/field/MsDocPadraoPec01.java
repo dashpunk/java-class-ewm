@@ -84,7 +84,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    System.out.println(">>>>>>>>>>> Dentro do metodo oficio da classe MsDocPadraoPec01");
 	    
 	    val.append("<body>");
-	    val.append("<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\">");
+	    val.append("<table>");
 	    val.append("<tr>");
 	    val.append("<td width=\"900\" valign=\"top\">");
 	    val.append("<p align=\"center\"><strong><img src=\"../webclient/imgpec/brasao.png\" alt=\"cabMS\" width=\"66\" height=\"76\" /></strong> <br/>");
@@ -109,12 +109,12 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("Telefone/Fax: "+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("PHONE")+"/"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getMboSet("COMPANIES").getMbo(0).getString("FAX")+"<br/></p>");
 	    val.append("<p>Assunto: Assinatura do Contrato n.°"+ purch.getString("CONTRACTNUM") +" e prestação da garantia</p>");
 	    val.append("<p>Ref.: Processo Eletrônico de Compras: n.° "+inex.getString("MS_SIPARNUM")+"</p>");
-	    val.append("<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Senhor Representante </p>");
+	    val.append("<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Senhor Representante </p>");
 	    val.append("<p style=\"text-align: justify;\">1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comunicamos a Vossa Senhoria que essa empresa fica convocada, na forma prevista no Art. XX da Lei n.° 8.666/93, no prazo de XX (XXXXX) dias úteis, para assinatura do Contrato Administrativo n.°"+ purch.getString("CONTRACTNUM") +", cujo o objetivo é a aquisição de,"+inex.getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0).getFloat("MSNUNUMQTDCONTRATADAINEX")+" "+inex.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+" "+inex.getMboSet("POLINE").getMbo(0).getMboSet("ID2RELMEASUREUNIT").getMbo(0).getString("DESCRIPTION")+" sob pena de aplicação das penalidades previstas em lei. </p>");
 	    val.append("<p style=\"text-align: justify;\">2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Informamos que essa empresa deverá apresentar, no prazo de 10 (dias) dias úteis. Contados da data de publicação do extrato do Contrato no Diário Oficial da União, comprovante de prestação de garantia, no valor de R$ "+purch.getFloat("MSNUNUMVALORGLOBAL") * 0.5+" (" + extenso.toString() + "), correspondente a XX (XXXXXX) do valor do Contrato, conforme disposto no § 1°, artigo 56, da lei n.° 8666/93. A referida garantia deve ser apresentada com <u>vigência vinculada ao prazo de execução do Contrato</u>.</p>");
 	    //A LINHA ABAIXO SERVE PARA FAZER MARCAÇÃO DE TEXTO
 	    //val.append("<p style=\"text-align: justify;\"><span style=\"background-color: #ffff00;\">"+inex.getMboSet("MSTBDOC").getMbo(0).getMboSet("MSTBCLAUPAR").getMbo(0).getMboSet("MSTBCONTE").getMbo(0).getString("DESCRIPTION")+"</span></p>");
-	    val.append("<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Atenciosamente,</p>");
+	    val.append("<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Atenciosamente,</p>");
 	    val.append("<p align=\"center\"><strong>&nbsp;</strong></p>");
 	    val.append("<p align=\"center\">XXXXXXXXXXXXXXXXXX<br />");
 	    val.append("<p align=\"center\">Chefe da Divisão de Contratos do Insumos Estratégicos para Saúde</p>");
