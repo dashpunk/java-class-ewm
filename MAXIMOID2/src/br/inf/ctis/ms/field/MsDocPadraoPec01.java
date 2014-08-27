@@ -32,7 +32,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	public MsDocPadraoPec01(MboValue mbv) throws MXException
 	  {
 	    super(mbv);
-	    System.out.println(">>>>>>>>>>> Dentro da classe MsDocPadraoPec01, versao 01");
+	    System.out.println(">>>>>>>>>>> Dentro da classe MsDocPadraoPec01, versao 02");
 	  }
 	
 	public void initValue() throws MXException, RemoteException {
