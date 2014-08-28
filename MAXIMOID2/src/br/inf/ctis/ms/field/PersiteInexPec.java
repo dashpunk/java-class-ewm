@@ -59,70 +59,67 @@ public class PersiteInexPec extends MAXTableDomain {
             	System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do for o valor de encontrado e:"+encontrado);
             	System.out.println(">>>>>>>>>>>>>>>>>>>> encontrou");
                 getMboValue().getMbo().setValue("MSNUNUMINEXIGIBILIDADE", mboSetInexOriginal.getMbo(i).getString("MSNUNUMINEXIGIBILIDADE"));
-                
-                break;
-            }        
+                                
+            }else{        
         
-        System.out.println(">>>>>>>>>>>>>>>>>>>> antes da validacao de encontrado");
+            	System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do Else de valor encontrado=false");
 
-        if (encontrado==false) {
-            
-        	String yesNoId = getClass().getName();
-            int userInput = MXApplicationYesNoCancelException.getUserInput(yesNoId, MXServer.getMXServer(), getMboValue().getMbo().getUserInfo());
-            
-            System.out.println("retorno = " + userInput);
-            switch (userInput) {
-                case MXApplicationYesNoCancelException.NULL:
-                    System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot null");
-                    Object params[] = {
-                        getMboValue().getString()
-                    };
-                    throw new MXApplicationYesNoCancelException(yesNoId, "Persistecase", "novoRegistro", params);
-
-                case MXApplicationYesNoCancelException.YES:
-                    System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot YES");
-                    System.out.println(">>>>>>>>>>>>>>>>>>>> Inexigibilidade");
-                   /* MboSet pessoas;
-                    pessoas = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("PERSON", mbo.getUserInfo());
-                    pessoas.setWhere("personid = '>>>>>>>>>>>>>>>>>>>>'");
-                    pessoas.reset();                   
-
-
-                    System.out.println("----------- pessoa");
-                    MboRemote pessoa = pessoas.add();
-                    String personId = pessoa.getString("PERSONID");
-                    System.out.println("---------- personId " + personId);
-                    System.out.println("---------- " + pessoa.getString("HASLD"));
-                    System.out.println("---------- " + pessoa.getString("LANGCODE"));
-                    System.out.println("---------- " + pessoa.getString("PERSONID"));
-                    System.out.println("---------- " + pessoa.getString("PERSONUID"));
-
-                    
-                    System.out.println("------------------ bb  antes " );
-                    pessoa.setFieldFlag("STATUS", MboConstants.READONLY, false);
-                    pessoa.setFieldFlag("STATUSDATE", MboConstants.READONLY, false);
-                    pessoa.setFieldFlag("STATUSIFACE", MboConstants.READONLY, false);
-                    pessoa.setFieldFlag("TRANSEMAILELECTION", MboConstants.READONLY, false);
-                   
-                    System.out.println("------------------ bb  antes " );
-
-                    System.out.println("----------- pessoas save");
-                    pessoas.save();
-                    System.out.println("----------- pessoas save a");                    
-					*/
-                   
-                    break;
-                case MXApplicationYesNoCancelException.NO: // '\020'
-                    System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot NO");
-                    //throw new MXApplicationException("system", "null");
-                    getMboValue().setValueNull();
-                default:
-                    System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot DEFAULT");
-                    break;
-            }
-
-
-          }
+	        	String yesNoId = getClass().getName();
+	            int userInput = MXApplicationYesNoCancelException.getUserInput(yesNoId, MXServer.getMXServer(), getMboValue().getMbo().getUserInfo());
+	            
+	            System.out.println("retorno = " + userInput);
+	            switch (userInput) {
+	                case MXApplicationYesNoCancelException.NULL:
+	                    System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot null");
+	                    Object params[] = {
+	                        getMboValue().getString()
+	                    };
+	                    throw new MXApplicationYesNoCancelException(yesNoId, "Persistecase", "novoRegistro", params);
+	
+	                case MXApplicationYesNoCancelException.YES:
+	                    System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot YES");
+	                    System.out.println(">>>>>>>>>>>>>>>>>>>> Inexigibilidade");
+	                   /* MboSet pessoas;
+	                    pessoas = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("PERSON", mbo.getUserInfo());
+	                    pessoas.setWhere("personid = '>>>>>>>>>>>>>>>>>>>>'");
+	                    pessoas.reset();                   
+	
+	
+	                    System.out.println("----------- pessoa");
+	                    MboRemote pessoa = pessoas.add();
+	                    String personId = pessoa.getString("PERSONID");
+	                    System.out.println("---------- personId " + personId);
+	                    System.out.println("---------- " + pessoa.getString("HASLD"));
+	                    System.out.println("---------- " + pessoa.getString("LANGCODE"));
+	                    System.out.println("---------- " + pessoa.getString("PERSONID"));
+	                    System.out.println("---------- " + pessoa.getString("PERSONUID"));
+	
+	                    
+	                    System.out.println("------------------ bb  antes " );
+	                    pessoa.setFieldFlag("STATUS", MboConstants.READONLY, false);
+	                    pessoa.setFieldFlag("STATUSDATE", MboConstants.READONLY, false);
+	                    pessoa.setFieldFlag("STATUSIFACE", MboConstants.READONLY, false);
+	                    pessoa.setFieldFlag("TRANSEMAILELECTION", MboConstants.READONLY, false);
+	                   
+	                    System.out.println("------------------ bb  antes " );
+	
+	                    System.out.println("----------- pessoas save");
+	                    pessoas.save();
+	                    System.out.println("----------- pessoas save a");                    
+						*/
+	                   
+	                    break;
+	                case MXApplicationYesNoCancelException.NO: // '\020'
+	                    System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot NO");
+	                    //throw new MXApplicationException("system", "null");
+	                    getMboValue().setValueNull();
+	                default:
+	                    System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot DEFAULT");
+	                    break;
+	            }
+	
+	
+	          }
 
         }
 
