@@ -21,7 +21,7 @@ public class PersiteInexPec extends MAXTableDomain {
 	public PersiteInexPec(MboValue mbv) {
 		super(mbv);
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersiteRegistrosPec versao 01 ");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersiteRegistrosPec versao 02 ");
 		
 		//setRelationship("BGTBDOCP01", "bgstnumnumdoc = :bgstnumnumdoc and bgstnumnumdoc not in (select bgstnumnumdoc from rhtbcase01)");
         //setErrorMessage("person", "InvalidPerson");
