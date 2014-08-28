@@ -43,20 +43,21 @@ public class PersiteInexPec extends MAXTableDomain {
 
         MboSet mboSetInexOriginal = (MboSet) getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE");
 
-        MboRemote gMbo;
-        boolean encontrado = false;
         
+        boolean encontrado = false;        
         
-        for (int i = 0; ((gMbo = mboSetInexOriginal.getMbo(i)) != null); i++) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>> Quantidade de registros na MSTBINEXIGIBILIDADE: "+mboSetInexOriginal.count());
+        
+        for (int i = 0; i < mboSetInexOriginal.count(); i++) {
            
-            encontrado = !gMbo.isNull("MSNUNUMINEXIGIBILIDADE");
+            encontrado = !mboSetInexOriginal.getMbo(i).isNull("MSNUNUMINEXIGIBILIDADE");
             
             System.out.println(">>>>>>>>>>>>>>>>>>>> nao encontrou nada");
           
             if (encontrado) {
                 
             	System.out.println(">>>>>>>>>>>>>>>>>>>> encontrou");
-                getMboValue().getMbo().setValue("MSNUNUMINEXIGIBILIDADE", gMbo.getString("MSNUNUMINEXIGIBILIDADE"));
+                getMboValue().getMbo().setValue("MSNUNUMINEXIGIBILIDADE", mboSetInexOriginal.getMbo(i).getString("MSNUNUMINEXIGIBILIDADE"));
                 
                 break;
             }        
