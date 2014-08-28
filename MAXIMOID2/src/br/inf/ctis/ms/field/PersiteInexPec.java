@@ -23,9 +23,9 @@ public class PersiteInexPec extends MAXTableDomain {
 		
 		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersiteRegistrosPec versao 01 ");
 		
-		setRelationship("BGTBDOCP01", "bgstnumnumdoc = :bgstnumnumdoc and bgstnumnumdoc not in (select bgstnumnumdoc from rhtbcase01)");
-        setErrorMessage("person", "InvalidPerson");
-        setListCriteria((new StringBuilder()).append("personid not in (select personid from rhtbcase01) and bgstcodtipdoc = :bgstcodtipdoc").toString());
+		//setRelationship("BGTBDOCP01", "bgstnumnumdoc = :bgstnumnumdoc and bgstnumnumdoc not in (select bgstnumnumdoc from rhtbcase01)");
+        //setErrorMessage("person", "InvalidPerson");
+        //setListCriteria((new StringBuilder()).append("personid not in (select personid from rhtbcase01) and bgstcodtipdoc = :bgstcodtipdoc").toString());
     
 	}
 	
@@ -36,56 +36,30 @@ public class PersiteInexPec extends MAXTableDomain {
             return;
         }
 
-       /*
-        //a pedido do Felipe Marinho dia 27/10/2011
-        String tipoDocumento = getMboValue("BGSTCODTIPDOC").getString();
-        String nrDocumento = getMboValue("BGSTNUMNUMDOC").getString();
-        System.out.println("... BGSTCODTIPDOC "+tipoDocumento);
-        System.out.println("... BGSTNUMNUMDOC "+nrDocumento);
-        String numDocumento = "";
-        if (tipoDocumento.equalsIgnoreCase("CPF")) {
-
-           if (!Validar.CPF(Uteis.getApenasNumeros(nrDocumento))) {
-               throw new MXApplicationException("id2message", "CpfInvalido");
-           }
-
-           numDocumento = Uteis.getValorMascarado("999.999.999-99", Uteis.getApenasNumeros(nrDocumento), true);
-
-           getMboValue().setValue(nrDocumento, MboConstants.NOVALIDATION_AND_NOACTION);
-        } else{
-        	 nrDocumento =  Uteis.getApenasNumeros(nrDocumento);
-        	 getMboValue().setValue(nrDocumento, MboConstants.NOVALIDATION_AND_NOACTION);
-        }
-
-       
-        //FIM das alterações requisitadas pelo Felipe Marinho dia 27/10/2011
-
+		 System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do validate");
+		
         MboRemote mbo = getMboValue().getMbo();
 
 
-        MboSet mboSetDocPes = (MboSet) getMboValue().getMbo().getMboSet("RHRLDOCP02");
+        MboSet mboSetInexOriginal = (MboSet) getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE");
 
         MboRemote gMbo;
         boolean encontrado = false;
-
-        for (int i = 0; ((gMbo = mboSetDocPes.getMbo(i)) != null); i++) {
-            System.out.println("------------- i " + i + " valorDoc " + gMbo.getString("BGSTNUMNUMDOC"));
-            encontrado = gMbo.getString("BGSTNUMNUMDOC").equalsIgnoreCase(numDocumento);
+        
+        
+        for (int i = 0; ((gMbo = mboSetInexOriginal.getMbo(i)) != null); i++) {
+           
+            encontrado = !gMbo.isNull("MSNUNUMINEXIGIBILIDADE");
+            
+            System.out.println(">>>>>>>>>>>>>>>>>>>> nao encontrou nada");
           
             if (encontrado) {
-                System.out.println("----------encontrou");
-                getMboValue().getMbo().setValue("PERSONID", gMbo.getString("PERSONID"));
-                getMboValue().getMbo().setValue("RHNUFLGSALVO", true);
+                
+            	System.out.println(">>>>>>>>>>>>>>>>>>>> encontrou");
+                getMboValue().getMbo().setValue("MSNUNUMINEXIGIBILIDADE", gMbo.getString("MSNUNUMINEXIGIBILIDADE"));
                 
                 break;
-            }
-        */
-
-        MboRemote mbo = getMboValue().getMbo();
-     
-
-        MboRemote gMbo;
-        boolean encontrado = false;
+            }        
         
         System.out.println(">>>>>>>>>>>>>>>>>>>> antes da validacao de encontrado");
 
@@ -105,8 +79,8 @@ public class PersiteInexPec extends MAXTableDomain {
 
                 case MXApplicationYesNoCancelException.YES:
                     System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot YES");
-                    System.out.println(">>>>>>>>>>>>>>>>>>>> pessoas");
-                    MboSet pessoas;
+                    System.out.println(">>>>>>>>>>>>>>>>>>>> Inexigibilidade");
+                   /* MboSet pessoas;
                     pessoas = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("PERSON", mbo.getUserInfo());
                     pessoas.setWhere("personid = '>>>>>>>>>>>>>>>>>>>>'");
                     pessoas.reset();                   
@@ -122,18 +96,18 @@ public class PersiteInexPec extends MAXTableDomain {
                     System.out.println("---------- " + pessoa.getString("PERSONUID"));
 
                     
-                    System.out.println("------------------ bb  antes " + ++aonde);
+                    System.out.println("------------------ bb  antes " );
                     pessoa.setFieldFlag("STATUS", MboConstants.READONLY, false);
                     pessoa.setFieldFlag("STATUSDATE", MboConstants.READONLY, false);
                     pessoa.setFieldFlag("STATUSIFACE", MboConstants.READONLY, false);
                     pessoa.setFieldFlag("TRANSEMAILELECTION", MboConstants.READONLY, false);
                    
-                    System.out.println("------------------ bb  antes " + ++aonde);
+                    System.out.println("------------------ bb  antes " );
 
                     System.out.println("----------- pessoas save");
                     pessoas.save();
                     System.out.println("----------- pessoas save a");                    
-
+					*/
                    
                     break;
                 case MXApplicationYesNoCancelException.NO: // '\020'
@@ -146,9 +120,9 @@ public class PersiteInexPec extends MAXTableDomain {
             }
 
 
+          }
+
         }
-
-
 
     }
 
