@@ -89,8 +89,8 @@ public class PersiteInexPec extends MAXTableDomain {
 	                  
 	                   MboRemote InexAdd = getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE").add();
 	                   
-	                   InexAdd.setValue("MSNUNUMINEXIGIBILIDADE", getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE").getMbo(0).getString("MSNUNUMINEXIGIBILIDADE"));
-	                   
+	                   InexAdd.setValue("MSNUNUMINEXIGIBILIDADE", getMboValue().getMbo().getString("MSNUNUMINEXIGIBILIDADE"));
+	                   InexAdd.setValue("PONUM", getMboValue().getMbo().getString("PONUM"));
 	                   
 	                   
 	                   /* MboSet pessoas;
