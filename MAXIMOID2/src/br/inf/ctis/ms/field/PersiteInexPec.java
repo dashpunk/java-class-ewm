@@ -85,7 +85,10 @@ public class PersiteInexPec extends MAXTableDomain {
 	                   System.out.println(">>>>>>>>>>>>>>>>>>>>Criando Inexigibilidade");
 	                   
 	                   
-	                   MboSet InexAdd = (MboSet) getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE").add();
+	                  // MboSet InexAdd = (MboSet) getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE").add();             
+	                  
+	                   MboRemote InexAdd = getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE").add();
+	                   
 	                   InexAdd.setValue("MSNUNUMINEXIGIBILIDADE", getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE").getMbo(0).getString("MSNUNUMINEXIGIBILIDADE"));
 	                   
 	                   
