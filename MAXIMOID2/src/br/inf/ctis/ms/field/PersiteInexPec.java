@@ -54,15 +54,18 @@ public class PersiteInexPec extends MAXTableDomain {
             
             System.out.println(">>>>>>>>>>>>>>>>>>>> nao encontrou nada");
                       
-            if (encontrado) {
-                
-            	System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do for o valor de encontrado e:"+encontrado);
-            	System.out.println(">>>>>>>>>>>>>>>>>>>> encontrou");
-                getMboValue().getMbo().setValue("MSNUNUMINEXIGIBILIDADE", mboSetInexOriginal.getMbo(i).getString("MSNUNUMINEXIGIBILIDADE"));
-                                
-            }else{        
+	            if (encontrado) {
+	                
+	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do for o valor de encontrado e:"+encontrado);
+	            	System.out.println(">>>>>>>>>>>>>>>>>>>> encontrou");
+	                getMboValue().getMbo().setValue("MSNUNUMINEXIGIBILIDADE", mboSetInexOriginal.getMbo(i).getString("MSNUNUMINEXIGIBILIDADE"));
+	                break;                
+	            }	
+        }
         
-            	System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do Else de valor encontrado=false");
+        if (!encontrado) {
+        
+            	System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do IF de valor encontrado=false");
 
 	        	String yesNoId = getClass().getName();
 	            int userInput = MXApplicationYesNoCancelException.getUserInput(yesNoId, MXServer.getMXServer(), getMboValue().getMbo().getUserInfo());
@@ -119,10 +122,10 @@ public class PersiteInexPec extends MAXTableDomain {
 	            }
 	
 	
-	          }
+	        }
 
-        }
+		}
 
     }
 
-}
+
