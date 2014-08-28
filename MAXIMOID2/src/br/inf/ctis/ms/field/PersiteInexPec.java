@@ -67,6 +67,7 @@ public class PersiteInexPec extends MAXTableDomain {
         
             	System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do IF de valor encontrado=false");
 
+            	          	
 	        	String yesNoId = getClass().getName();
 	            int userInput = MXApplicationYesNoCancelException.getUserInput(yesNoId, MXServer.getMXServer(), getMboValue().getMbo().getUserInfo());
 	            
@@ -81,8 +82,14 @@ public class PersiteInexPec extends MAXTableDomain {
 	                    throw new MXApplicationYesNoCancelException(yesNoId, "Persistecase", "novoRegistro", params);
 	
 	                case MXApplicationYesNoCancelException.YES:
-	                    System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot YES");
-	                    System.out.println(">>>>>>>>>>>>>>>>>>>> Inexigibilidade");
+	                   System.out.println(">>>>>>>>>>>>>>>>>>>>Criando Inexigibilidade");
+	                   
+	                   
+	                   MboSet InexAdd = (MboSet) getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE").add();
+	                   InexAdd.setValue("MSNUNUMINEXIGIBILIDADE", getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE").getMbo(0).getString("MSNUNUMINEXIGIBILIDADE"));
+	                   
+	                   
+	                   
 	                   /* MboSet pessoas;
 	                    pessoas = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("PERSON", mbo.getUserInfo());
 	                    pessoas.setWhere("personid = '>>>>>>>>>>>>>>>>>>>>'");
