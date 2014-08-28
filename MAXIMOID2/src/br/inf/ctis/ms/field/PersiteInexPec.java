@@ -71,6 +71,7 @@ public class PersiteInexPec extends MAXTableDomain {
 	            int userInput = MXApplicationYesNoCancelException.getUserInput(yesNoId, MXServer.getMXServer(), getMboValue().getMbo().getUserInfo());
 	            
 	            System.out.println("retorno = " + userInput);
+	            System.out.println("UserInput = " + getMboValue().getMbo().getUserInfo());
 	            switch (userInput) {
 	                case MXApplicationYesNoCancelException.NULL:
 	                    System.out.println(">>>>>>>>>>>>>>>>>>>> userImpot null");
