@@ -22,7 +22,7 @@ public class PersisteInexPec extends MAXTableDomain {
 	public PersisteInexPec(MboValue mbv) {
 		super(mbv);
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersisteInexPec versao 01 ");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersisteInexPec versao 10 ");
 				
 	}
 	
