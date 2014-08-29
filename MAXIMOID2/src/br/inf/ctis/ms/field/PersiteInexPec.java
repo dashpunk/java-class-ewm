@@ -2,6 +2,7 @@ package br.inf.ctis.ms.field;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import psdi.mbo.MAXTableDomain;
 import psdi.mbo.MboConstants;
@@ -21,12 +22,8 @@ public class PersiteInexPec extends MAXTableDomain {
 	public PersiteInexPec(MboValue mbv) {
 		super(mbv);
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersiteRegistrosPec versao 02 ");
-		
-		//setRelationship("BGTBDOCP01", "bgstnumnumdoc = :bgstnumnumdoc and bgstnumnumdoc not in (select bgstnumnumdoc from rhtbcase01)");
-        //setErrorMessage("person", "InvalidPerson");
-        //setListCriteria((new StringBuilder()).append("personid not in (select personid from rhtbcase01) and bgstcodtipdoc = :bgstcodtipdoc").toString());
-    
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersiteRegistrosPec versao 01 ");
+				
 	}
 	
 	public void validate() throws MXException, RemoteException {
@@ -35,6 +32,31 @@ public class PersiteInexPec extends MAXTableDomain {
             System.out.println(">>>>>>>>>>>>>>>>>>>> is null");
             return;
         }
+		
+		//valicao da mascara
+		String valor = new String();
+	    valor = Uteis.getApenasNumeros(getMboValue().getString());
+	    System.out.println("###############getMboValue().getString() = " + getMboValue().getString());
+	    System.out.println("###############valor = " + valor);
+	    
+	    if ((valor.length() < 6) || (valor.length() > 7)) {
+	    	throw new MXApplicationException("generica", "MascaraInvalida");
+	    }
+
+	    if (valor.length() == 6) {
+	    	valor = "0" + valor;
+	    }
+	    
+	    Calendar cAtual = Calendar.getInstance();        
+
+        if (Integer.valueOf(cAtual.get(Calendar.YEAR)) >= Integer.valueOf(valor.substring(3, 7)).intValue()) {
+        	getMboValue().setValue(Uteis.getValorMascarado("###/####", valor, false));
+        }
+	    else {
+	      throw new MXApplicationException("generica", "AnoInvalido");
+	    }		
+		
+		
 
 		 System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do validate");
 		
@@ -47,17 +69,16 @@ public class PersiteInexPec extends MAXTableDomain {
         boolean encontrado = false;        
         
         System.out.println(">>>>>>>>>>>>>>>>>>>> Quantidade de registros na MSTBINEXIGIBILIDADE: "+mboSetInexOriginal.count());
-        System.out.println(">>>>>>>>>>>>>>>>>>>> antes do for o valor de encontrado e:"+encontrado);
+        
         for (int i = 0; i < mboSetInexOriginal.count(); i++) {
            
             encontrado = !mboSetInexOriginal.getMbo(i).isNull("MSNUNUMINEXIGIBILIDADE");
             
-            System.out.println(">>>>>>>>>>>>>>>>>>>> nao encontrou nada");
-                      
+                                 
 	            if (encontrado) {
 	                
 	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do for o valor de encontrado e:"+encontrado);
-	            	System.out.println(">>>>>>>>>>>>>>>>>>>> encontrou");
+	            	
 	                getMboValue().getMbo().setValue("MSNUNUMINEXIGIBILIDADE", mboSetInexOriginal.getMbo(i).getString("MSNUNUMINEXIGIBILIDADE"));
 	                break;                
 	            }	
@@ -84,43 +105,14 @@ public class PersiteInexPec extends MAXTableDomain {
 	                case MXApplicationYesNoCancelException.YES:
 	                   System.out.println(">>>>>>>>>>>>>>>>>>>>Criando Inexigibilidade");
 	                   
-	                   
-	                  // MboSet InexAdd = (MboSet) getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE").add();             
+	                                              
 	                  
 	                   MboRemote InexAdd = getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE").add();
 	                   
 	                   InexAdd.setValue("MSNUNUMINEXIGIBILIDADE", getMboValue().getMbo().getString("MSNUNUMINEXIGIBILIDADE"));
 	                   InexAdd.setValue("PONUM", getMboValue().getMbo().getString("PONUM"));
-	                   
-	                   
-	                   /* MboSet pessoas;
-	                    pessoas = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("PERSON", mbo.getUserInfo());
-	                    pessoas.setWhere("personid = '>>>>>>>>>>>>>>>>>>>>'");
-	                    pessoas.reset();                   
-	
-	
-	                    System.out.println("----------- pessoa");
-	                    MboRemote pessoa = pessoas.add();
-	                    String personId = pessoa.getString("PERSONID");
-	                    System.out.println("---------- personId " + personId);
-	                    System.out.println("---------- " + pessoa.getString("HASLD"));
-	                    System.out.println("---------- " + pessoa.getString("LANGCODE"));
-	                    System.out.println("---------- " + pessoa.getString("PERSONID"));
-	                    System.out.println("---------- " + pessoa.getString("PERSONUID"));
-	
+	                   InexAdd.setValue("MS_SIPARNUM", getMboValue().getMbo().getString("MS_SIPARNUM"));                
 	                    
-	                    System.out.println("------------------ bb  antes " );
-	                    pessoa.setFieldFlag("STATUS", MboConstants.READONLY, false);
-	                    pessoa.setFieldFlag("STATUSDATE", MboConstants.READONLY, false);
-	                    pessoa.setFieldFlag("STATUSIFACE", MboConstants.READONLY, false);
-	                    pessoa.setFieldFlag("TRANSEMAILELECTION", MboConstants.READONLY, false);
-	                   
-	                    System.out.println("------------------ bb  antes " );
-	
-	                    System.out.println("----------- pessoas save");
-	                    pessoas.save();
-	                    System.out.println("----------- pessoas save a");                    
-						*/
 	                   
 	                    break;
 	                case MXApplicationYesNoCancelException.NO: // '\020'
