@@ -22,7 +22,7 @@ public class PersiteInexPec extends MAXTableDomain {
 	public PersiteInexPec(MboValue mbv) {
 		super(mbv);
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersiteRegistrosPec versao 01 ");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersisteRegistrosPec versao 01 ");
 				
 	}
 	
@@ -58,11 +58,8 @@ public class PersiteInexPec extends MAXTableDomain {
 		
 		
 
-		 System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do validate");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do validate");
 		
-        MboRemote mbo = getMboValue().getMbo();
-
-
         MboSet mboSetInexOriginal = (MboSet) getMboValue().getMbo().getMboSet("MSTBINEXIGIBILIDADE");
 
         
