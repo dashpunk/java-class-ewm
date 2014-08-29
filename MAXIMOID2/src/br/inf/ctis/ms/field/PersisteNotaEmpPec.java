@@ -21,7 +21,7 @@ public class PersisteNotaEmpPec extends MAXTableDomain {
 
 	public PersisteNotaEmpPec(MboValue mbv) {
 		super(mbv);
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersisteNotaEmpPec versao 01 ");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersisteNotaEmpPec versao 10 ");
 	}
 	
 	public void validate() throws MXException, RemoteException {
@@ -110,7 +110,7 @@ public class PersisteNotaEmpPec extends MAXTableDomain {
 	                   EmpAdd.setValue("MSALNUMNOTAEMPENHO", getMboValue().getMbo().getString("MSALNUMNOTAEMPENHO"));
 	                   EmpAdd.setValue("MSALCODMODALIDADE", getMboValue().getMbo().getString("MSALCODMODALIDADE"));
 	                   EmpAdd.setValue("MSNUNUMINEXIGIBILIDADE", getMboValue().getMbo().getString("MSNUNUMINEXIGIBILIDADE"));                
-	                    
+	                   					
 	                   
 	                    break;
 	                case MXApplicationYesNoCancelException.NO: // '\020'
