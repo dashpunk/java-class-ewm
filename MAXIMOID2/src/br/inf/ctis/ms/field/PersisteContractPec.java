@@ -21,7 +21,7 @@ public class PersisteContractPec extends MAXTableDomain {
 
 	public PersisteContractPec(MboValue mbv) {
 		super(mbv);
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersisteContractPec versao 10 ");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersisteContractPec versao 11 ");
 	}
 	
 	public void validate() throws MXException, RemoteException {
