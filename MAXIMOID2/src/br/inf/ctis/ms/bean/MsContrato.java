@@ -20,7 +20,7 @@ public class MsContrato extends ContPurchAppBean {
 	@Override
 	public void save() throws MXException {
 		try {
-			if(getMbo().isNew()){
+			if(getMbo().getMboSet("CONTRACTLINE").isEmpty()){
 		
 				MboRemote mbo;
 				MboRemote mboDestino = null;
