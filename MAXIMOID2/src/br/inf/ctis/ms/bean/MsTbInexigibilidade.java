@@ -18,7 +18,7 @@ public class MsTbInexigibilidade extends AppBean {
 	@Override
 	public void save() throws MXException {
 		try {
-			if(getMbo().isNew()){
+			if(getMbo().getMboSet("MSTBITENSINEXIGIBILIDADE").isEmpty()){
 			
 				MboRemote mbo;
 				MboRemote mboDestino = null;
