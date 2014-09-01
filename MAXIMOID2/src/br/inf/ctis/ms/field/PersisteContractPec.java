@@ -66,14 +66,14 @@ public class PersisteContractPec extends MAXTableDomain {
         
         for (int i = 0; i < mboSetContractOriginal.count(); i++) {
            
-            encontrado = !mboSetContractOriginal.getMbo(i).isNull("PURCHVIEW");
+            encontrado = !mboSetContractOriginal.getMbo(i).isNull("CONTRACTNUM");
             
                                  
 	            if (encontrado) {
 	                
 	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do for o valor de encontrado e:"+encontrado);
 	            	
-	                getMboValue().getMbo().setValue("CONTRACTNUM", mboSetContractOriginal.getMbo(i).getString("PURCHVIEW"));
+	                getMboValue().getMbo().setValue("CONTRACTNUM", mboSetContractOriginal.getMbo(i).getString("CONTRACTNUM"));
 	                break;                
 	            }	
         }
