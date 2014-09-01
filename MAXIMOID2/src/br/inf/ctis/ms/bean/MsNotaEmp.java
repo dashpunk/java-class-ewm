@@ -22,7 +22,7 @@ public class MsNotaEmp extends AppBean {
 	@Override
 	public void save() throws MXException {
 		try {
-			if(getMbo().isNew()){
+			if(getMbo().getMboSet("MSTBITENSNOTAEMPENHO").isEmpty()){
 			
 				MboRemote mbo;
 				MboRemote mbo1;
