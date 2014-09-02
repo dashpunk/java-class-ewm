@@ -56,7 +56,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 			oficio();
 		}else{
 		
-			oficio();
+			portaria();
 		}	    
 	   
 	  }
@@ -179,20 +179,21 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	}
 	public void portaria() throws MXException, RemoteException{
 		
-		MboRemote po = getMboValue().getMbo().getMboSet("PO").getMbo(0);
-		MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0).getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0);
-		MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
-		
-		// Data para Portaria
-		 Calendar dataport = Calendar.getInstance();
-		 SimpleDateFormat sdfport = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
+			MboRemote po = getMboValue().getMbo().getMboSet("PO").getMbo(0);
+			MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0).getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0);
+			MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
+			
+			// Data para Portaria
+			 Calendar dataport = Calendar.getInstance();
+			 SimpleDateFormat sdfport = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
 		 
 		 
 		
-		 StringBuilder valport = new StringBuilder(); 
-		    System.out.println(">>>>>>>>>>> Dentro do metodo portaria da classe MsDocPadraoPec01");
+		    StringBuilder valport = new StringBuilder(); 
+		    System.out.println(">>>>>>>>>>> Dentro do metodo portaria da classe MsDocPadraoPec02");
 		    // **
 		    valport.append("<body>");
+		    System.out.println(">>>>>>>>>>> <body> aberto");
 		    valport.append("<table>");
 		    valport.append("<tr>");
 		    valport.append("<td width=\"900\" valign=\"top\">");
@@ -202,7 +203,8 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		    valport.append("</table>");
 		    valport.append("<table>");
 		    valport.append("<tr>");
-		    valport.append("<td width=\"900\">");	    
+		    valport.append("<td width=\"900\">");
+		    System.out.println(">>>>>>>>>>> Cabecalho: O Diretor do Departamento de Logística em Saúde, no uso de suas atribuições, e tendo em vista o disposto no art. 67 da Lei n.° 8.666/1993, resolve:");
 		    valport.append("<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O Diretor do Departamento de Logística em Saúde, no uso de suas atribuições, e tendo em vista o disposto no art. 67 da Lei n.° 8.666/1993, resolve:</p>");
 		    valport.append("<p style=\"text-align: justify;\">Art 1.° -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Designar, com base na confirmação da Tarefa 94 do PEC - Termo de Referência n.°"+po.getInt("PONUM")+", o servidor "+po.getMboSet("MS_RLVW01PER").getMbo(0).getString("NOME")+", matricula SIAPE n.°"+po.getMboSet("MS_RLVW01PER").getMbo(0).getString("MATRICULA")+", e como substituta eventual a servidora "+po.getMboSet("MS_RLVW02PER").getMbo(0).getString("NOME")+", matrícula SIAPE n.° "+po.getMboSet("MS_RLVW02PER").getMbo(0).getString("MATRICULA")+", como representantes do Ministério da Saúde para acompanhar e fiscalizar a execução do Contrato n.° "+ purch.getString("CONTRACTNUM") +", firmado com a empresa "+inex.getString("MSALDSCFORNECEDORINEX")+", que tem por objeto a aquisição do medicamento "+inex.getFloat("MSNUNUMQTDCONTRATADAINEX")+" "+po.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+" "+po.getMboSet("POLINE").getMbo(0).getMboSet("ID2RELMEASUREUNIT").getMbo(0).getString("DESCRIPTION")+", resultante da Inexigibilidade de Licitação n.° "+ purch.getString("CONTRACTNUM") +", conforme Processo Eletrônico de Compras n.° "+po.getInt("MS_SIPARNUM")+" - Termo de referência "+po.getInt("PONUM")+".</p>");
 		    valport.append("<p style=\"text-align: justify;\">Art 2.° -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As atribuições conferidas e exercidas pelos servidores estão regulamentadas pela Portaria GM n.° 78/2006, de 16 de janeiro de 2006, publicada no BSE n.° 04 de 23 de janeiro de 2006, a qual dispõe sobre os procedimentos a serem adotados no acompanhamento e fiscalização de contratos e na Circular MS/SE/GAB n.° 40, de julho de 2010, registro SIPAR n.° 25000.127193/2010-56, a qual dispõe sobre a aplicação de penalidades a contratados.</p>");
@@ -212,6 +214,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		    valport.append("</td>");
 		    valport.append("</tr>");
 		    valport.append("</table>");
+		    System.out.println(">>>>>>>>>>> <body> fechando");
 		    valport.append("</body>");
 		    
 		    getMboValue().setValue(valport.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
