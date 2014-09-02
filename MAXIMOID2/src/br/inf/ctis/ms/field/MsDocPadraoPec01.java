@@ -50,7 +50,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		if(po.getString("STATUSPEC").equals("Processo de compra iniciado")){
 			System.out.println(">>>>>>>>>>> Dentro do if para status: Processo de compra iniciado");
 			//oficio();
-			despacho();
+			portaria();
 		}
 		if (po.getString("STATUSPEC").equals("004 - Inserir Pesquisa de Preço")){
 			oficio();
