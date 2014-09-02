@@ -47,20 +47,60 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    
 		MboRemote po = getMboValue().getMbo().getMboSet("PO").getMbo(0);
 		
-		if(po.getString("STATUSPEC").equals("Processo de compra iniciado")){
-			System.out.println(">>>>>>>>>>> Dentro do if para status: Processo de compra iniciado");
-			//oficio();
-			portaria();
+		if(po.getString("STATUSPEC").equals("034 - Solicitar Disponibilidade Orçamentaria")){
+			despacho2();
 		}
-		if (po.getString("STATUSPEC").equals("004 - Inserir Pesquisa de Preço")){
+		if(po.getString("STATUSPEC").equals("066 - Analisar Minuta Coordenador CGIES")){
+			despacho();
+		}
+		if(po.getString("STATUSPEC").equals("101 - Convocar Empresa")){
 			oficio();
-		}else{
-		
+		}
+		if(po.getString("STATUSPEC").equals("103 - Publicar Portaria")){
 			portaria();
-		}	    
+		}		    
 	   
 	  }
 	
+	private void despacho2() throws MXException, RemoteException{
+
+		
+			MboRemote podesp2 = getMboValue().getMbo().getMboSet("PO").getMbo(0);
+		
+			// Gerando a Data para o Documento******************
+		 	Calendar datadesp2 = Calendar.getInstance();
+			SimpleDateFormat sdfdesp2 = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
+
+		 	StringBuilder val = new StringBuilder(); 
+		    System.out.println(">>>>>>>>>>> Dentro do metodo despacho2 da classe MsDocPadraoPec01");
+		    // **
+		    val.append("<body>");
+		    val.append("<table>");
+		    val.append("<tr>");
+		    val.append("<td width=\"900\" valign=\"top\">");
+		    val.append("</br></br>");
+		    val.append("<p align=\"center\">Despacho referente ao PEC número do fluxo: "+podesp2.getInt("PONUM")+" e SIPAR n.° "+podesp2.getString("MS_SIPARNUM")+"<br/>");
+		    val.append("</tr>");
+		    val.append("</table>");
+		    val.append("<table>");
+		    val.append("<tr>");
+		    val.append("<td width=\"900\">");	    
+		    val.append("<p>Assunto: Disponibilidade Orçamentária – "+podesp2.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+"</p>");
+		    val.append("<p>À Coordenação de Execução Orçamentária e Financeira - CEOF,</p>");
+		    val.append("<p style=\"text-align: justify;\">Trata-se de processo eletrônico de compras para aquisição de "+podesp2.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+", em atendimento à solicitação da Coordenação-Geral do Componente Especializado da Assistência Farmacêutica – CGCEAF/DAF.</p>");
+		    val.append("<p style=\"text-align: justify;\">Objetivando o prosseguimento do processo em epígrafe, solicito por parte dessa Coordenação informar se existe disponibilidade orçamentária para atender as despesas decorrentes da presente aquisição.</p>");
+		    val.append("<p style=\"text-align: justify;\">Conforme proposta da empresa anexada ao PEC em 15/04/2013, tarefa T13, o preço do medicamento Telaprevir 375mg é de R$ 80,50 (oitenta reais e cinquenta centavos) por comprimido, perfazendo o valor global da aquisição R$ 243.432.000,00 (duzentos e quarenta e três milhões e quatrocentos e trinta e dois mil reais).</p>");
+		    val.append("<p style=\"text-align: justify;\">Cabe ressaltar que o pagamento da 1ª, 2ª e 3ª parcelas no valor de R$ 121.716.000 (cento e vinte e um milhões e setecentos e dezesseis mil reais) correrão por conta do Programa de Trabalho 10.303.2015.4705.0001 do orçamento de 2014 do Ministério da Saúde e as demais parcelas no valor de R$ 121.716.000 (cento e vinte e um milhões e setecentos e dezesseis mil reais), correrão por conta do orçamento de 2015 do Ministério da Saúde, conforme Despacho nº 175/2013/DAF/SCTIE/MS, anexado em 24/04/2014, tarefa T13.1 no PEC.</p>");
+		    val.append("<p align=\"right\">Brasília, "+ sdfdesp2.format(datadesp2.getTime())+"</p>");		    
+		    val.append("</td>");
+		    val.append("</tr>");
+		    val.append("</table>");
+		    val.append("</body>");
+		    
+		    getMboValue().setValue(val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
+		
+	}
+
 	public void oficio() throws MXException, RemoteException{
 		
 		MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0);
@@ -143,7 +183,14 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	
 	public void despacho() throws MXException, RemoteException{
 		
-		 StringBuilder val = new StringBuilder(); 
+			
+			MboRemote podesp = getMboValue().getMbo().getMboSet("PO").getMbo(0);
+			
+			// Gerando a Data para o Documento******************
+		 	Calendar datadesp = Calendar.getInstance();
+			SimpleDateFormat sdfdesp = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
+		
+			StringBuilder val = new StringBuilder(); 
 		    System.out.println(">>>>>>>>>>> Dentro do metodo despacho da classe MsDocPadraoPec01");
 		    // **
 		    val.append("<body>");
@@ -151,22 +198,22 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		    val.append("<tr>");
 		    val.append("<td width=\"900\" valign=\"top\">");
 		    val.append("</br></br>");
-		    val.append("<p align=\"center\"><strong>Despacho referente ao PEC número do fluxo.... e SIPAR n.° .....<strong><br/>");
+		    val.append("<p align=\"center\">Despacho referente ao PEC número do fluxo: "+podesp.getInt("PONUM")+" e SIPAR n.° "+podesp.getString("MS_SIPARNUM")+"<br/>");
 		    val.append("</tr>");
 		    val.append("</table>");
 		    val.append("<table>");
 		    val.append("<tr>");
 		    val.append("<td width=\"900\">");	    
-		    val.append("<p><strong>Assunto:</strong> Recomendações à área demandante – Parecer CONJUR/MS</p>");
-		    val.append("<p><strong>À Coordenação-Geral de Assistência Farmacêutica e Medicamentos Estratégicos – CGAFME</strong></p>");
-		    val.append("<p style=\"text-align: justify;\">Trata-se de processo eletrônico de compras para aquisição do medicamento Tipranavir (TPV) 250mg, em atendimento à solicitação do Departamento de Vigilância, Prevenção e Controle das DST, AIDS e Hepatites Virais – DDAHV/SVS.</p>");
+		    val.append("<p>Assunto: Recomendações à área demandante – Parecer CONJUR/MS</p>");
+		    val.append("<p>À Coordenação-Geral de Assistência Farmacêutica e Medicamentos Estratégicos – CGAFME</p>");
+		    val.append("<p style=\"text-align: justify;\">Trata-se de processo eletrônico de compras para aquisição do medicamento "+podesp.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+", em atendimento à solicitação do Departamento de Vigilância, Prevenção e Controle das DST, AIDS e Hepatites Virais – DDAHV/SVS.</p>");
 		    val.append("<p style=\"text-align: justify;\">	2.		Em cumprimento ao disposto no art. 38, parágrafo único, da Lei nº. 8.666/93, os autos foram encaminhados à d. Consultoria Jurídica para análise da minuta de contrato e dos procedimentos administrativos de aquisição.</p>");
 		    val.append("<p style=\"text-align: justify;\">	3.		Em resposta, a CONJUR/MS proferiu o Parecer nº 1774/2014/CODELICI/ AGU/CONJUR-MS/CGU/RAB, no qual se manifestou favorável à celebração do contrato, desde que observadas às recomendações exaradas no bojo daquele opinativo (T29 – anexada 15/05/2014), ao que foi aprovado pela Coordenadora Geral da CODELICI/CONJUR (T29.3 – anexada 09/06/2014)</p>");
 		    val.append("<p style=\"text-align: justify;\">	4.		Ante o exposto, encaminho o processo para conhecimento do inteiro teor do parecer encimado e manifestação quanto às recomendações de competência dessa área, em especial quanto aos parágrafos 25 a 27, 55, 78 e 88 subitem 1, 3 e 4 do referido parecer.</p>");
 		    val.append("<p>Atenciosamente,</p></br>");
-		    val.append("<p align=\"right\">Brasília, 27 de junho de 2014.</p>");
+		    val.append("<p align=\"right\">Brasília, "+ sdfdesp.format(datadesp.getTime())+"</p>");
 		    val.append("<p align=\"center\"><strong>&nbsp;</strong></p>");
-		    val.append("<p align=\"center\"><strong>XXXXXXXXXXXXXXXXXX</strong></br>");
+		    val.append("<p align=\"center\">XXXXXXXXXXXXXXXXXX</br>");
 		    val.append("<p align=\"center\">Coordenador Geral de Análise das Contratações de");
 		    val.append("<p align=\"center\">Insumos Estratégicos para Saúde -Substituto");
 		    val.append("<p align=\"center\">CGIES/DLOG/SE/MS");
@@ -190,7 +237,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		 
 		
 		    StringBuilder valport = new StringBuilder(); 
-		    System.out.println(">>>>>>>>>>> Dentro do metodo portaria da classe MsDocPadraoPec02");
+		    System.out.println(">>>>>>>>>>> Dentro do metodo portaria da classe MsDocPadraoPec01");
 		    // **
 		    valport.append("<body>");
 		    System.out.println(">>>>>>>>>>> <body> aberto");
@@ -218,9 +265,5 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		    valport.append("</body>");
 		    
 		    getMboValue().setValue(valport.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
-	}
-	public void minutaEmpNac() throws MXException, RemoteException{
-		
-		
-	}
+	}	
 }
