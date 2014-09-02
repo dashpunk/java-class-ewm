@@ -32,7 +32,7 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	public MsDocPadraoPec01(MboValue mbv) throws MXException
 	  {
 	    super(mbv);
-	    System.out.println(">>>>>>>>>>> Dentro da classe MsDocPadraoPec01, versao 02");
+	    System.out.println(">>>>>>>>>>> Dentro da classe MsDocPadraoPec01, versao 03");
 	  }
 	
 	public void initValue() throws MXException, RemoteException {
@@ -48,7 +48,9 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		MboRemote po = getMboValue().getMbo().getMboSet("PO").getMbo(0);
 		
 		if(po.getString("STATUSPEC").equals("Processo de compra iniciado")){
-			oficio();
+			System.out.println(">>>>>>>>>>> Dentro do if para status: Processo de compra iniciado");
+			//oficio();
+			despacho();
 		}
 		if (po.getString("STATUSPEC").equals("004 - Inserir Pesquisa de Preço")){
 			oficio();
@@ -64,14 +66,20 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0);
 	    MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
 	    
+	    System.out.println(">>>>>>>>>>> Inex e purch carregado respectivamente: "+inex+purch);
+	    
 	    // Buscando apenas o ano na PO para o numero do Oficio******************
 	    Calendar calendar = Calendar.getInstance();
 	    calendar.setTime(inex.getDate("STATUSDATE"));
 	    int AnoOf = calendar.get(Calendar.YEAR);
 	    
+	    System.out.println(">>>>>>>>>>> Ano do sistema carregado:" + AnoOf);
+	    
 	    // Gerando a Data para o Documento******************
 	    Calendar data = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
+		
+		System.out.println(">>>>>>>>>>> Data para o Documento"+ sdf);
 		
 		// Por extenso
 		Double total = 0d;
@@ -79,9 +87,11 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		total= purch.getFloat("MSNUNUMVALORGLOBAL") * 0.5;		
 		extenso.setNumber(total);
 		
+		System.out.println(">>>>>>>>>>> Por extenso de MSNUNUMVALORGLOBAL preenchido: "+ extenso.toString());
+		
 	    
 	    StringBuilder val = new StringBuilder(); 
-	    System.out.println(">>>>>>>>>>> Dentro do metodo oficio da classe MsDocPadraoPec01");
+	    System.out.println(">>>>>>>>>>> Carregando o Html na variavel: val");
 	    
 	    val.append("<body>");
 	    val.append("<table>");
@@ -97,8 +107,10 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 	    val.append("</table>");
 	    val.append("<table>");
 	    val.append("<tr>");
-	    val.append("<td width=\"900\">");	    
+	    val.append("<td width=\"900\">");
+	    System.out.println(">>>>>>>>>>> Antes do numero do Oficio ");
 	    val.append("<p>Ofício n.° "+inex.getInt("PONUM")+"/"+AnoOf+"/DCIES/CGLIS/DLOG/SE/MS</p>");
+	    System.out.println(">>>>>>>>>>> Antes da data do sistema para o documento ");
 	    val.append("<p align=\"right\">Brasília/DF, "+ sdf.format(data.getTime())+".</p>");
 	    val.append("<p>&nbsp;</p>");
 	    val.append("<p>Ao Senhor<br/>");
@@ -171,6 +183,12 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		MboRemote inex = getMboValue().getMbo().getMboSet("PO").getMbo(0).getMboSet("POLINE").getMbo(0).getMboSet("MSTBITENSINEXIGIBILIDADE").getMbo(0);
 		MboRemote purch = getMboValue().getMbo().getMboSet("PURCHVIEW").getMbo(0);
 		
+		// Data para Portaria
+		 Calendar dataport = Calendar.getInstance();
+		 SimpleDateFormat sdfport = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
+		 
+		 
+		
 		 StringBuilder val = new StringBuilder(); 
 		    System.out.println(">>>>>>>>>>> Dentro do metodo portaria da classe MsDocPadraoPec01");
 		    // **
@@ -179,17 +197,17 @@ public class MsDocPadraoPec01 extends MboValueAdapter {
 		    val.append("<tr>");
 		    val.append("<td width=\"900\" valign=\"top\">");
 		    val.append("</br></br>");
-		    val.append("<p align=\"center\"><strong>PORTARIA DLOG DE 01 DE JULHO DE 2014<strong><br/>");
+		    val.append("<p align=\"center\">PORTARIA DLOG DE "+sdfport.format(dataport.getTime())+" <br/>");
 		    val.append("</tr>");
 		    val.append("</table>");
 		    val.append("<table>");
 		    val.append("<tr>");
 		    val.append("<td width=\"900\">");	    
-		    val.append("<p style=\"text-align: justify;\">O Diretor do Departamento de Logística em Saúde, no uso de suas atribuições, e tendo em vista o disposto no art. 67 da Lei n.° 8.666/1993, resolve:</p>");
-		    val.append("<p style=\"text-align: justify;\">	Art 1.° - 	Designar, com base na confirmação da Tarefa 94 do PEC - Termo de Referência n.°"+po.getInt("PONUM")+", o servidor "+po.getMboSet("MS_RLVW01PER").getMbo(0).getString("NOME")+", matricula SIAPE n.°"+po.getMboSet("MS_RLVW01PER").getMbo(0).getString("MATRICULA")+", e como substituta eventual a servidora "+po.getMboSet("MS_RLVW02PER").getMbo(0).getString("NOME")+", matrícula SIAPE n.° "+po.getMboSet("MS_RLVW02PER").getMbo(0).getString("MATRICULA")+", como representantes do Ministério da Saúde para acompanhar e fiscalizar a execução do Contrato n.° "+ purch.getString("CONTRACTNUM") +", firmado com a empresa "+inex.getString("MSALDSCFORNECEDORINEX")+", que tem por objeto a aquisição do medicamento "+inex.getFloat("MSNUNUMQTDCONTRATADAINEX")+" "+po.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+" "+po.getMboSet("POLINE").getMbo(0).getMboSet("ID2RELMEASUREUNIT").getMbo(0).getString("DESCRIPTION")+", resultante da Inexigibilidade de Licitação n.° "+ purch.getString("CONTRACTNUM") +", conforme Processo Eletrônico de Compras n.° "+po.getInt("MS_SIPARNUM")+" - Termo de referência "+po.getInt("PONUM")+".</p>");
-		    val.append("<p style=\"text-align: justify;\">	Art 2.° -	As atribuições conferidas e exercidas pelos servidores estão regulamentadas pela Portaria GM n.° 78/2006, de 16 de janeiro de 2006, publicada no BSE n.° 04 de 23 de janeiro de 2006, a qual dispõe sobre os procedimentos a serem adotados no acompanhamento e fiscalização de contratos e na Circular MS/SE/GAB n.° 40, de julho de 2010, registro SIPAR n.° 25000.127193/2010-56, a qual dispõe sobre a aplicação de penalidades a contratados.</p>");
-		    val.append("<p align=\"center\"><strong>&nbsp;</strong></p>");
-		    val.append("<p align=\"center\"><strong>XXXXXXXXXXXXXXXXXX</strong></br>");
+		    val.append("<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O Diretor do Departamento de Logística em Saúde, no uso de suas atribuições, e tendo em vista o disposto no art. 67 da Lei n.° 8.666/1993, resolve:</p>");
+		    val.append("<p style=\"text-align: justify;\">Art 1.° -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Designar, com base na confirmação da Tarefa 94 do PEC - Termo de Referência n.°"+po.getInt("PONUM")+", o servidor "+po.getMboSet("MS_RLVW01PER").getMbo(0).getString("NOME")+", matricula SIAPE n.°"+po.getMboSet("MS_RLVW01PER").getMbo(0).getString("MATRICULA")+", e como substituta eventual a servidora "+po.getMboSet("MS_RLVW02PER").getMbo(0).getString("NOME")+", matrícula SIAPE n.° "+po.getMboSet("MS_RLVW02PER").getMbo(0).getString("MATRICULA")+", como representantes do Ministério da Saúde para acompanhar e fiscalizar a execução do Contrato n.° "+ purch.getString("CONTRACTNUM") +", firmado com a empresa "+inex.getString("MSALDSCFORNECEDORINEX")+", que tem por objeto a aquisição do medicamento "+inex.getFloat("MSNUNUMQTDCONTRATADAINEX")+" "+po.getMboSet("POLINE").getMbo(0).getString("DESCRIPTION")+" "+po.getMboSet("POLINE").getMbo(0).getMboSet("ID2RELMEASUREUNIT").getMbo(0).getString("DESCRIPTION")+", resultante da Inexigibilidade de Licitação n.° "+ purch.getString("CONTRACTNUM") +", conforme Processo Eletrônico de Compras n.° "+po.getInt("MS_SIPARNUM")+" - Termo de referência "+po.getInt("PONUM")+".</p>");
+		    val.append("<p style=\"text-align: justify;\">Art 2.° -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As atribuições conferidas e exercidas pelos servidores estão regulamentadas pela Portaria GM n.° 78/2006, de 16 de janeiro de 2006, publicada no BSE n.° 04 de 23 de janeiro de 2006, a qual dispõe sobre os procedimentos a serem adotados no acompanhamento e fiscalização de contratos e na Circular MS/SE/GAB n.° 40, de julho de 2010, registro SIPAR n.° 25000.127193/2010-56, a qual dispõe sobre a aplicação de penalidades a contratados.</p>");
+		    val.append("<p align=\"center\">&nbsp;</p>");
+		    val.append("<p align=\"center\">XXXXXXXXXXXXXXXXXX</br>");
 		    val.append("<p align=\"center\">Diretor do Departamento de Logística em Saúde/SE/MS");
 		    val.append("</td>");
 		    val.append("</tr>");
