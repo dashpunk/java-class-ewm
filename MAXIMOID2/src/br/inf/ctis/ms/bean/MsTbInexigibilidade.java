@@ -23,7 +23,7 @@ public class MsTbInexigibilidade extends AppBean {
 				MboRemote mbo;
 				MboRemote mboDestino = null;
 				
-				System.out.println("########## ID2PERIODO: " + getMbo().getMboSet("PO").getMbo(0).getMboSet("ID2RELPR").getMbo(0).getString("ID2PERIODO"));
+				System.out.println("########## ID2PERIODOO: " + getMbo().getMboSet("PO").getMbo(0).getMboSet("ID2RELPR").getMbo(0).getString("ID2PERIODO"));
 				getMbo().setValue("ID2PERIODO", getMbo().getMboSet("PO").getMbo(0).getMboSet("ID2RELPR").getMbo(0).getString("ID2PERIODO"));
 				
 				if (getMbo().getMboSet("MSTBITENSINEXIGIBILIDADE").isEmpty()){
