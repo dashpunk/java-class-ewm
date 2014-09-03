@@ -49,7 +49,10 @@ public class MsCotacao extends psdi.webclient.system.beans.AppBean {
 			}
 		}
 		
-		tempMedicamentos();
+		if(getMbo().isNew()){
+			tempMedicamentos();
+		}
+		
 
 		super.save();
 		return currentRow;
