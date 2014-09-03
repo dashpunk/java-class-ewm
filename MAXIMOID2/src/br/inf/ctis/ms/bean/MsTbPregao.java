@@ -20,7 +20,7 @@ public class MsTbPregao extends AppBean {
 	@Override
 	public void save() throws MXException {
 		try {
-			if(getMbo().isNew()){
+			if(getMbo().getMboSet("MSTBITENSPREGAO").isEmpty()){
 			
 				MboRemote mbo;
 				MboRemote mboDestino = null;
