@@ -94,7 +94,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("MSQTD", 0, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNTIPOATENDIMENTO", "COMPRA", MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSMEDPAI", 0, MboConstants.NOACCESSCHECK);
-								mboDestinoMed.setValue("STATUS", "VER.DEP.JUD", MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("STATUS", "ATEND.ESTOQUE", MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
 								

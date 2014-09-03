@@ -12,10 +12,8 @@ public class teste {
 	 */
 	public static void main(String[] args) {
 		
-		Double a = 1284281.50;
-		Extenso extenso = new Extenso();
-		extenso.setNumber(a);
-		System.out.println(extenso.toString());
+		String valor = "14002424141";
+		System.out.println(Integer.valueOf(valor.substring(0, 2)).intValue());
 
 	}
 
