@@ -1,18 +1,36 @@
 package br.inf.ctis.ms.bean;
 
 import java.rmi.RemoteException;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import br.inf.ctis.common.field.ComumHistoricoFiscal;
 import psdi.mbo.MboRemote;
 import psdi.util.MXException;
 import psdi.webclient.system.beans.AppBean;
 
 public class MsTbInexigibilidade extends AppBean {
 
+	private Map<String, List> dadosHistoricoUltimoFiscal;
+	
 	/**
 	 * @author marcelosydney.lima 
 	 */
 	public MsTbInexigibilidade() {
+	}
+	
+	@Override
+	public void initialize() throws MXException{
+		try {
+			ComumHistoricoFiscal gHFiscal = new ComumHistoricoFiscal();
+			dadosHistoricoUltimoFiscal = (Map<String, List>) gHFiscal.initializeUseCase(getMbo());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@Override
@@ -75,6 +93,32 @@ public class MsTbInexigibilidade extends AppBean {
 				
 				System.out.println("########## Valor Global = " + valorglobal);
 				getMbo().setValue("MSNUNUMVALORTOTAL", valorglobal);
+				
+				ComumHistoricoFiscal gHFiscal = new ComumHistoricoFiscal();
+				Map<String, List> dadosFiscal = (Map<String, List>) gHFiscal.initializeUseCase(getMbo());
+				
+				if(getMbo().getString("MSALNUMPORTARIAFISCAL") != null && 
+						!getMbo().getString("MSALNUMPORTARIAFISCAL").toString().equalsIgnoreCase("") &&
+						!getMbo().getString("MSALNUMPORTARIAFISCAL").equalsIgnoreCase(dadosHistoricoUltimoFiscal.get("MSALNUMPORTARIAFISCAL").get(0).toString())){
+					// chamar método para salvar o histórico.
+					
+					MboRemote mboHistorico = getMbo().getMboSet("MSTBHISTORICOFISCAIS").add();
+					mboHistorico.setValue("MSALNOMFISCALCONTRATO", getMbo().getString("MSALNOMFISCALCONTRATO"));
+					mboHistorico.setValue("MSALNOMFISCALCONTRATOSUB", getMbo().getString("MSALNOMFISCALCONTRATOSUB"));
+					mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATO", getMbo().getString("MSALNUMSIAPEFISCALCONTRATO"));
+					mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATOSUB", getMbo().getString("MSALNUMSIAPEFISCALCONTRATOSUB"));
+					mboHistorico.setValue("MSALNUMBSEFISCAL", getMbo().getString("MSALNUMBSEFISCAL"));
+					mboHistorico.setValue("MSALNUMPORTARIAFISCAL", getMbo().getString("MSALNUMPORTARIAFISCAL"));
+					mboHistorico.setValue("MSDTDTAPORTARIAFISCAL", getMbo().getString("MSDTDTAPORTARIAFISCAL"));
+					mboHistorico.setValue("MSDTDTAPUBLICACAOPORTARIAFISCAL", getMbo().getString("MSDTDTAPUBLICACAOPORTARIA"));
+					mboHistorico.setValue("APPNAME", "MSINEXIGIB");
+					mboHistorico.setValue("TABLENAME", "MSTBINEXIGIBILIDADE");
+					mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBINEXIGIBILIDADEID"));
+					mboHistorico.setValue("PERSONID", sessionContext.getUserInfo().getPersonId());
+					
+					//MSTBHISTORICOFISCAIS
+				}
+				
 				super.save();
 			}
 			//mboDestino.getThisMboSet().save();
