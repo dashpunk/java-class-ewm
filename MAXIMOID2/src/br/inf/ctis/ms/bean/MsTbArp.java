@@ -19,7 +19,7 @@ public class MsTbArp extends AppBean {
 	@Override
 	public void save() throws MXException {
 		try {
-			if(getMbo().isNew()){
+			if(getMbo().getMboSet("MSTBITENSARP").isEmpty()){
 			
 				MboRemote mbo;
 				MboRemote mboDestino = null;
