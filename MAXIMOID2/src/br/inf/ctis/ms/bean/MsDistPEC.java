@@ -186,13 +186,11 @@ public class MsDistPEC extends DataBean {
 				mboPO.setValue("MSFLAG2RESPORCA","1");
 				System.out.println(">>>>>>>>>>>>Setando para verdeiro:" +mboPO.getBoolean("MSFLAG2RESPORCA"));
 			}
-			else{
-				mboPO.setValue("MSFLAG2RESPORCA","0");
-				System.out.println(">>>>>>>>>>>>Setando para falso:" +mboPO.getBoolean("MSFLAG2RESPORCA"));
-			}
-			
 		}
-		
+		else{
+			mboPO.setValue("MSFLAG2RESPORCA","0");
+			System.out.println(">>>>>>>>>>>>Setando para falso:" +mboPO.getBoolean("MSFLAG2RESPORCA"));
+		}
 				
 		if(mboGrupo.getBoolean("MSHABDISTR")) {
 			
