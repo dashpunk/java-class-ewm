@@ -104,8 +104,7 @@ public class MsDistPEC extends DataBean {
 	private void validarCampos() throws MXException, RemoteException  {
 		System.out.println("applyCustomAction");
 
-		MboRemote aMbo;
-		MboRemote bMbo;
+		MboRemote aMbo;		
 		
 		MboSet mboCampos;
 		mboCampos = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSTBPEC_CAMPOS", getMbo().getUserInfo());
