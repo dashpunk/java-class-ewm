@@ -179,6 +179,20 @@ public class MsDistPEC extends DataBean {
 		mboPO.setValue("MSPECACAO", MsAcao);
 		mboPO.setValue("MSPECFLUXO", MsFluxo);
 		mboPO.setValue("STATUSPEC", Statuspec);
+		
+		System.out.println(">>>>>>>>>>>>Antes do IF valor:" + mboGrupo.getBoolean("MSFLAGRESP"));
+		if (mboGrupo.getBoolean("MSFLAGRESP")){
+			System.out.println(">>>>>>>>>>>>Valor do 2 Responsavel:" + mboPO.getString("MSSECREPB"));
+			if(!mboPO.getString("MSSECREPB").equals("NENHUMA")){
+				mboPO.setValue("MSFLAG2RESPORCA", 1);
+				System.out.println(">>>>>>>>>>>>Setando para verdeiro:" +mboPO.getBoolean("MSFLAG2RESPORCA"));
+			}
+			
+		}
+		else{
+			mboPO.setValue("MSFLAG2RESPORCA", 0);
+			System.out.println(">>>>>>>>>>>>Setando para falso:" +mboPO.getBoolean("MSFLAG2RESPORCA"));
+		}
 				
 		if(mboGrupo.getBoolean("MSHABDISTR")) {
 			
