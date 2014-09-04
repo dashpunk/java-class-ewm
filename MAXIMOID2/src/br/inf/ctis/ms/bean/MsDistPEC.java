@@ -43,7 +43,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste01");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste02");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -183,13 +183,13 @@ public class MsDistPEC extends DataBean {
 		if (mboGrupo.getBoolean("MSFLAGRESP")){
 			System.out.println(">>>>>>>>>>>>Valor do 2 Responsavel:" + mboPO.getString("MSSECREPB"));
 			if(!mboPO.getString("MSSECREPB").equals("NENHUMA")){
-				mboPO.setValue("MSFLAG2RESPORCA", 1);
+				mboPO.setValue("MSFLAG2RESPORCA","1");
 				System.out.println(">>>>>>>>>>>>Setando para verdeiro:" +mboPO.getBoolean("MSFLAG2RESPORCA"));
 			}
 			
 		}
 		else{
-			mboPO.setValue("MSFLAG2RESPORCA", 0);
+			mboPO.setValue("MSFLAG2RESPORCA","0");
 			System.out.println(">>>>>>>>>>>>Setando para falso:" +mboPO.getBoolean("MSFLAG2RESPORCA"));
 		}
 				
