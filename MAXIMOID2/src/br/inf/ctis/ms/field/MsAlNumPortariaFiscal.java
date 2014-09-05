@@ -21,6 +21,11 @@ public class MsAlNumPortariaFiscal extends MboValueAdapter{
 		getMboValue().getMbo().setValueNull("MSALNUMSIAPEFISCALCONTRATOSUB");
 		getMboValue().getMbo().setValueNull("MSALNUMBSEFISCAL");
 		getMboValue().getMbo().setValueNull("MSDTDTAPORTARIAFISCAL");
-		getMboValue().getMbo().setValueNull("MSDTDTAPUBLICACAOPORTARIAFISCAL");
+		
+		try {
+			getMboValue().getMbo().setValueNull("MSDTDTAPUBLICACAOPORTARIAFISCAL");
+		} catch (Exception e) {
+			getMboValue().getMbo().setValueNull("MSDTDTAPUBLICACAOPORTARIA");
+		}
 	}
 }
