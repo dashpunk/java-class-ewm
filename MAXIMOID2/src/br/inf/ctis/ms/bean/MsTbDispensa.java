@@ -9,6 +9,8 @@ import psdi.webclient.system.beans.AppBean;
 
 public class MsTbDispensa extends AppBean {
 
+	private String historicoNumPortaria;
+	
 	/**
 	 * @author marcelosydney.lima 
 	 */
@@ -16,9 +18,19 @@ public class MsTbDispensa extends AppBean {
 	}
 	
 	@Override
+	public void initialize() throws MXException{
+		try {
+			historicoNumPortaria = getMbo().getString("MSALNUMPORTARIAFISCAL");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
 	public void save() throws MXException {
 		try {
-			if(getMbo().isNew()){
+			if(getMbo().getMboSet("MSTBITENSDISPENSA").isEmpty()){
 			
 				MboRemote mbo;
 				MboRemote mboDestino = null;
@@ -54,6 +66,30 @@ public class MsTbDispensa extends AppBean {
 				
 				System.out.println("########## Valor Global = " + valorglobal);
 				getMbo().setValue("MSNUNUMVALORTOTAL", valorglobal);
+				
+				System.out.println("########## boolean dadosHistoricoUltimoFiscal: " + historicoNumPortaria);
+				
+				if(getMbo().getString("MSALNUMPORTARIAFISCAL") != null && 
+						!getMbo().getString("MSALNUMPORTARIAFISCAL").toString().equalsIgnoreCase("") &&
+						!getMbo().getString("MSALNUMPORTARIAFISCAL").equalsIgnoreCase(historicoNumPortaria)){
+					// chamar método para salvar o histórico.
+					
+					MboRemote mboHistorico = getMbo().getMboSet("MSTBHISTORICOFISCAIS").add();
+					mboHistorico.setValue("MSALNOMFISCALCONTRATO", getMbo().getString("MSALNOMFISCALCONTRATO"));
+					mboHistorico.setValue("MSALNOMFISCALCONTRATOSUB", getMbo().getString("MSALNOMFISCALCONTRATOSUB"));
+					mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATO", getMbo().getString("MSALNUMSIAPEFISCALCONTRATO"));
+					mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATOSUB", getMbo().getString("MSALNUMSIAPEFISCALCONTRATOSUB"));
+					mboHistorico.setValue("MSALNUMBSEFISCAL", getMbo().getString("MSALNUMBSEFISCAL"));
+					mboHistorico.setValue("MSALNUMPORTARIAFISCAL", getMbo().getString("MSALNUMPORTARIAFISCAL"));
+					mboHistorico.setValue("MSDTDTAPORTARIAFISCAL", getMbo().getString("MSDTDTAPORTARIAFISCAL"));
+					mboHistorico.setValue("MSDTDTAPUBLICACAOPORTARIAFISCAL", getMbo().getString("MSDTDTAPUBLICACAOPORTARIA"));
+					mboHistorico.setValue("APPNAME", "MSINEXIGIB");
+					mboHistorico.setValue("TABLENAME", "MSTBINEXIGIBILIDADE");
+					mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBINEXIGIBILIDADEID"));
+					mboHistorico.setValue("PERSONID", sessionContext.getUserInfo().getPersonId());
+					
+					//MSTBHISTORICOFISCAIS
+				}
 								
 				super.save();
 				
@@ -75,6 +111,31 @@ public class MsTbDispensa extends AppBean {
 				
 				System.out.println("########## Valor Global = " + valorglobal);
 				getMbo().setValue("MSNUNUMVALORTOTAL", valorglobal);
+				
+				System.out.println("########## boolean dadosHistoricoUltimoFiscal: " + historicoNumPortaria);
+				
+				if(getMbo().getString("MSALNUMPORTARIAFISCAL") != null && 
+						!getMbo().getString("MSALNUMPORTARIAFISCAL").toString().equalsIgnoreCase("") &&
+						!getMbo().getString("MSALNUMPORTARIAFISCAL").equalsIgnoreCase(historicoNumPortaria)){
+					// chamar método para salvar o histórico.
+					
+					MboRemote mboHistorico = getMbo().getMboSet("MSTBHISTORICOFISCAIS").add();
+					mboHistorico.setValue("MSALNOMFISCALCONTRATO", getMbo().getString("MSALNOMFISCALCONTRATO"));
+					mboHistorico.setValue("MSALNOMFISCALCONTRATOSUB", getMbo().getString("MSALNOMFISCALCONTRATOSUB"));
+					mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATO", getMbo().getString("MSALNUMSIAPEFISCALCONTRATO"));
+					mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATOSUB", getMbo().getString("MSALNUMSIAPEFISCALCONTRATOSUB"));
+					mboHistorico.setValue("MSALNUMBSEFISCAL", getMbo().getString("MSALNUMBSEFISCAL"));
+					mboHistorico.setValue("MSALNUMPORTARIAFISCAL", getMbo().getString("MSALNUMPORTARIAFISCAL"));
+					mboHistorico.setValue("MSDTDTAPORTARIAFISCAL", getMbo().getString("MSDTDTAPORTARIAFISCAL"));
+					mboHistorico.setValue("MSDTDTAPUBLICACAOPORTARIAFISCAL", getMbo().getString("MSDTDTAPUBLICACAOPORTARIA"));
+					mboHistorico.setValue("APPNAME", "MSINEXIGIB");
+					mboHistorico.setValue("TABLENAME", "MSTBINEXIGIBILIDADE");
+					mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBINEXIGIBILIDADEID"));
+					mboHistorico.setValue("PERSONID", sessionContext.getUserInfo().getPersonId());
+					
+					//MSTBHISTORICOFISCAIS
+				}
+				
 				super.save();
 			}
 			//mboDestino.getThisMboSet().save();

@@ -13,7 +13,7 @@ import psdi.webclient.system.beans.AppBean;
 
 public class MsTbInexigibilidade extends AppBean {
 
-	private Map<String, List> dadosHistoricoUltimoFiscal;
+	private String historicoNumPortaria;
 	
 	/**
 	 * @author marcelosydney.lima 
@@ -24,13 +24,11 @@ public class MsTbInexigibilidade extends AppBean {
 	@Override
 	public void initialize() throws MXException{
 		try {
-			ComumHistoricoFiscal gHFiscal = new ComumHistoricoFiscal();
-			dadosHistoricoUltimoFiscal = (Map<String, List>) gHFiscal.initializeUseCase(getMbo());
+			historicoNumPortaria = getMbo().getString("MSALNUMPORTARIAFISCAL");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	@Override
@@ -72,6 +70,30 @@ public class MsTbInexigibilidade extends AppBean {
 				
 				System.out.println("########## Valor Global = " + valorglobal);
 				getMbo().setValue("MSNUNUMVALORTOTAL", valorglobal);
+				
+				System.out.println("########## boolean dadosHistoricoUltimoFiscal: " + historicoNumPortaria);
+				
+				if(getMbo().getString("MSALNUMPORTARIAFISCAL") != null && 
+						!getMbo().getString("MSALNUMPORTARIAFISCAL").toString().equalsIgnoreCase("") &&
+						!getMbo().getString("MSALNUMPORTARIAFISCAL").equalsIgnoreCase(historicoNumPortaria)){
+					// chamar método para salvar o histórico.
+					
+					MboRemote mboHistorico = getMbo().getMboSet("MSTBHISTORICOFISCAIS").add();
+					mboHistorico.setValue("MSALNOMFISCALCONTRATO", getMbo().getString("MSALNOMFISCALCONTRATO"));
+					mboHistorico.setValue("MSALNOMFISCALCONTRATOSUB", getMbo().getString("MSALNOMFISCALCONTRATOSUB"));
+					mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATO", getMbo().getString("MSALNUMSIAPEFISCALCONTRATO"));
+					mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATOSUB", getMbo().getString("MSALNUMSIAPEFISCALCONTRATOSUB"));
+					mboHistorico.setValue("MSALNUMBSEFISCAL", getMbo().getString("MSALNUMBSEFISCAL"));
+					mboHistorico.setValue("MSALNUMPORTARIAFISCAL", getMbo().getString("MSALNUMPORTARIAFISCAL"));
+					mboHistorico.setValue("MSDTDTAPORTARIAFISCAL", getMbo().getString("MSDTDTAPORTARIAFISCAL"));
+					mboHistorico.setValue("MSDTDTAPUBLICACAOPORTARIAFISCAL", getMbo().getString("MSDTDTAPUBLICACAOPORTARIA"));
+					mboHistorico.setValue("APPNAME", "MSINEXIGIB");
+					mboHistorico.setValue("TABLENAME", "MSTBINEXIGIBILIDADE");
+					mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBINEXIGIBILIDADEID"));
+					mboHistorico.setValue("PERSONID", sessionContext.getUserInfo().getPersonId());
+					
+					//MSTBHISTORICOFISCAIS
+				}
 								
 				super.save();
 				
@@ -94,12 +116,11 @@ public class MsTbInexigibilidade extends AppBean {
 				System.out.println("########## Valor Global = " + valorglobal);
 				getMbo().setValue("MSNUNUMVALORTOTAL", valorglobal);
 				
-				ComumHistoricoFiscal gHFiscal = new ComumHistoricoFiscal();
-				Map<String, List> dadosFiscal = (Map<String, List>) gHFiscal.initializeUseCase(getMbo());
+				System.out.println("########## boolean dadosHistoricoUltimoFiscal: " + historicoNumPortaria);
 				
 				if(getMbo().getString("MSALNUMPORTARIAFISCAL") != null && 
 						!getMbo().getString("MSALNUMPORTARIAFISCAL").toString().equalsIgnoreCase("") &&
-						!getMbo().getString("MSALNUMPORTARIAFISCAL").equalsIgnoreCase(dadosHistoricoUltimoFiscal.get("MSALNUMPORTARIAFISCAL").get(0).toString())){
+						!getMbo().getString("MSALNUMPORTARIAFISCAL").equalsIgnoreCase(historicoNumPortaria)){
 					// chamar método para salvar o histórico.
 					
 					MboRemote mboHistorico = getMbo().getMboSet("MSTBHISTORICOFISCAIS").add();
