@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import br.inf.ctis.common.field.ComumHistoricoFiscal;
 import psdi.mbo.MboRemote;
 import psdi.util.MXException;
 import psdi.webclient.system.beans.AppBean;
