@@ -139,9 +139,9 @@ public class MsContrato extends ContPurchAppBean {
 				mboHistorico.setValue("MSALNUMPORTARIAFISCAL", getMbo().getString("MSALNUMPORTARIAFISCAL"));
 				mboHistorico.setValue("MSDTDTAPORTARIAFISCAL", getMbo().getString("MSDTDTAPORTARIAFISCAL"));
 				mboHistorico.setValue("MSDTDTAPUBLICACAOPORTARIAFISCAL", getMbo().getString("MSDTDTAPUBLICACAOPORTARIA"));
-				mboHistorico.setValue("APPNAME", "MSINEXIGIB");
-				mboHistorico.setValue("TABLENAME", "MSTBINEXIGIBILIDADE");
-				mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBINEXIGIBILIDADEID"));
+				mboHistorico.setValue("APPNAME", "MSCONTRATO");
+				mboHistorico.setValue("TABLENAME", "PURCHVIEW");
+				mboHistorico.setValue("ORIGEMID", getMbo().getInt("CONTRACTID"));
 				mboHistorico.setValue("PERSONID", sessionContext.getUserInfo().getPersonId());
 				
 				//MSTBHISTORICOFISCAIS

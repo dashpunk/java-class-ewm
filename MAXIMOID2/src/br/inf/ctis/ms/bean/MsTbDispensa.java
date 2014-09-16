@@ -83,9 +83,9 @@ public class MsTbDispensa extends AppBean {
 					mboHistorico.setValue("MSALNUMPORTARIAFISCAL", getMbo().getString("MSALNUMPORTARIAFISCAL"));
 					mboHistorico.setValue("MSDTDTAPORTARIAFISCAL", getMbo().getString("MSDTDTAPORTARIAFISCAL"));
 					mboHistorico.setValue("MSDTDTAPUBLICACAOPORTARIAFISCAL", getMbo().getString("MSDTDTAPUBLICACAOPORTARIA"));
-					mboHistorico.setValue("APPNAME", "MSINEXIGIB");
-					mboHistorico.setValue("TABLENAME", "MSTBINEXIGIBILIDADE");
-					mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBINEXIGIBILIDADEID"));
+					mboHistorico.setValue("APPNAME", "MSDISPENSA");
+					mboHistorico.setValue("TABLENAME", "MSTBDISPENSA");
+					mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBDISPENSAID"));
 					mboHistorico.setValue("PERSONID", sessionContext.getUserInfo().getPersonId());
 					
 					//MSTBHISTORICOFISCAIS
@@ -128,9 +128,9 @@ public class MsTbDispensa extends AppBean {
 					mboHistorico.setValue("MSALNUMPORTARIAFISCAL", getMbo().getString("MSALNUMPORTARIAFISCAL"));
 					mboHistorico.setValue("MSDTDTAPORTARIAFISCAL", getMbo().getString("MSDTDTAPORTARIAFISCAL"));
 					mboHistorico.setValue("MSDTDTAPUBLICACAOPORTARIAFISCAL", getMbo().getString("MSDTDTAPUBLICACAOPORTARIA"));
-					mboHistorico.setValue("APPNAME", "MSINEXIGIB");
-					mboHistorico.setValue("TABLENAME", "MSTBINEXIGIBILIDADE");
-					mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBINEXIGIBILIDADEID"));
+					mboHistorico.setValue("APPNAME", "MSDISPENSA");
+					mboHistorico.setValue("TABLENAME", "MSTBDISPENSA");
+					mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBDISPENSAID"));
 					mboHistorico.setValue("PERSONID", sessionContext.getUserInfo().getPersonId());
 					
 					//MSTBHISTORICOFISCAIS
