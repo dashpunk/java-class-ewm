@@ -66,7 +66,7 @@ public class MSCatMat extends MboValueAdapter {
 		TabelaMedicamentos = getMboValue().getMbo().getMboSet("MSTBMEDICAMENTOS");
 
 		MboRemote mboa = null;
-
+		//Alterado para BR
 		if (CatMat != "BR") {
 			for (int i = 0; ((mboa = TabelaMedicamentos.getMbo(i)) != null); i++) {
 				System.out.println("#### CTIS - MSCatMat / verificaSeExiste CatMat For" + mboa.getString("CATMAT") + "     =    " + CatMat + " ? " );
