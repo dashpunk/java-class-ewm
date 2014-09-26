@@ -46,7 +46,8 @@ public class MSCatMat extends MboValueAdapter {
 						if (WORKORDER.getString("STATUS").equals("ESTADO/MUNICIPIO")) {
 							novaLinha("ESTADO/MUNICIPIO");
 						} else if (WORKORDER.getString("STATUS").equals("VER. PROGRAMA")) {
-							novaLinha("VER. PROGRAMA");
+							//novaLinha("VER. PROGRAMA");
+							novaLinha("");
 						}
 					}
 				} else {
@@ -92,7 +93,7 @@ public class MSCatMat extends MboValueAdapter {
 			System.out.println("#### CTIS - MSCatMat / Nova Linha: ESTADO/MUNICIPIO");
 			mbo.setValue("MSALNTIPOATENDIMENTO", status, MboConstants.NOACCESSCHECK);
 			mbo.setValue("STATUS", "ATEND.EST/MUN", MboConstants.NOACCESSCHECK);
-		} else if (status == "VER. PROGRAMA") {
+		} /*else if (status == "VER. PROGRAMA") {
 			System.out.println("#### CTIS - MSCatMat / Nova Linha: VER. PROGRAMA");
 			MboSet mboSetMedicamentosVW;
 			mboSetMedicamentosVW = (MboSet) psdi.server.MXServer.getMXServer().getMboSet("MSVWMEDICESTOQUE", getMboValue().getMbo().getUserInfo());
@@ -108,7 +109,7 @@ public class MSCatMat extends MboValueAdapter {
 				mbo.setValue("MSALNTIPOATENDIMENTO", "COMPRA", MboConstants.NOACCESSCHECK);
 				mbo.setValue("STATUS", "VER.DEP.JUD", MboConstants.NOACCESSCHECK);
 			}
-		}
+		}*/
 		if (status == "") {
 			mbo.setValue("MSALNTIPOATENDIMENTO", "", MboConstants.NOACCESSCHECK);
 			mbo.setValue("DESCRIPTION", "", MboConstants.NOACCESSCHECK);

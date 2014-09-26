@@ -8,11 +8,6 @@
 package br.inf.ctis.ms.field;
 
 import java.rmi.RemoteException;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.util.Properties;
-
-import psdi.id2.Uteis;
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboSet;
@@ -20,7 +15,6 @@ import psdi.mbo.MboSetRemote;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
 import psdi.server.MXServer;
-import psdi.util.DBConnect;
 import psdi.util.MXApplicationYesNoCancelException;
 import psdi.util.MXException;
 
@@ -68,8 +62,13 @@ public class MsQtdDemJud extends MboValueAdapter {
 						case MXApplicationYesNoCancelException.YES:
 							System.out.println(">>> Usuario clicou em SIM");
 							
+							String Sismat = getMboValue().getMbo().getString("MSSISMAT");
 							String Catmat = getMboValue().getMbo().getString("CATMAT");
 							String DescCatmat = getMboValue().getMbo().getString("DESCRIPTION");
+							String PrincipioAtivo = getMboValue().getMbo().getString("MSALNPRINCIPIO");
+							String Nome = getMboValue().getMbo().getString("MSALNNOME");
+							String Unidade = getMboValue().getMbo().getString("MSALNUNIDADEMEDIDA");
+							int Tempo = getMboValue().getMbo().getInt("MSNUMTEMPO");
 							String Wonum = getMboValue().getMbo().getString("WONUM");
 							double QtdCompra = QtdSolic - QtdDisp;
 							
@@ -96,6 +95,11 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("MSMEDPAI", 0, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("STATUS", "ATEND.ESTOQUE", MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSSISMAT", Sismat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNPRINCIPIO", PrincipioAtivo, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNNOME", Nome, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNUNIDADEMEDIDA", Unidade, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSNUMTEMPO", Tempo, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
 								
 								
@@ -115,6 +119,11 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("MSMEDPAI", ID_do_Pai, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("STATUS", "ATEND.ESTOQUE", MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSSISMAT", Sismat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNPRINCIPIO", PrincipioAtivo, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNNOME", Nome, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNUNIDADEMEDIDA", Unidade, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSNUMTEMPO", Tempo, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
 								
 								
@@ -134,6 +143,11 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("MSMEDPAI", 0, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("STATUS", "VER.DEP.JUD", MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSSISMAT", Sismat, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNPRINCIPIO", PrincipioAtivo, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNNOME", Nome, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNUNIDADEMEDIDA", Unidade, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSNUMTEMPO", Tempo, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
 								
 								
