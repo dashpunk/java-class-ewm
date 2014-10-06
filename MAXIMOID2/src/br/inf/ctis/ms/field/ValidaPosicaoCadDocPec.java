@@ -31,6 +31,20 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
             return;
         }
 		
+		//Mascara de validacao
+		String valor = new String();
+	    valor = Uteis.getApenasNumeros(getMboValue().getString());
+	    System.out.println(">>>>>>>>>>>>>>>>>>>>getMboValue().getString() = " + getMboValue().getString());
+	    System.out.println(">>>>>>>>>>>>>>>>>>>>valor = " + valor);
+	    
+	    if ((valor.length() > 10)) {
+	    	throw new MXApplicationException("tamposicao", "TamanhoPosicaoInvalido");
+	    }
+	    
+	    System.out.println(">>>>>>>>>>>>>>>>>>>>validando mascara do ponto");
+	    if ((!getMboValue().getString().substring(2, 2).equalsIgnoreCase("."))||(!getMboValue().getString().substring(4, 4).equalsIgnoreCase(".")) || (!getMboValue().getString().substring(6, 6).equalsIgnoreCase("."))) {
+	    	throw new MXApplicationException("pontoposicao", "PontosInvalida");
+	    }
 		
 		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do validate");
 
@@ -38,7 +52,7 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
         
         System.out.println(">>>>>>>>>>>>>>>>>>>> Quantidade de registros na MSVWCLAUSULAPEC: "+mbosetPosicao.count());
         
-        for (int i = 0; i < mbosetPosicao.count(); i++) {
+        /*for (int i = 0; i < mbosetPosicao.count(); i++) {
            
                                           
 	            if (getMboValue().getString().equals(mbosetPosicao.getMbo(i).getString("MSPOSICAO"))) {
@@ -52,7 +66,7 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
 	            	getMboValue().getMbo().setValue("MSPOSICAO", mbosetPosicao.getMbo(i).getString("MSPOSICAO"));
 	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do else ja persistindo a Posicao");
 	            }
-        }
+        }*/
         
        
 
