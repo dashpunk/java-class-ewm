@@ -32,11 +32,11 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
         }
 		
 		//Mascara de validacao
-		String valor = new String();
-	    valor = Uteis.getApenasNumeros(getMboValue().getString());
-	    System.out.println(">>>>>>>>>>>>>>>>>>>>getMboValue().getString() = " + getMboValue().getString());
-	    System.out.println(">>>>>>>>>>>>>>>>>>>>valor = " + valor);
-	    
+		//String valor = new String();
+	    // valor = Uteis.getApenasNumeros(getMboValue().getString());
+		String valor = getMboValue().getMbo().getString("MSPOSICAO");
+	    System.out.println(">>>>>>>>>>>>>>>>>>>>valor = " + getMboValue().getMbo().getString("MSPOSICAO"));
+	  	    
 	    if ((valor.length() > 10)) {
 	    	throw new MXApplicationException("tamposicao", "TamanhoPosicaoInvalido");
 	    }
