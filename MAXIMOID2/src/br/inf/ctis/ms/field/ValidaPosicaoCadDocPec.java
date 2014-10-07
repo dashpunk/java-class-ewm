@@ -43,6 +43,8 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
 	    
 	    System.out.println(">>>>>>>>>>>>>>>>>>>>validando mascara do ponto");
 	    if ((!getMboValue().getString().substring(2, 2).equalsIgnoreCase("."))) {
+	    	
+	    	System.out.println(">>>>>>>>>>>>>>>>>>>>getMboValue().getString().substring(2, 2) = "+getMboValue().getString().substring(2, 2));
 	    	throw new MXApplicationException("pontoposicao", "PontosInvalida");
 	    }
 		
