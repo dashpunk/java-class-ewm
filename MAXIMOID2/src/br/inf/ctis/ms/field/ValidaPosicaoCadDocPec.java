@@ -43,6 +43,7 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
 	    	if((valor.length() < 3)){
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.", valor, false));
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 3");
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor mascarado"+Uteis.getValorMascarado("#.", valor, false));
 	    	}
 	    	if((valor.length() < 5)){
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.", valor, false));
