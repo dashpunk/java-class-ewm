@@ -10,6 +10,7 @@ import psdi.mbo.MboRemote;
 import psdi.mbo.MboSet;
 import psdi.mbo.MboSetRemote;
 import psdi.mbo.MboValue;
+import psdi.mbo.MboValueAdapter;
 import psdi.server.MXServer;
 import psdi.util.MXApplicationException;
 import psdi.util.MXApplicationYesNoCancelException;
@@ -17,11 +18,11 @@ import psdi.util.MXException;
 import br.inf.id2.common.util.Uteis;
 import br.inf.id2.common.util.Validar;
 
-public class ValidaPosicaoCadDocPec extends MAXTableDomain {
+public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 
 	public ValidaPosicaoCadDocPec(MboValue mbv) {
 		super(mbv);
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 02");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 04");
 	}
 	
 	public void validate() throws MXException, RemoteException {
@@ -32,7 +33,7 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
         }
 		
 		//Mascara de validacao
-		String valor = new String();
+		String valor = "";
 	    valor = Uteis.getApenasNumeros(getMboValue().getString());
 	    System.out.println(">>>>>>>>>>>>>>>>>>>>valor = " + getMboValue().getMbo().getString("MSPOSICAO"));
 	  	    
@@ -40,9 +41,9 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
 	    System.out.println(">>>>>>>>>>>>>>>>>>>>validando mascara do ponto");
 	    if (!getMboValue().getMbo().isNull("MSPOSICAO")) {	 
 	    	
-	    	if((valor.length() < 2)){
+	    	if((valor.length() < 3)){
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.", valor, false));
-	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 2");
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 3");
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor mascarado"+Uteis.getValorMascarado("#.", valor, false));
 	    	}
 	    	if((valor.length() < 5)){
