@@ -21,7 +21,7 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
 
 	public ValidaPosicaoCadDocPec(MboValue mbv) {
 		super(mbv);
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 03 ");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 00");
 	}
 	
 	public void validate() throws MXException, RemoteException {
@@ -32,20 +32,40 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
         }
 		
 		//Mascara de validacao
-		//String valor = new String();
-	    // valor = Uteis.getApenasNumeros(getMboValue().getString());
-		String valor = getMboValue().getMbo().getString("MSPOSICAO");
+		String valor = new String();
+	    valor = Uteis.getApenasNumeros(getMboValue().getString());
 	    System.out.println(">>>>>>>>>>>>>>>>>>>>valor = " + getMboValue().getMbo().getString("MSPOSICAO"));
 	  	    
-	    if ((valor.length() > 10)) {
-	    	throw new MXApplicationException("tamposicao", "TamanhoPosicaoInvalido");
-	    }
-	    
+	        
 	    System.out.println(">>>>>>>>>>>>>>>>>>>>validando mascara do ponto");
-	    if ((!getMboValue().getString().substring(1, 1).equalsIgnoreCase(".")||(!getMboValue().getString().substring(3, 3).equalsIgnoreCase(".")))) {
+	    if (!getMboValue().getMbo().isNull("MSPOSICAO")) {	 
 	    	
+	    	if((valor.length() < 3)){
+	    		getMboValue().setValue(Uteis.getValorMascarado("#.", valor, false));
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 3");
+	    	}
+	    	if((valor.length() < 5)){
+	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.", valor, false));
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 5");
+	    	}
+	    	if((valor.length() < 7)){
+	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.", valor, false));
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 7");
+	    	}
+	    	if((valor.length() < 9)){
+	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.#.", valor, false));
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 9");
+	    	}
+	    	if((valor.length() < 11)){
+	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.#.#.", valor, false));
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 11");
+	    	}
+	    	else{
 	    	System.out.println(">>>>>>>>>>>>>>>>>>>>getMboValue().getString().substring(0, 1) = "+getMboValue().getString().substring(0, 1));
-	    	throw new MXApplicationException("pontoposicao", "PontosInvalida");
+	    	throw new MXApplicationException("pontoposicao", "MascaraPosicaoInvalida");
+	    	}
+	    	
+	    	
 	    }
 		
 		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do validate");
