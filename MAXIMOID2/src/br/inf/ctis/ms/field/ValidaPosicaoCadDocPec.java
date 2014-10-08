@@ -22,7 +22,7 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 
 	public ValidaPosicaoCadDocPec(MboValue mbv) throws MXException {
 		super(mbv);
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 04");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 00");
 	}
 	
 	public void validate() throws MXException, RemoteException {
@@ -59,16 +59,16 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 11");
 	    	}
 	    	else{
-	    	System.out.println(">>>>>>>>>>>>>>>>>>>>getMboValue().getString().substring(0, 1) = "+getMboValue().getString().substring(0, 1));
+	    	
 	    	throw new MXApplicationException("pontoposicao", "MascaraPosicaoInvalida");
 	    	}
 	    	
 	    	
 	    }
 		
-		MboSet mbosetPosicao = (MboSet) getMboValue().getMbo().getMboSet("MSVWCLAUSULAPEC");
+		//MboSet mbosetPosicao = (MboSet) getMboValue().getMbo().getMboSet("MSVWCLAUSULAPEC");
         
-        System.out.println(">>>>>>>>>>>>>>>>>>>> Quantidade de registros na MSVWCLAUSULAPEC: "+mbosetPosicao.count());
+        //System.out.println(">>>>>>>>>>>>>>>>>>>> Quantidade de registros na MSVWCLAUSULAPEC: "+mbosetPosicao.count());
         
         /*for (int i = 0; i < mbosetPosicao.count(); i++) {
            
