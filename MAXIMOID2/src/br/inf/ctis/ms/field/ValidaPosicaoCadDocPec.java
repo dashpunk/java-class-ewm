@@ -21,7 +21,7 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
 
 	public ValidaPosicaoCadDocPec(MboValue mbv) {
 		super(mbv);
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 00");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 02");
 	}
 	
 	public void validate() throws MXException, RemoteException {
@@ -40,9 +40,9 @@ public class ValidaPosicaoCadDocPec extends MAXTableDomain {
 	    System.out.println(">>>>>>>>>>>>>>>>>>>>validando mascara do ponto");
 	    if (!getMboValue().getMbo().isNull("MSPOSICAO")) {	 
 	    	
-	    	if((valor.length() < 3)){
+	    	if((valor.length() < 2)){
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.", valor, false));
-	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 3");
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 2");
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor mascarado"+Uteis.getValorMascarado("#.", valor, false));
 	    	}
 	    	if((valor.length() < 5)){
