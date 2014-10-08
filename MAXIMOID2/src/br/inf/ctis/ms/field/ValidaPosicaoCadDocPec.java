@@ -20,25 +20,21 @@ import br.inf.id2.common.util.Validar;
 
 public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 
-	public ValidaPosicaoCadDocPec(MboValue mbv) {
+	public ValidaPosicaoCadDocPec(MboValue mbv) throws MXException {
 		super(mbv);
 		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 04");
 	}
 	
 	public void validate() throws MXException, RemoteException {
 		
-		if (getMboValue().isNull()) {
-            System.out.println(">>>>>>>>>>>>>>>>>>>> is null");
-            return;
-        }
-		
+				
 		//Mascara de validacao
-		String valor = "";
+		String valor = new String();
 	    valor = Uteis.getApenasNumeros(getMboValue().getString());
-	    System.out.println(">>>>>>>>>>>>>>>>>>>>valor = " + getMboValue().getMbo().getString("MSPOSICAO"));
+	    System.out.println(">>>>>>>>>>>>>>>>>>>> valor antes do IF de posicao= " + getMboValue().getMbo().getString("MSPOSICAO"));
 	  	    
 	        
-	    System.out.println(">>>>>>>>>>>>>>>>>>>>validando mascara do ponto");
+	    System.out.println(">>>>>>>>>>>>>>>>>>>> validando mascara do ponto");
 	    if (!getMboValue().getMbo().isNull("MSPOSICAO")) {	 
 	    	
 	    	if((valor.length() < 3)){
@@ -70,8 +66,6 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 	    	
 	    }
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do validate");
-
 		MboSet mbosetPosicao = (MboSet) getMboValue().getMbo().getMboSet("MSVWCLAUSULAPEC");
         
         System.out.println(">>>>>>>>>>>>>>>>>>>> Quantidade de registros na MSVWCLAUSULAPEC: "+mbosetPosicao.count());
