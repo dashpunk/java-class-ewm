@@ -22,7 +22,7 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 
 	public ValidaPosicaoCadDocPec(MboValue mbv) throws MXException {
 		super(mbv);
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 00");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 01");
 	}
 	
 	public void validate() throws MXException, RemoteException {
@@ -32,35 +32,35 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 		String valor = new String();
 	    valor = Uteis.getApenasNumeros(getMboValue().getString());
 	    System.out.println(">>>>>>>>>>>>>>>>>>>> valor antes do IF de posicao= " + getMboValue().getMbo().getString("MSPOSICAO"));
-	  	    
+	  	System.out.println("########## valor antes do if: " + valor);
 	        
 	    System.out.println(">>>>>>>>>>>>>>>>>>>> validando mascara do ponto");
 	    if (!getMboValue().getMbo().isNull("MSPOSICAO")) {	 
 	    	
-	    	if((valor.length() < 3)){
+	    	System.out.println(">>>>>>>>>>>>>>>>>>>> tamanho do length: "+valor.length());
+	    	if((valor.length() < 2)){
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.", valor, false));
-	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 3");
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do if de valor < 3");
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor mascarado"+Uteis.getValorMascarado("#.", valor, false));
-	    	}
-	    	if((valor.length() < 5)){
+	    	} else if((valor.length() < 3)){
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.", valor, false));
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 5");
-	    	}
-	    	if((valor.length() < 7)){
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor mascarado"+Uteis.getValorMascarado("#.#.", valor, false));
+	    	//else if((valor.length() < 7 && valor.length() >= 5)){
+	    	} else if((valor.length() < 4)){
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.", valor, false));
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 7");
-	    	}
-	    	if((valor.length() < 9)){
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor mascarado"+Uteis.getValorMascarado("#.#.#.", valor, false));
+	    	} else if((valor.length() < 5)){
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.#.", valor, false));
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 9");
-	    	}
-	    	if((valor.length() < 11)){
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor mascarado"+Uteis.getValorMascarado("#.#.#.#.", valor, false));
+	    	} else if((valor.length() < 6)){
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.#.#.", valor, false));
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 11");
-	    	}
-	    	else{
-	    	
-	    	throw new MXApplicationException("pontoposicao", "MascaraPosicaoInvalida");
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor mascarado"+Uteis.getValorMascarado("#.#.#.#.#.", valor, false));
+	    	} else{
+	    		throw new MXApplicationException("pontoposicao", "MascaraPosicaoInvalida");
 	    	}
 	    	
 	    	
