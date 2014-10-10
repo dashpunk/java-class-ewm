@@ -20,16 +20,6 @@ public class MsTbPregao extends AppBean {
 	}
 	
 	@Override
-	public void initialize() throws MXException{
-		try {
-			historicoNumPortaria = getMbo().getString("MSALNUMPORTARIAFISCAL");
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	@Override
 	public void save() throws MXException {
 		try {
 			if(getMbo().getMboSet("MSTBITENSPREGAO").isEmpty()){
@@ -124,26 +114,35 @@ public class MsTbPregao extends AppBean {
 			System.out.println("########## Valor Global = " + valorglobal);
 			getMbo().setValue("MSNUNUMVALORGLOBAL", valorglobal);
 			
-			System.out.println("########## boolean dadosHistoricoUltimoFiscal: " + historicoNumPortaria);
-			
 			if(getMbo().getString("MSALNUMPORTARIAFISCAL") != null && 
-					!getMbo().getString("MSALNUMPORTARIAFISCAL").toString().equalsIgnoreCase("") &&
-					!getMbo().getString("MSALNUMPORTARIAFISCAL").equalsIgnoreCase(historicoNumPortaria)){
+					!getMbo().getString("MSALNUMPORTARIAFISCAL").toString().equalsIgnoreCase("")){
 				// chamar método para salvar o histórico.
 				
-				MboRemote mboHistorico = getMbo().getMboSet("MSTBHISTORICOFISCAIS").add();
-				mboHistorico.setValue("MSALNOMFISCALCONTRATO", getMbo().getString("MSALNOMFISCALCONTRATO"));
-				mboHistorico.setValue("MSALNOMFISCALCONTRATOSUB", getMbo().getString("MSALNOMFISCALCONTRATOSUB"));
-				mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATO", getMbo().getString("MSALNUMSIAPEFISCALCONTRATO"));
-				mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATOSUB", getMbo().getString("MSALNUMSIAPEFISCALCONTRATOSUB"));
-				mboHistorico.setValue("MSALNUMBSEFISCAL", getMbo().getString("MSALNUMBSEFISCAL"));
-				mboHistorico.setValue("MSALNUMPORTARIAFISCAL", getMbo().getString("MSALNUMPORTARIAFISCAL"));
-				mboHistorico.setValue("MSDTDTAPORTARIAFISCAL", getMbo().getString("MSDTDTAPORTARIAFISCAL"));
-				mboHistorico.setValue("MSDTDTAPUBLICACAOPORTARIAFISCAL", getMbo().getString("MSDTDTAPUBLICACAOPORTARIA"));
-				mboHistorico.setValue("APPNAME", "MSPREGAO");
-				mboHistorico.setValue("TABLENAME", "MSTBPREGAO");
-				mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBPREGAOID"));
-				mboHistorico.setValue("PERSONID", sessionContext.getUserInfo().getPersonId());
+				MboRemote mbo3;
+				boolean flag = false;
+				
+				for (int i = 0; ((mbo3 = getMbo().getMboSet("MSTBHISTORICOFISCAIS").getMbo(i)) != null); i++){
+					
+					if (mbo3.getString("MSALNUMPORTARIAFISCAL").equalsIgnoreCase(getMbo().getString("MSALNUMPORTARIAFISCAL"))){
+						flag = true;						
+					}	
+				}	
+				
+				if(!flag) {
+					MboRemote mboHistorico = getMbo().getMboSet("MSTBHISTORICOFISCAIS").add();
+					mboHistorico.setValue("MSALNOMFISCALCONTRATO", getMbo().getString("MSALNOMFISCALCONTRATO"));
+					mboHistorico.setValue("MSALNOMFISCALCONTRATOSUB", getMbo().getString("MSALNOMFISCALCONTRATOSUB"));
+					mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATO", getMbo().getString("MSALNUMSIAPEFISCALCONTRATO"));
+					mboHistorico.setValue("MSALNUMSIAPEFISCALCONTRATOSUB", getMbo().getString("MSALNUMSIAPEFISCALCONTRATOSUB"));
+					mboHistorico.setValue("MSALNUMBSEFISCAL", getMbo().getString("MSALNUMBSEFISCAL"));
+					mboHistorico.setValue("MSALNUMPORTARIAFISCAL", getMbo().getString("MSALNUMPORTARIAFISCAL"));
+					mboHistorico.setValue("MSDTDTAPORTARIAFISCAL", getMbo().getString("MSDTDTAPORTARIAFISCAL"));
+					mboHistorico.setValue("MSDTDTAPUBLICACAOPORTARIAFISCAL", getMbo().getString("MSDTDTAPUBLICACAOPORTARIA"));
+					mboHistorico.setValue("APPNAME", "MSPREGAO");
+					mboHistorico.setValue("TABLENAME", "MSTBPREGAO");
+					mboHistorico.setValue("ORIGEMID", getMbo().getInt("MSTBPREGAOID"));
+					mboHistorico.setValue("PERSONID", sessionContext.getUserInfo().getPersonId());
+				}
 				
 				//MSTBHISTORICOFISCAIS
 			}

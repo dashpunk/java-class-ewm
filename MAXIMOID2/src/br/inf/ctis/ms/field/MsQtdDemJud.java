@@ -68,6 +68,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 							String PrincipioAtivo = getMboValue().getMbo().getString("MSALNPRINCIPIO");
 							String Nome = getMboValue().getMbo().getString("MSALNNOME");
 							String Unidade = getMboValue().getMbo().getString("MSALNUNIDADEMEDIDA");
+							String Tratamento = getMboValue().getMbo().getString("MSALNTIPOTRATAMENTO");
 							int Tempo = getMboValue().getMbo().getInt("MSNUMTEMPO");
 							String Wonum = getMboValue().getMbo().getString("WONUM");
 							double QtdCompra = QtdSolic - QtdDisp;
@@ -99,6 +100,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("MSALNPRINCIPIO", PrincipioAtivo, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNNOME", Nome, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNUNIDADEMEDIDA", Unidade, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNTIPOTRATAMENTO", Tratamento, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSNUMTEMPO", Tempo, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
 								
@@ -123,6 +125,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("MSALNPRINCIPIO", PrincipioAtivo, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNNOME", Nome, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNUNIDADEMEDIDA", Unidade, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNTIPOTRATAMENTO", Tratamento, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSNUMTEMPO", Tempo, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
 								
@@ -147,6 +150,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("MSALNPRINCIPIO", PrincipioAtivo, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNNOME", Nome, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNUNIDADEMEDIDA", Unidade, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNTIPOTRATAMENTO", Tratamento, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSNUMTEMPO", Tempo, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSIDESTOQUE", IdEstoque, MboConstants.NOACCESSCHECK);
 								
