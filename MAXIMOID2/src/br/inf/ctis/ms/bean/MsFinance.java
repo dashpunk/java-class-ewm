@@ -40,8 +40,6 @@ public class MsFinance extends AppBean {
 				MboRemote mbo4;
 				double valorglobal = 0d;
 				double saldoinstrumento = 0d;
-				double valortotalap = 0d;
-				double valortotalapst = 0d;
 				int ultimoNumero = 0;
 				
 				for (int i = 0; ((mbo1 = getMbo().getMboSet("INVOICE").getMbo(i)) != null); i++) {					
@@ -97,6 +95,9 @@ public class MsFinance extends AppBean {
 										
 				for (int i = 0; ((mbo1 = getMbo().getMboSet("MSTBAUTORIZACAOPAGAMENTO").getMbo(i)) != null); i++) {
 					
+					double valortotalap = 0d;
+					double valortotalapst = 0d;
+					
 					//###########################################################NUMERO DA AP#################################################################
 					if(mbo1.getString("MSALNUMAUTORIZACAOPAGAMENTO") == null || mbo1.getString("MSALNUMAUTORIZACAOPAGAMENTO") == ""){
 						ultimoNumero += 1;
@@ -139,6 +140,10 @@ public class MsFinance extends AppBean {
 				}
 				
 				for (int i = 0; ((mbo1 = getMbo().getMboSet("MSTBAUTORIZACAOPAGAMENTO").getMbo(i)) != null); i++) {
+					
+					double valortotalap = mbo1.getDouble("MSNUNUMVALORTOTAL");
+					double valortotalapst = mbo1.getDouble("MSNUNUMVALORTOTALSEMTRIBUTO");
+					
 					System.out.println("########## Count Notas de Empenho = " + mbo1.getMboSet("MSTBAPNOTAEMPENHO").count());
 					if (!mbo1.toBeDeleted()) {
 						if (mbo1.getMboSet("MSTBAPNOTAEMPENHO").count() > 0) {
