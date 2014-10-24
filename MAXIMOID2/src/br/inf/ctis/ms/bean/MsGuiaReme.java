@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,12 +19,14 @@ public class MsGuiaReme extends AppBean {
 	 * @author Marcelo
 	 */
 	public MsGuiaReme() {
+		System.out.println("########## Entrou em MsGuiaReme()");
 	}
 	
 	int ultimoNumero=0;
 	
 	@Override
 	public void save() throws MXException {
+		System.out.println("########## Entrou em MsGuiaReme.save()");
 		Properties prop;
 		Connection conexao = null;
 		Statement st2 = null;
@@ -31,6 +34,7 @@ public class MsGuiaReme extends AppBean {
 		
 		try {
 			if(getMbo().isNew()){
+				System.out.println("########## Entrou em isNew()");
 				prop = MXServer.getMXServer().getConfig();
 				
 				String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
@@ -42,23 +46,29 @@ public class MsGuiaReme extends AppBean {
 				conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
 				
 				st2 = conexao.createStatement();
-				idMax = st2.executeQuery("select nvl(max(TO_NUMBER(ltrim(MSCODREMESSA))),0) from MSREMESSA");
+				idMax = st2.executeQuery("select TO_NUMBER(nvl(max(TO_NUMBER(ltrim(substr(MSCODREMESSA,0,5)))),0)) from MSREMESSA where substr(MSCODREMESSA,7,4)=EXTRACT(YEAR FROM SYSDATE)");
 				
 				
 				if (idMax.next()) {
+					System.out.println("########## Entrou no ResultSet!");
+					System.out.println("########## idMax = " + idMax.getInt(1));
 					ultimoNumero = idMax.getInt(1);
 				}
 				
 				System.out.println("########## ultimoNumero = " + ultimoNumero);
 				
-				ultimoNumero += 1;
-				System.out.println("########## ultimoNumero += 1 = " + ultimoNumero);
-				
-				String codRemessa = String.format("%05d", ultimoNumero);
-				System.out.println("########## String.format = " + codRemessa);
-				
-				System.out.println("########## MSCODREMESSA = " + codRemessa);
-				getMbo().setValue("MSCODREMESSA", codRemessa);
+				if(getMbo().getString("MSCODREMESSA") == null || getMbo().getString("MSCODREMESSA") == ""){
+					ultimoNumero += 1;
+					System.out.println("########## ultimoNumero += 1 = " + ultimoNumero);
+					
+					String codRemessa = String.format("%05d", ultimoNumero);
+					System.out.println("########## String.format = " + codRemessa);
+					
+					codRemessa = codRemessa+"/"+Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
+					
+					System.out.println("########## MSCODREMESSA = " + codRemessa);
+					getMbo().setValue("MSCODREMESSA", codRemessa);
+				}
 				
 				super.save();
 			} 
@@ -70,7 +80,7 @@ public class MsGuiaReme extends AppBean {
 			Utility.sendEvent(new WebClientEvent("reloadTable", app.getApp(), null, sessionContext));*/
 		
 		} catch (RemoteException ex) {
-            Logger.getLogger(MsTbArp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MsGuiaReme.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
 			e.printStackTrace();
 		} finally {

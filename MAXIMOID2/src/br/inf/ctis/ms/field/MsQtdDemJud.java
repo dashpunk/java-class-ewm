@@ -34,7 +34,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 		double QtdSolic = getMboValue().getMbo().getDouble("MSQTD");
 		int IdEstoque = getMboValue().getMbo().getInt("MSIDESTOQUE");
 		
-		System.out.println(">>>>>>>>> CTIS - MSIDESTOQUE: " + IdEstoque);
+		System.out.println("########## CTIS - MSIDESTOQUE: " + IdEstoque);
 		
 		if (!getMboValue().getMbo().isNull("MSIDESTOQUE")){
 			MboSet mboSetEstoqueMedic;
@@ -43,29 +43,30 @@ public class MsQtdDemJud extends MboValueAdapter {
 			mboSetEstoqueMedic.reset();
 			
 			if (mboSetEstoqueMedic.count() > 0){
-				System.out.println(">>>>>>>>> CTIS - " + mboSetEstoqueMedic.count());					
+				System.out.println("########## mboSetEstoqueMedic.count() - " + mboSetEstoqueMedic.count());					
 				
 				double QtdDisp = mboSetEstoqueMedic.getMbo(0).getDouble("MSNUMQNTDISP");
 				
 					if (QtdDisp > 0 && getMboValue().getMbo().getString("MSALNTIPOATENDIMENTO").equals("COMPRA")){
-						System.out.println(">>>>>>>>> CTIS - " + QtdSolic  + " > " + QtdDisp);
+						System.out.println("########## CTIS - " + QtdSolic  + " > " + QtdDisp);
 	
 						String yesNoId = getClass().getName();
 						int userInput = MXApplicationYesNoCancelException.getUserInput(yesNoId, MXServer.getMXServer(), getMboValue().getMbo().getUserInfo());
-						System.out.println(">>>>> retorno = " + userInput);
+						System.out.println("########## retorno = " + userInput);
 						
 						switch (userInput) {
 						case MXApplicationYesNoCancelException.NULL:
-							System.out.println(">>> userImput null");
+							System.out.println("########## userImput null");
 							Object params[] = { QtdDisp, QtdSolic };
 							throw new MXApplicationYesNoCancelException(yesNoId, "msdemjud","MsQtd", params);
 						case MXApplicationYesNoCancelException.YES:
-							System.out.println(">>> Usuario clicou em SIM");
+							System.out.println("########## Usuario clicou em SIM");
 							
 							String Sismat = getMboValue().getMbo().getString("MSSISMAT");
 							String Catmat = getMboValue().getMbo().getString("CATMAT");
 							String DescCatmat = getMboValue().getMbo().getString("DESCRIPTION");
 							String PrincipioAtivo = getMboValue().getMbo().getString("MSALNPRINCIPIO");
+							String Concentracao = getMboValue().getMbo().getString("MSALNCONCENTRACAO"); 
 							String Nome = getMboValue().getMbo().getString("MSALNNOME");
 							String Unidade = getMboValue().getMbo().getString("MSALNUNIDADEMEDIDA");
 							String Tratamento = getMboValue().getMbo().getString("MSALNTIPOTRATAMENTO");
@@ -98,6 +99,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSSISMAT", Sismat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNPRINCIPIO", PrincipioAtivo, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNCONCENTRACAO", Concentracao, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNNOME", Nome, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNUNIDADEMEDIDA", Unidade, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNTIPOTRATAMENTO", Tratamento, MboConstants.NOACCESSCHECK);
@@ -123,6 +125,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSSISMAT", Sismat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNPRINCIPIO", PrincipioAtivo, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNCONCENTRACAO", Concentracao, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNNOME", Nome, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNUNIDADEMEDIDA", Unidade, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNTIPOTRATAMENTO", Tratamento, MboConstants.NOACCESSCHECK);
@@ -148,6 +151,7 @@ public class MsQtdDemJud extends MboValueAdapter {
 								mboDestinoMed.setValue("CATMAT", Catmat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSSISMAT", Sismat, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNPRINCIPIO", PrincipioAtivo, MboConstants.NOACCESSCHECK);
+								mboDestinoMed.setValue("MSALNCONCENTRACAO", Concentracao, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNNOME", Nome, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNUNIDADEMEDIDA", Unidade, MboConstants.NOACCESSCHECK);
 								mboDestinoMed.setValue("MSALNTIPOTRATAMENTO", Tratamento, MboConstants.NOACCESSCHECK);
@@ -178,10 +182,10 @@ public class MsQtdDemJud extends MboValueAdapter {
 					        
 							break;
 						case MXApplicationYesNoCancelException.NO:
-							System.out.println(">>> Usuario clicou em NAO");
+							System.out.println("########## Usuario clicou em NAO");
 							break;
 						default:
-							System.out.println(">>> userImpot DEFAULT");
+							System.out.println("########## userImpot DEFAULT");
 							break;
 					}
 				}
