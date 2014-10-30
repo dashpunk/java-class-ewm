@@ -39,6 +39,7 @@ public class MsDistPEC extends DataBean {
 	String Statuspec ="";
 	String MsDistDem ="";
 	String MsDistDem2 ="";
+	boolean Msckanexos;
 		
 	
 
@@ -85,6 +86,7 @@ public class MsDistPEC extends DataBean {
 		MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID");
 		MsAcao = getMbo(row).getInt("MSACAO");
 		Statuspec = mboStatus.getString("DESCRIPTION");
+		Msckanexos = mboStatus.getBoolean("MSCKANEXOS");
 		System.out.println(">>>>>>>>>>>>Dentro do metodo Linha selecionada");
 		
 		
@@ -178,6 +180,7 @@ public class MsDistPEC extends DataBean {
 		mboPO.setValue("MSPECACAO", MsAcao);
 		mboPO.setValue("MSPECFLUXO", MsFluxo);
 		mboPO.setValue("STATUSPEC", Statuspec);
+		mboPO.setValue("MSCKANEXOS", Msckanexos);
 		
 		System.out.println(">>>>>>>>>>>>Antes do IF valor:" + mboGrupo.getBoolean("MSFLAGRESP"));
 		if (mboGrupo.getBoolean("MSFLAGRESP")){
