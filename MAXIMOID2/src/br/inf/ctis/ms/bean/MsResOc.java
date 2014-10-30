@@ -1,8 +1,15 @@
 package br.inf.ctis.ms.bean;
 
 import java.rmi.RemoteException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import br.inf.ctis.common.util.Extenso;
 
@@ -10,6 +17,8 @@ import psdi.mbo.Mbo;
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
+import psdi.server.MXServer;
+import psdi.util.DBConnect;
 import psdi.util.MXException;
 import psdi.webclient.system.beans.AppBean;
 
@@ -21,6 +30,50 @@ public class MsResOc extends AppBean {
 	public void despacho1() throws MXException, RemoteException {
 		
 		System.out.println("########## Dentro do metodo despacho1() da classe DespachosCdju");
+		
+		Properties prop;
+		Connection conexao = null;
+		Statement st2 = null;
+		ResultSet idMax = null;
+		int revisao = 0;
+		
+		try {
+			prop = MXServer.getMXServer().getConfig();
+			
+			String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
+	        String url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@srvoradf0.saude.gov:1521/DFPO1.SAUDE.GOV");
+	        String username = prop.getProperty("mxe.db.user", "dbmaximo");
+	        String password = prop.getProperty("mxe.db.password", "max894512");
+			Class.forName(driver).newInstance();
+			
+			conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
+			
+			st2 = conexao.createStatement();
+			idMax = st2.executeQuery("select coalesce(max(to_number(MSNUCODREVISAO)),0) from MSTBOCDESPACHOS where MSALCODDESPACHO='SOLAUTCOMPRA' and MSTBOCID = '" + getMbo().getInt("MSTBOCID") + "'");
+			
+			
+			if (idMax.next()) {
+				System.out.println("########## Entrou no ResultSet!");
+				System.out.println("########## idMax = " + idMax.getInt(1));
+				revisao = idMax.getInt(1);
+			}
+			
+			System.out.println("########## ultimarevisao = " + revisao);
+			
+			revisao++;
+			System.out.println("########## revisao = " + revisao);
+			
+		} catch (RemoteException ex) {
+            Logger.getLogger(MsResOc.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+		    try { conexao.close(); } catch (Exception e) { /**/ }
+		    try { st2.close(); } catch (Exception e) { /**/ }
+		    try { idMax.close(); } catch (Exception e) { /**/ }
+		}
 		
 		Calendar data = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
@@ -78,8 +131,15 @@ public class MsResOc extends AppBean {
 		val.append("</tbody>");
 		val.append("</table>");
 		val.append("</body>");
-              
-        getMbo().setValue("MSCLOBDESPACHO01", val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
+        
+		MboRemote mboDestino = null;
+		mboDestino = getMbo().getMboSet("MSTBOCDESPACHOS").add();
+		System.out.println("############ add() na Despachos");
+		
+		mboDestino.setValue("MSTBOCID", getMbo().getInt("MSTBOCID"));
+		mboDestino.setValue("MSALCODDESPACHO", "SOLAUTCOMPRA");
+		mboDestino.setValue("MSNUCODREVISAO", revisao);
+		mboDestino.setValue("MSCLOBDESPACHO", val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
         super.SAVE();
         super.refreshTable();
         super.reloadTable();
@@ -89,6 +149,50 @@ public class MsResOc extends AppBean {
 	public void despacho2() throws MXException, RemoteException {
 		
 		System.out.println("########## Dentro do metodo despacho2() da classe DespachosCdju");
+		
+		Properties prop;
+		Connection conexao = null;
+		Statement st2 = null;
+		ResultSet idMax = null;
+		int revisao = 0;
+		
+		try {
+			prop = MXServer.getMXServer().getConfig();
+			
+			String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
+	        String url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@srvoradf0.saude.gov:1521/DFPO1.SAUDE.GOV");
+	        String username = prop.getProperty("mxe.db.user", "dbmaximo");
+	        String password = prop.getProperty("mxe.db.password", "max894512");
+			Class.forName(driver).newInstance();
+			
+			conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
+			
+			st2 = conexao.createStatement();
+			idMax = st2.executeQuery("select coalesce(max(to_number(MSNUCODREVISAO)),0) from MSTBOCDESPACHOS where MSALCODDESPACHO='SOLRATDESPESA' and MSTBOCID = '" + getMbo().getInt("MSTBOCID") + "'");
+			
+			
+			if (idMax.next()) {
+				System.out.println("########## Entrou no ResultSet!");
+				System.out.println("########## idMax = " + idMax.getInt(1));
+				revisao = idMax.getInt(1);
+			}
+			
+			System.out.println("########## ultimarevisao = " + revisao);
+			
+			revisao++;
+			System.out.println("########## revisao = " + revisao);
+			
+		} catch (RemoteException ex) {
+            Logger.getLogger(MsResOc.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+		    try { conexao.close(); } catch (Exception e) { /**/ }
+		    try { st2.close(); } catch (Exception e) { /**/ }
+		    try { idMax.close(); } catch (Exception e) { /**/ }
+		}
 		
 		Calendar data = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
@@ -144,7 +248,14 @@ public class MsResOc extends AppBean {
 		val.append("</table>");
 		val.append("</body>");
               
-        getMbo().setValue("MSCLOBDESPACHO02", val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
+		MboRemote mboDestino = null;
+		mboDestino = getMbo().getMboSet("MSTBOCDESPACHOS").add();
+		System.out.println("############ add() na Despachos");
+		
+		mboDestino.setValue("MSTBOCID", getMbo().getInt("MSTBOCID"));
+		mboDestino.setValue("MSALCODDESPACHO", "SOLRATDESPESA");
+		mboDestino.setValue("MSNUCODREVISAO", revisao);
+		mboDestino.setValue("MSCLOBDESPACHO", val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
         super.SAVE();
         super.refreshTable();
         super.reloadTable();
@@ -154,6 +265,50 @@ public class MsResOc extends AppBean {
 	public void despacho3() throws MXException, RemoteException {
 		
 		System.out.println("########## Dentro do metodo despacho3() da classe DespachosCdju");
+		
+		Properties prop;
+		Connection conexao = null;
+		Statement st2 = null;
+		ResultSet idMax = null;
+		int revisao = 0;
+		
+		try {
+			prop = MXServer.getMXServer().getConfig();
+			
+			String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
+	        String url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@srvoradf0.saude.gov:1521/DFPO1.SAUDE.GOV");
+	        String username = prop.getProperty("mxe.db.user", "dbmaximo");
+	        String password = prop.getProperty("mxe.db.password", "max894512");
+			Class.forName(driver).newInstance();
+			
+			conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
+			
+			st2 = conexao.createStatement();
+			idMax = st2.executeQuery("select coalesce(max(to_number(MSNUCODREVISAO)),0) from MSTBOCDESPACHOS where MSALCODDESPACHO='RATDESPESA' and MSTBOCID = '" + getMbo().getInt("MSTBOCID") + "'");
+			
+			
+			if (idMax.next()) {
+				System.out.println("########## Entrou no ResultSet!");
+				System.out.println("########## idMax = " + idMax.getInt(1));
+				revisao = idMax.getInt(1);
+			}
+			
+			System.out.println("########## ultimarevisao = " + revisao);
+			
+			revisao++;
+			System.out.println("########## revisao = " + revisao);
+			
+		} catch (RemoteException ex) {
+            Logger.getLogger(MsResOc.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+		    try { conexao.close(); } catch (Exception e) { /**/ }
+		    try { st2.close(); } catch (Exception e) { /**/ }
+		    try { idMax.close(); } catch (Exception e) { /**/ }
+		}
 		
 		Calendar data = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
@@ -209,7 +364,14 @@ public class MsResOc extends AppBean {
 		val.append("</table>");
 		val.append("</body>");
               
-        getMbo().setValue("MSCLOBDESPACHO03", val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
+		MboRemote mboDestino = null;
+		mboDestino = getMbo().getMboSet("MSTBOCDESPACHOS").add();
+		System.out.println("############ add() na Despachos");
+		
+		mboDestino.setValue("MSTBOCID", getMbo().getInt("MSTBOCID"));
+		mboDestino.setValue("MSALCODDESPACHO", "RATDESPESA");
+		mboDestino.setValue("MSNUCODREVISAO", revisao);
+		mboDestino.setValue("MSCLOBDESPACHO", val.toString(), Mbo.NOACCESSCHECK | Mbo.NOVALIDATION);
         super.SAVE();
         super.refreshTable();
         super.reloadTable();
@@ -219,6 +381,61 @@ public class MsResOc extends AppBean {
 	public void despacho4() throws MXException, RemoteException {
 		
 		System.out.println("########## Dentro do metodo despacho4() da classe DespachosCdju");
+		
+		Properties prop;
+		Connection conexao = null;
+		Statement st2 = null;
+		ResultSet idMax = null;
+		int revisao = 0;
+		
+		try {
+			prop = MXServer.getMXServer().getConfig();
+			
+			String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
+	        String url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@srvoradf0.saude.gov:1521/DFPO1.SAUDE.GOV");
+	        String username = prop.getProperty("mxe.db.user", "dbmaximo");
+	        String password = prop.getProperty("mxe.db.password", "max894512");
+			Class.forName(driver).newInstance();
+			
+			conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
+			
+			st2 = conexao.createStatement();
+			idMax = st2.executeQuery("select coalesce(max(to_number(MSNUCODREVISAO)),0) from MSTBOCDESPACHOS where MSALCODDESPACHO='OUTRO' and MSTBOCID = '" + getMbo().getInt("MSTBOCID") + "'");
+			
+			
+			if (idMax.next()) {
+				System.out.println("########## Entrou no ResultSet!");
+				System.out.println("########## idMax = " + idMax.getInt(1));
+				revisao = idMax.getInt(1);
+			}
+			
+			System.out.println("########## ultimarevisao = " + revisao);
+			
+			revisao++;
+			System.out.println("########## revisao = " + revisao);
+			
+		} catch (RemoteException ex) {
+            Logger.getLogger(MsResOc.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+		    try { conexao.close(); } catch (Exception e) { /**/ }
+		    try { st2.close(); } catch (Exception e) { /**/ }
+		    try { idMax.close(); } catch (Exception e) { /**/ }
+		}
+		
+		MboRemote mboDestino = null;
+		mboDestino = getMbo().getMboSet("MSTBOCDESPACHOS").add();
+		System.out.println("############ add() na Despachos");
+		
+		mboDestino.setValue("MSTBOCID", getMbo().getInt("MSTBOCID"));
+		mboDestino.setValue("MSALCODDESPACHO", "OUTRO");
+		mboDestino.setValue("MSNUCODREVISAO", revisao);
+		super.SAVE();
+        super.refreshTable();
+        super.reloadTable();
 		
 	}
 
