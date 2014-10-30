@@ -10,25 +10,33 @@ import java.rmi.*;
 public class PrintDespacho extends DataBean {
 
     public PrintDespacho() {
+    	System.out.println("########## PrintDespacho - Entrou");
     }
 
     public void Imprimir() {
-        try {
-            Hashtable reportParams = new Hashtable();
+    	 try {
+    		 System.out.println("########## PrintDespacho - Imprimir");
+             Hashtable reportParams = new Hashtable();
+             java.lang.String[] attrs = getAttributes();
+             for (int i = 0; i < attrs.length; i++) {
+             		System.out.println("########## Atributo (" + i + ")=" + attrs[i]);
+                 reportParams.put(attrs[i], (String) getMbo().getString(attrs[i]));
+             }
+             System.out.println("########## MSTBOCID" + (String) parent.getMbo().getString("MSTBOCID"));
+             reportParams.put("MSTBOCID", (String) parent.getMbo().getString("MSTBOCID"));
+             reportParams.put("REPORTTYPE", "PDF");
+             reportParams.put("DISPLAYNAME", getMbo().getUserInfo().getUserName());
+             
+             WebClientEvent event = sessionContext.getCurrentEvent();
+             reportParams.put("relatorio", (String) event.getValue());
+             app.put("relatorio", reportParams);
+             Utility.sendEvent(new WebClientEvent("dialogclose", event.getTargetId(), event.getValue(), sessionContext));
+             System.out.println("########## Enviado ao Maximo");
 
-            System.out.println("########## MSTBOCID" + (String) parent.getMbo().getString("MSTBOCID"));
-            reportParams.put("MSTBOCID", (String) parent.getMbo().getString("MSTBOCID"));
-            reportParams.put("REPORTTYPE", "PDF");
-
-            WebClientEvent event = sessionContext.getCurrentEvent();
-            reportParams.put("relatorio", (String) event.getValue());
-            app.put("relatorio", reportParams);
-            //Utility.sendEvent(new WebClientEvent("spawnjasperreport", event.getTargetId(), reportParams, sessionContext));
-            Utility.sendEvent(new WebClientEvent("dialogclose", event.getTargetId(), event.getValue(), sessionContext));
-        } catch (MXException mx) {
-            mx.printStackTrace();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+         } catch (MXException mx) {
+             mx.printStackTrace();
+         } catch (RemoteException re) {
+             re.printStackTrace();
+         }
     }
 }
