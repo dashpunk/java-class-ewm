@@ -10,7 +10,7 @@ import java.rmi.*;
 public class PrintDespacho extends DataBean {
 
     public PrintDespacho() {
-    	System.out.println("########## PrintDespacho - Entrou");
+    	System.out.println("########### PrintDespacho - Entrou");
     }
 
     public void Imprimir() {
