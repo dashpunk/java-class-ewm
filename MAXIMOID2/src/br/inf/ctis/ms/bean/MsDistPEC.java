@@ -4,6 +4,11 @@
 package br.inf.ctis.ms.bean;
 
 import java.rmi.RemoteException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,6 +16,8 @@ import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboSet;
 import psdi.mbo.MboSetRemote;
+import psdi.server.MXServer;
+import psdi.util.DBConnect;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 import psdi.webclient.system.beans.*;
@@ -40,11 +47,16 @@ public class MsDistPEC extends DataBean {
 	String MsDistDem ="";
 	String MsDistDem2 ="";
 	boolean Msckanexos;
+	//Conexao para anexos	
+	Properties prop;
+	Connection conexao = null;
+	Statement st2 = null;
+	ResultSet QtdAnexos = null;
 		
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste03");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste00");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -206,6 +218,35 @@ public class MsDistPEC extends DataBean {
 			mboPO.setValue("MSPECGRUPO", MsGrupo); 
 			System.out.println(">>>>>>>>>>>>Setando Registro de Designação do Fluxo: " + MsGrupo);
 		}
+		
+		
+		//Adicionando a passagem da tarefa na tabela de anexos/mensagens
+		System.out.println(">>>>>>>>>>>>Entrando na passagem para add a tarefa em anexos/mensagens ");
+		prop = MXServer.getMXServer().getConfig();		
+		String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
+        String url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@srvoradf0.saude.gov:1521/DFPO1.SAUDE.GOV");
+        String username = prop.getProperty("mxe.db.user", "dbmaximo");
+        String password = prop.getProperty("mxe.db.password", "max894512");
+		try {
+			Class.forName(driver).newInstance();
+			conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
+			st2 = conexao.createStatement();
+			QtdAnexos = st2.executeQuery("select count(*) from MSPECANEXOS where ponum="+mboPO.getString("PONUM")+"");
+			System.out.println(">>>>>>>>>>>>Quantidade de anexos no momento: " + QtdAnexos);
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
 		super.save(); 
 
 	}
