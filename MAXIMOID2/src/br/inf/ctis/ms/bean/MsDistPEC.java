@@ -51,8 +51,8 @@ public class MsDistPEC extends DataBean {
 	Properties prop;
 	Connection conexao = null;
 	Statement st2 = null;
-	ResultSet QtdAnexos = null;
-		
+	ResultSet rsQuery = null;
+	int QtdAnexos=0;
 	
 
 	public MsDistPEC() {	
@@ -221,30 +221,33 @@ public class MsDistPEC extends DataBean {
 		
 		
 		//Adicionando a passagem da tarefa na tabela de anexos/mensagens
-		System.out.println(">>>>>>>>>>>>Entrando na passagem para add a tarefa em anexos/mensagens ");
-		prop = MXServer.getMXServer().getConfig();		
-		String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
-        String url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@srvoradf0.saude.gov:1521/DFPO1.SAUDE.GOV");
-        String username = prop.getProperty("mxe.db.user", "dbmaximo");
-        String password = prop.getProperty("mxe.db.password", "max894512");
+		
 		try {
+			System.out.println(">>>>>>>>>>>>Entrando na passagem para add a tarefa em anexos/mensagens ");
+			prop = MXServer.getMXServer().getConfig();		
+			String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
+	        String url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@srvoradf0.saude.gov:1521/DFPO1.SAUDE.GOV");
+	        String username = prop.getProperty("mxe.db.user", "dbmaximo");
+	        String password = prop.getProperty("mxe.db.password", "max894512");
 			Class.forName(driver).newInstance();
 			conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
 			st2 = conexao.createStatement();
-			QtdAnexos = st2.executeQuery("select count(*) from MSPECANEXOS where ponum="+mboPO.getString("PONUM")+"");
-			System.out.println(">>>>>>>>>>>>Quantidade de anexos no momento: " + QtdAnexos);
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
+			rsQuery = st2.executeQuery("select count(*) from MSPECANEXOS where ponum=2402");
+			
+			if (rsQuery.next()) {
+				QtdAnexos = rsQuery.getInt(1);
+				System.out.println(">>>>>>>>>>>>Quantidade de anexos no momento: " + QtdAnexos);
+				super.save();
+			}
+			
+		} catch (RemoteException ex) {
+            Logger.getLogger(MsTbArp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} finally {
+		    try { conexao.close(); } catch (Exception e) { /**/ }
+		    try { st2.close(); } catch (Exception e) { /**/ }
+		    try { rsQuery.close(); } catch (Exception e) { /**/ }
 		}		
 		
 		super.save(); 
