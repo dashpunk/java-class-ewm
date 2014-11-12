@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,12 +48,13 @@ public class MsDistPEC extends DataBean {
 	String MsDistDem ="";
 	String MsDistDem2 ="";
 	boolean Msckanexos;
-	//Conexao para anexos	
+	//Declaracoes para Tabela  de anexos	
 	Properties prop;
 	Connection conexao = null;
 	Statement st2 = null;
 	ResultSet rsQuery = null;
 	int QtdAnexos=0;
+	int QtdAnexosPO=0;
 	
 
 	public MsDistPEC() {	
@@ -236,7 +238,22 @@ public class MsDistPEC extends DataBean {
 			
 			if (rsQuery.next()) {
 				QtdAnexos = rsQuery.getInt(1);
-				System.out.println(">>>>>>>>>>>>Quantidade de anexos no momento: " + QtdAnexos);
+				System.out.println(">>>>>>>>>>>>Quantidade de anexos Tabela Anexos " + QtdAnexos);
+				MboRemote mboPOAnexos = app.getDataBean("MAINRECORD").getMbo();
+				MboRemote mboNovoAnexo = app.getDataBean("MAINRECORD").getMbo(0).getMboSet("MSPECANEXOS").add();
+				QtdAnexosPO = mboPOAnexos.getInt("MSQTDANEXOPEC");
+				System.out.println(">>>>>>>>>>>>Quantidade de anexos Tabela PO " + QtdAnexosPO);
+				System.out.println(">>>>>>>>>>>>Check de obrigatoriedade da PO " + mboPOAnexos.getBoolean("MSCKANEXOS"));
+				
+				if((QtdAnexosPO==QtdAnexos) && (!mboPOAnexos.getBoolean("MSCKANEXOS"))){
+					System.out.println(">>>>>>>>>>>>Quantidade de anexos iguais e nao e obrigatoria");
+					String PersonID = sessionContext.getUserInfo().getPersonId();
+					
+					mboNovoAnexo.setValue("STATUS", Statuspec);
+					mboNovoAnexo.setValue("MSRESP", PersonID);
+					mboNovoAnexo.setValue("MSDATA", new Date());
+					mboNovoAnexo.setValue("MSFLAGNEWMSG", 1);
+				}
 				super.save();
 			}
 			
