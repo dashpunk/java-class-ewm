@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -190,6 +192,9 @@ public class MsDistPEC extends DataBean {
 		MboRemote mboPO = app.getDataBean("MAINRECORD").getMbo();
 		MboRemote mboGrupo;
 		mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
+		MboRemote mboNovoAnexo = null;
+		MboRemote mboPOAnexos = app.getDataBean("MAINRECORD").getMbo();
+		mboNovoAnexo = app.getDataBean("MAINRECORD").getMbo(0).getMboSet("MSPECANEXOS").add();
 
 		mboPO.setValue("MSPECACAO", MsAcao);
 		mboPO.setValue("MSPECFLUXO", MsFluxo);
@@ -222,7 +227,7 @@ public class MsDistPEC extends DataBean {
 		}
 		
 		
-		//Adicionando a passagem da tarefa na tabela de anexos/mensagens
+		//Adicionando a passagem da tarefa na tabela de anexos/mensagens automaticamente
 		
 		try {
 			System.out.println(">>>>>>>>>>>>Entrando na passagem para add a tarefa em anexos/mensagens ");
@@ -234,27 +239,11 @@ public class MsDistPEC extends DataBean {
 			Class.forName(driver).newInstance();
 			conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
 			st2 = conexao.createStatement();
-			rsQuery = st2.executeQuery("select count(*) from MSPECANEXOS where ponum=2402");
+			rsQuery = st2.executeQuery("select count(*) from MSPECANEXOS where ponum="+app.getDataBean("MAINRECORD").getMbo(0).getString("PONUM")+"");
 			
 			if (rsQuery.next()) {
-				QtdAnexos = rsQuery.getInt(1);
-				System.out.println(">>>>>>>>>>>>Quantidade de anexos Tabela Anexos " + QtdAnexos);
-				MboRemote mboPOAnexos = app.getDataBean("MAINRECORD").getMbo();
-				MboRemote mboNovoAnexo = app.getDataBean("MAINRECORD").getMbo(0).getMboSet("MSPECANEXOS").add();
-				QtdAnexosPO = mboPOAnexos.getInt("MSQTDANEXOPEC");
-				System.out.println(">>>>>>>>>>>>Quantidade de anexos Tabela PO " + QtdAnexosPO);
-				System.out.println(">>>>>>>>>>>>Check de obrigatoriedade da PO " + mboPOAnexos.getBoolean("MSCKANEXOS"));
-				
-				if((QtdAnexosPO==QtdAnexos) && (!mboPOAnexos.getBoolean("MSCKANEXOS"))){
-					System.out.println(">>>>>>>>>>>>Quantidade de anexos iguais e nao e obrigatoria");
-					String PersonID = sessionContext.getUserInfo().getPersonId();
-					
-					mboNovoAnexo.setValue("STATUS", Statuspec);
-					mboNovoAnexo.setValue("MSRESP", PersonID);
-					mboNovoAnexo.setValue("MSDATA", new Date());
-					mboNovoAnexo.setValue("MSFLAGNEWMSG", 1);
-				}
-				super.save();
+				QtdAnexos = rsQuery.getInt(1);				
+				QtdAnexosPO = mboPOAnexos.getInt("MSQTDANEXOPEC");				
 			}
 			
 		} catch (RemoteException ex) {
@@ -266,8 +255,17 @@ public class MsDistPEC extends DataBean {
 		    try { st2.close(); } catch (Exception e) { /**/ }
 		    try { rsQuery.close(); } catch (Exception e) { /**/ }
 		}		
+			
 		
-		super.save(); 
+		if((QtdAnexosPO==QtdAnexos) && (!mboPOAnexos.getBoolean("MSCKANEXOS"))){
+			System.out.println(">>>>>>>>>>>>Quantidade de anexos iguais e nao e obrigatoria");
+			String PersonID = sessionContext.getUserInfo().getPersonId();			
+			mboNovoAnexo.setValue("STATUS", app.getDataBean("MAINRECORD").getMbo(0).getString("STATUSPEC"));
+			mboNovoAnexo.setValue("MSRESP", PersonID);			
+			mboNovoAnexo.setValue("MSFLAGNEWMSG", 1);		
+			mboNovoAnexo.setValue("PONUM",app.getDataBean("MAINRECORD").getMbo(0).getString("PONUM"));
+		}
+		super.save();		 
 
 	}
 	private void DefineDoc() throws RemoteException, MXException {
