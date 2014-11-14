@@ -47,6 +47,7 @@ public class MsDistPEC extends DataBean {
 	String MsGrupo = ""; 
 	String MSFLAGMSG = "0";
 	String Statuspec ="";
+	String StatuspecOld="";
 	String MsDistDem ="";
 	String MsDistDem2 ="";
 	boolean Msckanexos;
@@ -102,6 +103,7 @@ public class MsDistPEC extends DataBean {
 		MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID");
 		MsAcao = getMbo(row).getInt("MSACAO");
 		Statuspec = mboStatus.getString("DESCRIPTION");
+		StatuspecOld = app.getDataBean("MAINRECORD").getMbo().getString("STATUSPEC");
 		Msckanexos = mboStatus.getBoolean("MSCKANEXOS");
 		System.out.println(">>>>>>>>>>>>Dentro do metodo Linha selecionada");
 		
@@ -260,9 +262,9 @@ public class MsDistPEC extends DataBean {
 		if((QtdAnexosPO==QtdAnexos) && (!mboPOAnexos.getBoolean("MSCKANEXOS"))){
 			System.out.println(">>>>>>>>>>>>Quantidade de anexos iguais e nao e obrigatoria");
 			String PersonID = sessionContext.getUserInfo().getPersonId();			
-			mboNovoAnexo.setValue("STATUS", app.getDataBean("MAINRECORD").getMbo(0).getString("STATUSPEC"));
+			mboNovoAnexo.setValue("STATUS", StatuspecOld);
 			mboNovoAnexo.setValue("MSRESP", PersonID);			
-			mboNovoAnexo.setValue("MSFLAGNEWMSG", 1);		
+			mboNovoAnexo.setValue("MSFLAGNEWMSG", true );		
 			mboNovoAnexo.setValue("PONUM",app.getDataBean("MAINRECORD").getMbo(0).getString("PONUM"));
 		}
 		super.save();		 
