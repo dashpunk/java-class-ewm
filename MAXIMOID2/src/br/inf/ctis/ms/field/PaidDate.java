@@ -23,9 +23,9 @@ public class PaidDate extends MboValueAdapter{
 		String mesAno;
 		
 		System.out.println("########## dataAtesto = " + data);
-		System.out.println("########## dataAtesto.MONTH = " + dataAtesto.get(Calendar.MONTH)+1);
+		System.out.println("########## dataAtesto.MONTH = " + (dataAtesto.get(Calendar.MONTH)+1));
 		System.out.println("########## dataAtesto.YEAR = " + dataAtesto.get(Calendar.YEAR));
-		if(dataAtesto.get(Calendar.MONTH) < 10) {
+		if(dataAtesto.get(Calendar.MONTH) < 9) {
 			mesAno = "0"+(dataAtesto.get(Calendar.MONTH)+1)+"/"+dataAtesto.get(Calendar.YEAR);
 		} else {
 			mesAno = (dataAtesto.get(Calendar.MONTH)+1)+"/"+dataAtesto.get(Calendar.YEAR);

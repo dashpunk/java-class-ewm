@@ -23,9 +23,9 @@ public class MsDtDtaAtualizacao extends MboValueAdapter{
 		String mesAno;
 		
 		System.out.println("########## dataAtesto = " + data);
-		System.out.println("########## dataAtesto.MONTH = " + (dataAtualizacao.get(Calendar.MONTH)+1));
+		System.out.println("########## dataAtesto.MONTH = " + ((dataAtualizacao.get(Calendar.MONTH)+1)));
 		System.out.println("########## dataAtesto.YEAR = " + dataAtualizacao.get(Calendar.YEAR));
-		if((dataAtualizacao.get(Calendar.MONTH)+1) < 10) {
+		if((dataAtualizacao.get(Calendar.MONTH)+1) < 9) {
 			mesAno = "0"+(dataAtualizacao.get(Calendar.MONTH)+1)+"/"+dataAtualizacao.get(Calendar.YEAR);
 		} else {
 			mesAno = (dataAtualizacao.get(Calendar.MONTH)+1)+"/"+dataAtualizacao.get(Calendar.YEAR);

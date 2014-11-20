@@ -19,7 +19,7 @@ import psdi.webclient.system.beans.DataBean;
  */
 public class MsDemJudTable extends DataBean {
 	
-	public MsDemJudTable (){
+	public MsDemJudTable() {
 		
 	}
 	

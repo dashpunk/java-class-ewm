@@ -6,6 +6,9 @@ package br.inf.ctis.ms.bean;
 import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.Hashtable;
+
+import javax.mail.MessagingException;
+
 import psdi.mbo.Mbo;
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboSet;
@@ -26,7 +29,7 @@ public class MsOrdemCompra extends DataBean {
 		System.out.println("CTIS # --- Entrou em MsOrdemCompra(1)");
 	}
 
-	public void GerarOrdem() throws MXException {
+	public void GerarOrdem() throws MXException, MessagingException {
 		try {
 
 			Integer novoIdOC = 0;
@@ -75,6 +78,7 @@ public class MsOrdemCompra extends DataBean {
 
 			MboRemote mboOrdemCompra = null;
 			MboRemote mboSuporteOC = null;
+			MboRemote mboFornecedores = null;
 
 			for (int i = 0; i < mboMedicamentos.count(); i++) {
 
@@ -88,7 +92,29 @@ public class MsOrdemCompra extends DataBean {
 						dataOrdemCompra = new Date();
 						mboOrdemCompra.setValue("msdata", dataOrdemCompra, 2L);
 						novoIdOC = mboOrdemCompra.getInt("mstbocid");
-
+						
+						//Envio de EMAIL aos Fornecedores
+						int quantidadeForn = getMbo().getMboSet("MAXUSER").count();
+						String[] to = new String[quantidadeForn];
+						
+						for (int j = 0; ((mboFornecedores = getMbo().getMboSet("MAXUSER").getMbo(j)) !=null); j++){
+							System.out.println("########## Emails: " + mboFornecedores.getMboSet("PERSON").getMbo(0).getString("PRIMARYEMAIL"));
+							to[j] = mboFornecedores.getMboSet("PERSON").getMbo(0).getString("PRIMARYEMAIL");
+							
+						}
+						
+						String from = "demandasjudiciais@saude.gov.br";
+						String subject = "Uma nova Ordem de Compra foi gerada.";
+						String message = "A nova Ordem de Compra #" + novoIdOC + " foi gerada.\n" +
+								"Acesse o sistema PGMS (https://silos.saude.gov.br/maximo) para realizar uma cotação.\n\n" +
+								"Atenciosamente,\n" +
+								"Coordenação de Compra por Determinação Judicial\n" +
+								"CDJU/CGIES/DLOG/SE/MS";
+						
+						MXServer.sendEMail(to, from, subject, message);
+						
+						//Envio de EMAIL aos Fornecedores
+						
 						/*
 						 * Tabela de Suporte da OC
 						 */
