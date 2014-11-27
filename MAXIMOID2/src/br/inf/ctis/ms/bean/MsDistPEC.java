@@ -50,6 +50,7 @@ public class MsDistPEC extends DataBean {
 	String StatuspecOld="";
 	String MsDistDem ="";
 	String MsDistDem2 ="";
+	String Decisao="";
 	boolean Msckanexos;
 	//Declaracoes para Tabela  de anexos	
 	Properties prop;
@@ -102,6 +103,7 @@ public class MsDistPEC extends DataBean {
 		PoNum = app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"); 
 		MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID");
 		MsAcao = getMbo(row).getInt("MSACAO");
+		Decisao = getMbo(row).getString("DESCRIPTION");
 		Statuspec = mboStatus.getString("DESCRIPTION");
 		StatuspecOld = app.getDataBean("MAINRECORD").getMbo().getString("STATUSPEC");
 		Msckanexos = mboStatus.getBoolean("MSCKANEXOS");
@@ -192,8 +194,8 @@ public class MsDistPEC extends DataBean {
 	private void setarValores() throws RemoteException, MXException {
 
 		MboRemote mboPO = app.getDataBean("MAINRECORD").getMbo();
-		MboRemote mboGrupo;
-		mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
+		MboRemote mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
+		
 		MboRemote mboNovoAnexo = null;
 		MboRemote mboPOAnexos = app.getDataBean("MAINRECORD").getMbo();
 		mboNovoAnexo = app.getDataBean("MAINRECORD").getMbo(0).getMboSet("MSPECANEXOS").add();
@@ -264,9 +266,10 @@ public class MsDistPEC extends DataBean {
 			String PersonID = sessionContext.getUserInfo().getPersonId();			
 			mboNovoAnexo.setValue("STATUS", StatuspecOld);
 			mboNovoAnexo.setValue("MSRESP", PersonID);			
-			mboNovoAnexo.setValue("MSFLAGNEWMSG", true );		
+			mboNovoAnexo.setValue("MSFLAGNEWMSG", true);			
 			mboNovoAnexo.setValue("PONUM",app.getDataBean("MAINRECORD").getMbo(0).getString("PONUM"));
 		}
+		mboNovoAnexo.setValue("MSDECISAO", Decisao);
 		super.save();		 
 
 	}
