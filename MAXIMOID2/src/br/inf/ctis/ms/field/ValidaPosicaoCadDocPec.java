@@ -30,31 +30,90 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 				
 		//Mascara de validacao
 		String valor = new String();
+		String valor2 = new String();
 	    valor = Uteis.getApenasNumeros(getMboValue().getString());
 	    System.out.println(">>>>>>>>>>>>>>>>>>>> valor antes do IF de posicao= " + getMboValue().getMbo().getString("MSPOSICAO"));
 	  	System.out.println("########## valor antes do if: " + valor);
 	        
 	    System.out.println(">>>>>>>>>>>>>>>>>>>> validando mascara do ponto");
-	    if (!getMboValue().getMbo().isNull("MSPOSICAO")) {	 
+	    if (!getMboValue().getMbo().isNull("MSPOSICAO")) {	
+	    	
+	    	MboSet mbosetPosicao = (MboSet) getMboValue().getMbo().getMboSet("MSVWCLAUSULAPEC");
 	    	
 	    	System.out.println(">>>>>>>>>>>>>>>>>>>> tamanho do length: "+valor.length());
 	    	if((valor.length() < 2)){
+	    		
+	    		 for (int i = 0; i < mbosetPosicao.count(); i++) {
+	    		 valor2 = Uteis.getApenasNumeros(mbosetPosicao.getMbo(i).getString("MSPOSICAO")); 
+	    			  
+	                 if (valor.equals(valor2)) {
+	 	                
+	 	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Posicao Existente, valor: "+valor2);
+	 	            	                
+	 	                throw new MXApplicationException("genericaDoc", "PosicaoDocPecExiste");
+	 	            }
+	    		 }
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.", valor, false));
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do if de valor < 2");
 	    		
 	    	} else if((valor.length() < 3)){
+	    		
+	    		for (int i = 0; i < mbosetPosicao.count(); i++) {
+		    		 valor2 = Uteis.getApenasNumeros(mbosetPosicao.getMbo(i).getString("MSPOSICAO")); 
+		    			  
+		                 if (valor.equals(valor2)) {
+			 	                
+			 	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Posicao Existente, valor: "+valor2);
+			 	            	                
+			 	                throw new MXApplicationException("genericaDoc", "PosicaoDocPecExiste");
+			 	            }
+		                 
+		    		 }
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.", valor, false));
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 3");
 	    		
 	    	} else if((valor.length() < 4)){
+	    		
+	    		for (int i = 0; i < mbosetPosicao.count(); i++) {
+		    		 valor2 = Uteis.getApenasNumeros(mbosetPosicao.getMbo(i).getString("MSPOSICAO")); 
+		    			  
+		                 if (valor.equals(valor2)) {
+			 	                
+			 	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Posicao Existente, valor: "+valor2);
+			 	            	                
+			 	                throw new MXApplicationException("genericaDoc", "PosicaoDocPecExiste");
+			 	         }
+		    	 }
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.", valor, false));
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 4");
 	    		
 	    	} else if((valor.length() < 5)){
+	    		
+	    		for (int i = 0; i < mbosetPosicao.count(); i++) {
+		    		 valor2 = Uteis.getApenasNumeros(mbosetPosicao.getMbo(i).getString("MSPOSICAO")); 
+		    			 
+		                 if (valor.equals(valor2)) {
+			 	                
+			 	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Posicao Existente, valor: "+valor2);
+			 	            	                
+			 	                throw new MXApplicationException("genericaDoc", "PosicaoDocPecExiste");
+			 	            }
+		    	 }
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.#.", valor, false));
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 5");
 	    		
 	    	} else if((valor.length() < 6)){
+	    		
+	    		for (int i = 0; i < mbosetPosicao.count(); i++) {
+		    		 valor2 = Uteis.getApenasNumeros(mbosetPosicao.getMbo(i).getString("MSPOSICAO")); 
+		    			
+		                 if (valor.equals(valor2)) {
+			 	                
+			 	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Posicao Existente, valor: "+valor2);
+			 	            	                
+			 	                throw new MXApplicationException("genericaDoc", "PosicaoDocPecExiste");
+			 	            }
+		    	 }
 	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.#.#.", valor, false));
 	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 6");
 	    		
@@ -65,26 +124,6 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 	    	
 	    }
 		
-		MboSet mbosetPosicao = (MboSet) getMboValue().getMbo().getMboSet("MSVWCLAUSULAPEC");
-        
-        System.out.println(">>>>>>>>>>>>>>>>>>>> Quantidade de registros na MSVWCLAUSULAPEC: "+mbosetPosicao.count());
-        
-        for (int i = 0; i < mbosetPosicao.count(); i++) {
-           
-                System.out.println(">>>>>>>>>>>>>>>>>>>> Valor da posicao na VIEW: "+mbosetPosicao.getMbo(i).getString("MSPOSICAO"));
-                System.out.println(">>>>>>>>>>>>>>>>>>>> Valor da posicao na MSTBCLACAP: "+getMboValue().getMbo().getString("MSPOSICAO"));                          
-	            if (getMboValue().getString().equals(mbosetPosicao.getMbo(i).getString("MSPOSICAO"))) {
-	                
-	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Posicao Existente, valor: "+mbosetPosicao.getMbo(i).getString("MSPOSICAO"));
-	            	                
-	               // throw new MXApplicationException("genericaDoc", "PosicaoDocPecExiste");
-	            }
-	            else{
-	            	getMboValue().getMbo().setValue("MSPOSICAO", mbosetPosicao.getMbo(i).getString("MSPOSICAO"));
-	            	System.out.println(">>>>>>>>>>>>>>>>>>>> Posicao Nova Inserida");
-	            }
-        }
-        
        
 
 	}
