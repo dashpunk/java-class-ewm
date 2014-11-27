@@ -197,13 +197,15 @@ public class MsDistPEC extends DataBean {
 		MboRemote mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
 		
 		MboRemote mboNovoAnexo = null;
+		MboRemote mboOldAnexo = app.getDataBean("MAINRECORD").getMbo().getMboSet("MSPECANEXOSFLAG").getMbo(0);
 		MboRemote mboPOAnexos = app.getDataBean("MAINRECORD").getMbo();
-		mboNovoAnexo = app.getDataBean("MAINRECORD").getMbo(0).getMboSet("MSPECANEXOS").add();
+		
 
 		mboPO.setValue("MSPECACAO", MsAcao);
 		mboPO.setValue("MSPECFLUXO", MsFluxo);
 		mboPO.setValue("STATUSPEC", Statuspec);
 		mboPO.setValue("MSCKANEXOS", Msckanexos);
+		mboOldAnexo.setValue("MSDECISAO", Decisao);
 		
 		System.out.println(">>>>>>>>>>>>Antes do IF valor:" + mboGrupo.getBoolean("MSFLAGRESP"));
 		if (mboGrupo.getBoolean("MSFLAGRESP")){
@@ -263,13 +265,15 @@ public class MsDistPEC extends DataBean {
 		
 		if((QtdAnexosPO==QtdAnexos) && (!mboPOAnexos.getBoolean("MSCKANEXOS"))){
 			System.out.println(">>>>>>>>>>>>Quantidade de anexos iguais e nao e obrigatoria");
+			mboNovoAnexo = app.getDataBean("MAINRECORD").getMbo(0).getMboSet("MSPECANEXOS").add();
 			String PersonID = sessionContext.getUserInfo().getPersonId();			
 			mboNovoAnexo.setValue("STATUS", StatuspecOld);
 			mboNovoAnexo.setValue("MSRESP", PersonID);			
 			mboNovoAnexo.setValue("MSFLAGNEWMSG", true);			
 			mboNovoAnexo.setValue("PONUM",app.getDataBean("MAINRECORD").getMbo(0).getString("PONUM"));
+			mboNovoAnexo.setValue("MSDECISAO", Decisao);
 		}
-		mboNovoAnexo.setValue("MSDECISAO", Decisao);
+		
 		super.save();		 
 
 	}
