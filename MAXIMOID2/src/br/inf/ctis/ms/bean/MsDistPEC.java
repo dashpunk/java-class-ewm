@@ -62,7 +62,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste00");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste10");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -204,8 +204,7 @@ public class MsDistPEC extends DataBean {
 		mboPO.setValue("MSPECACAO", MsAcao);
 		mboPO.setValue("MSPECFLUXO", MsFluxo);
 		mboPO.setValue("STATUSPEC", Statuspec);
-		mboPO.setValue("MSCKANEXOS", Msckanexos);
-		mboOldAnexo.setValue("MSDECISAO", Decisao);
+		mboPO.setValue("MSCKANEXOS", Msckanexos);		
 		
 		System.out.println(">>>>>>>>>>>>Antes do IF valor:" + mboGrupo.getBoolean("MSFLAGRESP"));
 		if (mboGrupo.getBoolean("MSFLAGRESP")){
@@ -272,6 +271,9 @@ public class MsDistPEC extends DataBean {
 			mboNovoAnexo.setValue("MSFLAGNEWMSG", true);			
 			mboNovoAnexo.setValue("PONUM",app.getDataBean("MAINRECORD").getMbo(0).getString("PONUM"));
 			mboNovoAnexo.setValue("MSDECISAO", Decisao);
+		}
+		else{
+			mboOldAnexo.setValue("MSDECISAO", Decisao);
 		}
 		
 		super.save();		 
