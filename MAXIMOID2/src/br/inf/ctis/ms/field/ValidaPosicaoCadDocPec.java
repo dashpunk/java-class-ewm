@@ -18,11 +18,17 @@ import psdi.util.MXException;
 import br.inf.id2.common.util.Uteis;
 import br.inf.id2.common.util.Validar;
 
+/**
+ * 
+ * @author andrel.almeida
+ *
+ */
+
 public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 
 	public ValidaPosicaoCadDocPec(MboValue mbv) throws MXException {
 		super(mbv);
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 00");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe ValidaPosicaoCadDocPec versao 01");
 	}
 	
 	public void validate() throws MXException, RemoteException {
@@ -41,7 +47,7 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 	    	MboSet mbosetPosicao = (MboSet) getMboValue().getMbo().getMboSet("MSVWCLAUSULAPEC");
 	    	
 	    	System.out.println(">>>>>>>>>>>>>>>>>>>> tamanho do length: "+valor.length());
-	    	if((valor.length() < 2)){
+	    	if((valor.length() < 3)){
 	    		
 	    		 for (int i = 0; i < mbosetPosicao.count(); i++) {
 	    		 valor2 = Uteis.getApenasNumeros(mbosetPosicao.getMbo(i).getString("MSPOSICAO")); 
@@ -53,10 +59,10 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 	 	                throw new MXApplicationException("genericaDoc", "PosicaoDocPecExiste");
 	 	            }
 	    		 }
-	    		getMboValue().setValue(Uteis.getValorMascarado("#.", valor, false));
-	    		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do if de valor < 2");
+	    		getMboValue().setValue(Uteis.getValorMascarado("##.", valor, false));
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do if de valor < 3");
 	    		
-	    	} else if((valor.length() < 3)){
+	    	} else if((valor.length() < 5)){
 	    		
 	    		for (int i = 0; i < mbosetPosicao.count(); i++) {
 		    		 valor2 = Uteis.getApenasNumeros(mbosetPosicao.getMbo(i).getString("MSPOSICAO")); 
@@ -69,10 +75,10 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 			 	            }
 		                 
 		    		 }
-	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.", valor, false));
-	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 3");
+	    		getMboValue().setValue(Uteis.getValorMascarado("##.##.", valor, false));
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 5");
 	    		
-	    	} else if((valor.length() < 4)){
+	    	} else if((valor.length() < 7)){
 	    		
 	    		for (int i = 0; i < mbosetPosicao.count(); i++) {
 		    		 valor2 = Uteis.getApenasNumeros(mbosetPosicao.getMbo(i).getString("MSPOSICAO")); 
@@ -84,10 +90,10 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 			 	                throw new MXApplicationException("genericaDoc", "PosicaoDocPecExiste");
 			 	         }
 		    	 }
-	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.", valor, false));
-	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 4");
+	    		getMboValue().setValue(Uteis.getValorMascarado("##.##.##.", valor, false));
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 7");
 	    		
-	    	} else if((valor.length() < 5)){
+	    	} else if((valor.length() < 9)){
 	    		
 	    		for (int i = 0; i < mbosetPosicao.count(); i++) {
 		    		 valor2 = Uteis.getApenasNumeros(mbosetPosicao.getMbo(i).getString("MSPOSICAO")); 
@@ -99,10 +105,10 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 			 	                throw new MXApplicationException("genericaDoc", "PosicaoDocPecExiste");
 			 	            }
 		    	 }
-	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.#.", valor, false));
-	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 5");
+	    		getMboValue().setValue(Uteis.getValorMascarado("##.##.##.##.", valor, false));
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 9");
 	    		
-	    	} else if((valor.length() < 6)){
+	    	} else if((valor.length() < 11)){
 	    		
 	    		for (int i = 0; i < mbosetPosicao.count(); i++) {
 		    		 valor2 = Uteis.getApenasNumeros(mbosetPosicao.getMbo(i).getString("MSPOSICAO")); 
@@ -114,8 +120,8 @@ public class ValidaPosicaoCadDocPec extends MboValueAdapter {
 			 	                throw new MXApplicationException("genericaDoc", "PosicaoDocPecExiste");
 			 	            }
 		    	 }
-	    		getMboValue().setValue(Uteis.getValorMascarado("#.#.#.#.#.", valor, false));
-	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 6");
+	    		getMboValue().setValue(Uteis.getValorMascarado("##.##.##.##.##.", valor, false));
+	    		System.out.println(">>>>>>>>>>>>>>>>>>>> valor < 11");
 	    		
 	    	} else{
 	    		throw new MXApplicationException("pontoposicao", "MascaraPosicaoInvalida");
