@@ -5,12 +5,13 @@
 <body>
 	<%	String codigoBarra = request.getParameter("codigoBarras"); %>
 
-		<form name="jasperjasperreportForm" id="jasperjasperreportForm" action="jasperReportAction">
-			<input type="hidden" name="relatorio" value="e-GTA-CodeBar.jasper" >
-			<input type="hidden" name="CODBARRA" value="<%=codigoBarra %>" >
-		</form>
+	<form name="jasperjasperreportForm" id="jasperjasperreportForm"
+		action="jasperReportAction">
+		<input type="hidden" name="relatorio" value="e-GTA-CodeBar.jasper">
+			<input type="hidden" name="CODBARRA" value="<%=codigoBarra %>">
+	</form>
 
-<script language="JavaScript" type="text/JavaScript">
+	<script language="JavaScript" type="text/JavaScript">
 	<%	
 		if (codigoBarra != null) {
 	%>

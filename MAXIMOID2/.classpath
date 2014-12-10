@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/ccmdb.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGCCMDBCommon.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGInstallCommon.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGInstallResources.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGInstallResourcesWasTmsXml.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGPSICLIClient.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGPSIDeploymentServices.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGPSIGUIClient.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGPSIService.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/icl.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/jlanclient.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/LAPApp.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/maxEncrypt.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/mwitoolkit-topology.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/remoteaccess.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/ssh.jar"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/maximo/applications/maximo/businessobjects/classes"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/maximo/applications/maximo/maximouiweb/webmodule/WEB-INF/classes"/>
-	<classpathentry kind="lib" path="D:/Trabalho/Eclipse/workspace/projetos/j2ee.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="src" />
+	<classpathentry kind="con"
+		path="org.eclipse.jdt.launching.JRE_CONTAINER" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/ccmdb.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGCCMDBCommon.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGInstallCommon.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGInstallResources.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGInstallResourcesWasTmsXml.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGPSICLIClient.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGPSIDeploymentServices.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGPSIGUIClient.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/CTGPSIService.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/icl.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/jlanclient.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/LAPApp.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/maxEncrypt.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/mwitoolkit-topology.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/remoteaccess.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/lib/ssh.jar" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/maximo/applications/maximo/businessobjects/classes" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/ibm/SMP/maximo/applications/maximo/maximouiweb/webmodule/WEB-INF/classes" />
+	<classpathentry kind="lib"
+		path="D:/Trabalho/Eclipse/workspace/projetos/j2ee.jar" />
+	<classpathentry kind="output" path="bin" />
 </classpath>

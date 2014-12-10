@@ -3,15 +3,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
 <head>
-<title>MAPA - Ministério da Agricultura, Pecuária e Abastecimento</title>
+<title>MAPA - Ministério da Agricultura, Pecuária e
+	Abastecimento</title>
 <!-- ###
   Início - Arquivos de estilo e comportamento
-### -->  
-  <link rel="stylesheet" type="text/css" href="css/mapa/estilo.css" />
-  <link rel="stylesheet" type="text/css" href="css/mapa/estilo-login.css" />
-  <script language="JavaScript" type="text/JavaScript" src="javascript/mapa/navegacao-local.js"></script>
-  <script language="JavaScript" type="text/JavaScript" src="javascript/mapa/controles-layout.js"></script>
-  <script language="Javascript" type="text/Javascript">
+### -->
+<link rel="stylesheet" type="text/css" href="css/mapa/estilo.css" />
+<link rel="stylesheet" type="text/css" href="css/mapa/estilo-login.css" />
+<script language="JavaScript" type="text/JavaScript"
+	src="javascript/mapa/navegacao-local.js"></script>
+<script language="JavaScript" type="text/JavaScript"
+	src="javascript/mapa/controles-layout.js"></script>
+<script language="Javascript" type="text/Javascript">
 
   		function validaSubmit() {
 			if (document.consulta.pais.value != '' || document.consulta.area.value != '' || document.consulta.categoria.value != '' || document.consulta.especie.value != '') {
@@ -25,7 +28,7 @@
 
 <!-- ###
   Fim - Arquivos de estilo e comportamento
-### -->  
+### -->
 </head>
 <%	String pais = request.getParameter("pais"); %>
 <%	String area = request.getParameter("area"); %>
@@ -70,84 +73,102 @@
 <%	String[] especies = {"ASININO","AVESTRUZ","BOVINO","BUBALINO","CAPIVARA","CAPRINO","CATETO","CROCODILIANO","CRUSTÁCEO","EQÜINO",
 						 "FAIZÃO","GALINHA","GALINHA D'ANGOLA","GANSO","MARRECO","MOLUSCO","MUAR","OUTRAS ESPÉCIES","OUTROS PALMÍPEDES",
 						 "OVINO","PATO","PEIXE","PERU","QUEIXADA","QUELÔNIO","SUÍNO"};%>
-						 
-						 
+
+
 <%	String[] areas = {"Carnes e Derivados","Leite e Derivados","Mel e Derivados","Ovos e Derivados","Pescados e Derivados"};%>
 
-						
+
 <body>
 
-<div id="resolucao">
-  <div id="moldura-topo">
-  	<div id="topo">
-      <div id="identificacao-ministerio">
-		<div id="logomarca-governo-federal">
-        </div>
-      </div>
-      <div id="identificacao-sistema">
-          <img vspace="0" hspace="0" align="left" alt="logo" src="login/images/left.jpg">
-      </div>
-      <div id="dados-login">
-        <!-- ###
+	<div id="resolucao">
+		<div id="moldura-topo">
+			<div id="topo">
+				<div id="identificacao-ministerio">
+					<div id="logomarca-governo-federal"></div>
+				</div>
+				<div id="identificacao-sistema">
+					<img vspace="0" hspace="0" align="left" alt="logo"
+						src="login/images/left.jpg">
+				</div>
+				<div id="dados-login">
+					<!-- ###
           Área destinada a exibição dos dados do usuário logado
         ### -->
-      </div>
-    </div>    
-	</div>
-  <div id="moldura-navegacao-global">
-    <div id="navegacao-global"></div>
-  </div>
-  <div id="corpo">
-		<h3>Consulta Pública do Estabelecimento Estrangeiro</h3>
-		<!--div id="area-mensagens">
+				</div>
+			</div>
+		</div>
+		<div id="moldura-navegacao-global">
+			<div id="navegacao-global"></div>
+		</div>
+		<div id="corpo">
+			<h3>Consulta Pública do Estabelecimento Estrangeiro</h3>
+			<!--div id="area-mensagens">
 			<ul class="msg-alerta">
 				<li>Descrição da mensagem de alerta.</li>
 				<li>Sequência de mensagens</li>
 				<li>...</li>
 			</ul>
 		</div-->
-    <div id="conteudo">
-      <div id="conteudo-login">
-        <h4>Consulta</h4>
-        <p class="conteudo">
+			<div id="conteudo">
+				<div id="conteudo-login">
+					<h4>Consulta</h4>
+					<p class="conteudo">
 
-			<form action="consultaIFrameEstabEstrangeiro.jsp" method="post" target="iframe" onSubmit="return validaSubmit();" name="consulta">		
-				<table>
-					<tr><td>País:</td><td><select class="form-text" style="height:20px" name="pais">
-												<option value="" class="form-text">Selecione</option>
-												<%for (int i = 0; i < paises.length; i++) { %>
-												<option value="<%=paises[i]%>"><%=paises[i]%></option>
-												<% } %>
-						                  </select> 
-					</td></tr>
-					<tr><td>Aréa:</td><td><select class="form-text" name="area"/>
-												<option value="" class="form-text">Selecione</option>
-												<%for (int i = 0; i < areas.length; i++) { %>
-												<option value="<%=areas[i]%>"><%=areas[i]%></option>
-												<% } %>
-					</td></tr>
-					
-					
-					<tr><td>Categoria:</td><td><input type="text" class="form-text" style="height:20px" size="42" maxlength="48" name="categoria" /></td></tr>
-					
-					<tr><td>Espécie:</td><td><select class="form-text" style="height:20px" name="especie" />
-												<option value="" class="form-text">Selecione</option>
-												<%for (int i = 0; i < especies.length; i++) { %>
-												<option value="<%=especies[i]%>"><%=especies[i]%></option>
-												<% } %>
-					</td></tr>
+						<form action="consultaIFrameEstabEstrangeiro.jsp" method="post"
+							target="iframe" onSubmit="return validaSubmit();" name="consulta">
+							<table>
+								<tr>
+									<td>País:</td>
+									<td><select class="form-text" style="height: 20px"
+										name="pais">
+											<option value="" class="form-text">Selecione</option>
+											<%for (int i = 0; i < paises.length; i++) { %>
+											<option value="<%=paises[i]%>"><%=paises[i]%></option>
+											<% } %>
+									</select></td>
+								</tr>
+								<tr>
+									<td>Aréa:</td>
+									<td><select class="form-text" name="area" />
+										<option value="" class="form-text">Selecione</option> <%for (int i = 0; i < areas.length; i++) { %>
+										<option value="<%=areas[i]%>"><%=areas[i]%></option> <% } %></td>
+								</tr>
 
-					<tr><td>&nbsp;</td></tr>
-					<tr><td><input type="button" class="form-button" value="Relatório" onclick="validaSubmit();"/></td><td><input class="form-button" TYPE="reset" NAME="limpar" VALUE="Limpar"></td></tr>
-				</table>
-			</form>
-			
-        </p>
-      </div>
-    </div>
-		<iframe name="iframe" id="iframe" width="100%" height="500" src="consultaIFrameEstabEstrangeiro.jsp" frameborder="0"></iframe>
-  </div>
-</div>
+
+								<tr>
+									<td>Categoria:</td>
+									<td><input type="text" class="form-text"
+										style="height: 20px" size="42" maxlength="48" name="categoria" /></td>
+								</tr>
+
+								<tr>
+									<td>Espécie:</td>
+									<td><select class="form-text" style="height: 20px"
+										name="especie" />
+										<option value="" class="form-text">Selecione</option> <%for (int i = 0; i < especies.length; i++) { %>
+										<option value="<%=especies[i]%>"><%=especies[i]%></option> <% } %>
+									</td>
+								</tr>
+
+								<tr>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td><input type="button" class="form-button"
+										value="Relatório" onclick="validaSubmit();" /></td>
+									<td><input class="form-button" TYPE="reset" NAME="limpar"
+										VALUE="Limpar"></td>
+								</tr>
+							</table>
+						</form>
+
+					</p>
+				</div>
+			</div>
+			<iframe name="iframe" id="iframe" width="100%" height="500"
+				src="consultaIFrameEstabEstrangeiro.jsp" frameborder="0"></iframe>
+		</div>
+	</div>
 
 
 

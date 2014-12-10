@@ -4,11 +4,11 @@
   Author   : ID2maximo
 --%>
 
-<%@page import="java.util.*" %>
-<%@page import="java.sql.*" %>
+<%@page import="java.util.*"%>
+<%@page import="java.sql.*"%>
 
 <html>
-    <script language="Javascript" type="text/Javascript">
+<script language="Javascript" type="text/Javascript">
 
         function validaValores() {
             if (document.consulta.edValor.value == '') {
@@ -19,18 +19,24 @@
             }
         }
     </script>
-    <head><title>Mnt Maximo</title></head>
+<head>
+<title>Mnt Maximo</title>
+</head>
 
-    <body onload="executa()">
-        <div>
-            <form action="consulta.jsp" method="post" target="iframe" onSubmit="return validaValores();" name="consulta">
-                Usuário: <input type="text" name="edUsuario" value="" size="40" />
-                Senha: <input type="password" name="edSenha" value="" />
-                <textarea name="edValor" rows="4" cols="120"></textarea><input type="button" class="form-button" value="Consultar" onclick="validaValores();"/>
-            </form>
-        </div>        
-        <div>
-            <iframe name="iframe" id="iframe"  width="100%" height="100%" src="consulta.jsp" frameborder="0"></iframe>
-        </div>
+<body onload="executa()">
+	<div>
+		<form action="consulta.jsp" method="post" target="iframe"
+			onSubmit="return validaValores();" name="consulta">
+			Usuário: <input type="text" name="edUsuario" value="" size="40" />
+			Senha: <input type="password" name="edSenha" value="" />
+			<textarea name="edValor" rows="4" cols="120"></textarea>
+			<input type="button" class="form-button" value="Consultar"
+				onclick="validaValores();" />
+		</form>
+	</div>
+	<div>
+		<iframe name="iframe" id="iframe" width="100%" height="100%"
+			src="consulta.jsp" frameborder="0"></iframe>
+	</div>
 </body>
 </html>
