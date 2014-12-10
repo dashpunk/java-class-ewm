@@ -8,120 +8,140 @@
 <%@page language="java" import="java.io.*,java.sql.*,javax.sql.*,javax.naming.*,java.util.*" %>
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page language="java" import="java.io.*,java.text.*,java.sql.*,javax.sql.*,javax.naming.*,java.util.*" %>
+<%@page language="java"
+	import="java.io.*,java.text.*,java.sql.*,javax.sql.*,javax.naming.*,java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
-    <style type="text/css">
-        @import url("http://www.google.com/uds/css/gsearch.css");
-        @import url("http://www.google.com/uds/solutions/localsearch/gmlocalsearch.css");
-        html {
-            background-color: ;
-            padding: 10px;
-            background-image: url(../images/bg_navbarxxx.jpg);
-            background-repeat: repeat;
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:v="urn:schemas-microsoft-com:vml">
+<style type="text/css">
+@import url("http://www.google.com/uds/css/gsearch.css");
 
-        }
-        html, body {
-            height: 100%;
-        }
-        body {
-            margin: 0;
-        }
-        .toolbar {
-            background-image: url(../images/bg_toolbar.gif);
-        }
+@import
+	url("http://www.google.com/uds/solutions/localsearch/gmlocalsearch.css")
+	;
 
-        div#GQueryControl {
-            background-color: #F5EFD5;
-            background-image: url(../images/bg_toolbar.gif);
-            background-repeat: repeat-x;
-            width: 155;
-            border: 2px;
-            font-family:arial,sans serif,verdana;
-            font-size:11px;
-            padding: 1px;
-        }
-        div#Title {
-            padding-top: 4px;
-            padding-bottom: 10px;
-            font-family:arial,sans serif,verdana;
-            font-size: 70px;
-        }
-        especificacao {
-            padding-top: 4px;
-            padding-bottom: 10px;
-            font-family:arial,sans serif,verdana;
-            font-size: 12px;
-        }
-        #caixaGrafico {
-            border:1px solid #e7e7e7;
-            padding:20px 20px;
-            width:400px;
-            background-color:#f8f8f8;
-        }
-        #flutuante {
-            display: scroll;
-            position: fixed;
-            top:0px;
-            margin-left: -220px;
-            left: 50%; 
-        }
-        #caixaGrafico h2{
-            color:#666666;
-            font-family:Arial, sans-serif;
-            font-size:1.1em;
-            padding-bottom:0.3em;
-            font-weight:bold;
-            text-align:center;
-        }
-        #caixaGrafico p {
-            color:#888888;
-            font-family:Arial, sans-serif;
-            font-size:0.8em;
-            padding-top: 0.3em;
-            text-align:left;
-        }
-        .grafico {
-            background-color: #F0EFEF;
-            border:1px solid #cccccc;
-            padding:2px 2px;
-        }
-        .grafico .barra, .grafico .barra2, .grafico .barra3 {
-            text-align:left;
-            color:#ffffff;
-            height:1.8em;
-            line-height:1.8em;
-            font-family:Arial, sans-serif;
-            display:block;
-        }
-        .grafico .barra {
-            background-color:#ff6600;
-        }
-        .grafico .barra2 {
-            background-color:#66CC33;
-        }
-        .grafico .barra3 {
-            background-color:#3399CC;
-        }
-        .grafico .barra4 {
-            background-color:#add8e6;
-        }
+html {
+	background-color:;
+	padding: 10px;
+	background-image: url(../images/bg_navbarxxx.jpg);
+	background-repeat: repeat;
+}
 
-        .content {
-            font-family:arial,sans serif,verdana;
-            margin-left:13.5em;
-            margin-right:13.5em;
-            margin-bottom:20px;
-            height:85%;
-            color:#333;
-            background:#ffc;
-            border:1px solid #333;
-            padding:0 10px;}
+html,body {
+	height: 100%;
+}
 
-    </style>
-    <head>
-        <script type="text/javascript">
+body {
+	margin: 0;
+}
+
+.toolbar {
+	background-image: url(../images/bg_toolbar.gif);
+}
+
+div#GQueryControl {
+	background-color: #F5EFD5;
+	background-image: url(../images/bg_toolbar.gif);
+	background-repeat: repeat-x;
+	width: 155;
+	border: 2px;
+	font-family: arial, sans serif, verdana;
+	font-size: 11px;
+	padding: 1px;
+}
+
+div#Title {
+	padding-top: 4px;
+	padding-bottom: 10px;
+	font-family: arial, sans serif, verdana;
+	font-size: 70px;
+}
+
+especificacao {
+	padding-top: 4px;
+	padding-bottom: 10px;
+	font-family: arial, sans serif, verdana;
+	font-size: 12px;
+}
+
+#caixaGrafico {
+	border: 1px solid #e7e7e7;
+	padding: 20px 20px;
+	width: 400px;
+	background-color: #f8f8f8;
+}
+
+#flutuante {
+	display: scroll;
+	position: fixed;
+	top: 0px;
+	margin-left: -220px;
+	left: 50%;
+}
+
+#caixaGrafico h2 {
+	color: #666666;
+	font-family: Arial, sans-serif;
+	font-size: 1.1em;
+	padding-bottom: 0.3em;
+	font-weight: bold;
+	text-align: center;
+}
+
+#caixaGrafico p {
+	color: #888888;
+	font-family: Arial, sans-serif;
+	font-size: 0.8em;
+	padding-top: 0.3em;
+	text-align: left;
+}
+
+.grafico {
+	background-color: #F0EFEF;
+	border: 1px solid #cccccc;
+	padding: 2px 2px;
+}
+
+.grafico .barra,.grafico .barra2,.grafico .barra3 {
+	text-align: left;
+	color: #ffffff;
+	height: 1.8em;
+	line-height: 1.8em;
+	font-family: Arial, sans-serif;
+	display: block;
+}
+
+.grafico .barra {
+	background-color: #ff6600;
+}
+
+.grafico .barra2 {
+	background-color: #66CC33;
+}
+
+.grafico .barra3 {
+	background-color: #3399CC;
+}
+
+.grafico .barra4 {
+	background-color: #add8e6;
+}
+
+.content {
+	font-family: arial, sans serif, verdana;
+	margin-left: 13.5em;
+	margin-right: 13.5em;
+	margin-bottom: 20px;
+	height: 85%;
+	color: #333;
+	background: #ffc;
+	border: 1px solid #333;
+	padding: 0 10px;
+}
+</style>
+<head>
+<script type="text/javascript">
             <%
                 //System.out.println("____init()");
                 String user = "GTA_PGA";
@@ -236,13 +256,16 @@
             %>
 
         </script>
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-        <title>Bloqueio</title>
-        <script src= type="text/javascript"></script>
-        <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB6Py81KG0H57podswdsWBUd3KISfXYCXg&sensor=false&libraries=geometry"></script>
-        <script type="text/javascript">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Bloqueio</title>
+<script src=type="text/javascript"></script>
+<link
+	href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css"
+	rel="stylesheet" type="text/css" />
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB6Py81KG0H57podswdsWBUd3KISfXYCXg&sensor=false&libraries=geometry"></script>
+<script type="text/javascript">
             
             function distance(point1, point2) {
                 var R = 6371; // earth's mean radius in km
@@ -545,12 +568,14 @@
 
              
         </script>
-    </head>
-    <body onload="initialize()">
-        <div id="map_canvas"><img id="flutuante" src="images/bannerInfo.png " /></div>
-    </body>
-    <div style="width:100%">
-        <img id="flutuante" src="images/bannerInfo.png " />
-    </div>
+</head>
+<body onload="initialize()">
+	<div id="map_canvas">
+		<img id="flutuante" src="images/bannerInfo.png " />
+	</div>
+</body>
+<div style="width: 100%">
+	<img id="flutuante" src="images/bannerInfo.png " />
+</div>
 
 </html>

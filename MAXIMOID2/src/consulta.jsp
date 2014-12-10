@@ -5,95 +5,107 @@
 --%>
 
 <%@page import="java.sql.DriverManager"%>
-<%@page import="java.util.*" %>
-<%@page import="javax.sql.*" %>
+<%@page import="java.util.*"%>
+<%@page import="javax.sql.*"%>
 <%@page import="java.sql.ResultSetMetaData"%>
 <html>
-    <style type="text/css">
-        /* 
+<style type="text/css">
+/* 
         TagBox table styles
         written by TagBox http://www.tagbox.de
         */
-        table {
-            border-collapse: collapse;
-            border: 1px solid #03476F;
-            font: normal 11px verdana, arial, helvetica, sans-serif;
-            color: #363636;
-            background: #92C428;
-        }
-        caption {
-            text-align: center;
-            font: bold 18px arial, helvetica, sans-serif;
-            background: transparent;
-            padding:6px 4px 8px 0px;
-            color: #03476F;
-            text-transform: uppercase;
-        }
-        td, th {
-            border: 1px dotted #03476F;
-            padding: .4em;
-            color: #363636;
-        }
+table {
+	border-collapse: collapse;
+	border: 1px solid #03476F;
+	font: normal 11px verdana, arial, helvetica, sans-serif;
+	color: #363636;
+	background: #92C428;
+}
 
-        thead th, tfoot th {
-            font: bold 11px verdana, arial, helvetica, sans-serif;
-            border: 1px solid #03476F;;
-            text-align: left;
-            background: #4591AD;
-            color: #FFFFFF;
-            padding-top:3px;
-        }
-        tbody td a {
-            background: transparent;
-            text-decoration: none;
-            color: #363636;
-        }
-        tbody td a:hover {
-            background: #C2F64D;
-            color: #363636;
-        }
-        tbody th a {
-            font: normal 11px verdana, arial, helvetica, sans-serif;
-            background: transparent;
-            text-decoration: none;
-            font-weight:normal;
-            color: #363636;
-        }
-        tbody th a:hover {
-            background: transparent;
-            color: #363636;
-        }
-        tbody th, tbody td {
-            vertical-align: top;
-            text-align: left;
-        }
-        tfoot td {
-            border: 1px solid #03476F;
-            background: #4591AD;
-            padding-top:3px;
-            color: #FFFFFF;
-        }
-        .odd {
-            background: #AEE239;
-        }
-        tbody tr:hover {
-            background: #FFD800;
-            border: 1px solid #03476F;
-            color: #FFFFFF;
-        }
-        tbody tr:hover th,
-        tbody tr.odd:hover th {
-            background: #FFD800;
-            color: #FFFFFF;
-        }
-    </style>
-    <head><title>Mnt Maximo</title></head>
+caption {
+	text-align: center;
+	font: bold 18px arial, helvetica, sans-serif;
+	background: transparent;
+	padding: 6px 4px 8px 0px;
+	color: #03476F;
+	text-transform: uppercase;
+}
+
+td,th {
+	border: 1px dotted #03476F;
+	padding: .4em;
+	color: #363636;
+}
+
+thead th,tfoot th {
+	font: bold 11px verdana, arial, helvetica, sans-serif;
+	border: 1px solid #03476F;;
+	text-align: left;
+	background: #4591AD;
+	color: #FFFFFF;
+	padding-top: 3px;
+}
+
+tbody td a {
+	background: transparent;
+	text-decoration: none;
+	color: #363636;
+}
+
+tbody td a:hover {
+	background: #C2F64D;
+	color: #363636;
+}
+
+tbody th a {
+	font: normal 11px verdana, arial, helvetica, sans-serif;
+	background: transparent;
+	text-decoration: none;
+	font-weight: normal;
+	color: #363636;
+}
+
+tbody th a:hover {
+	background: transparent;
+	color: #363636;
+}
+
+tbody th,tbody td {
+	vertical-align: top;
+	text-align: left;
+}
+
+tfoot td {
+	border: 1px solid #03476F;
+	background: #4591AD;
+	padding-top: 3px;
+	color: #FFFFFF;
+}
+
+.odd {
+	background: #AEE239;
+}
+
+tbody tr:hover {
+	background: #FFD800;
+	border: 1px solid #03476F;
+	color: #FFFFFF;
+}
+
+tbody tr:hover th,tbody tr.odd:hover th {
+	background: #FFD800;
+	color: #FFFFFF;
+}
+</style>
+<head>
+<title>Mnt Maximo</title>
+</head>
 
 
-    <body onload="executa()">
-        <%	String valor = request.getParameter("edValor");
+<body onload="executa()">
+	<%	String valor = request.getParameter("edValor");
             if (valor != null) {%>
-        <%
+	<%
             int cont = 0;
             if (valor.toUpperCase().indexOf("INSERT") != -1
                     || valor.toUpperCase().indexOf("INTO") != -1
@@ -145,7 +157,7 @@
             }
         %>
 
-        <%
+	<%
             String sql = "select * from APP.CUSTOMER";
             sql = "select PURCHASE_ORDER.*,  CUSTOMER.NAME from APP.PURCHASE_ORDER, CUSTOMER "
                     + "WHERE APP.PURCHASE_ORDER.CUSTOMER_ID = CUSTOMER.CUSTOMER_ID";
@@ -154,28 +166,42 @@
                 s = con.createStatement();
                 rs = s.executeQuery(sql);
                 ResultSetMetaData meta = rs.getMetaData();
-        %><table border="1"><thead><tr><%
+        %><table border="1">
+		<thead>
+			<tr>
+				<%
             for (int cab = 1; cab <= meta.getColumnCount(); cab++) {
 
-                    %><th><%= meta.getColumnName(cab)%></th><%
+                    %><th><%= meta.getColumnName(cab)%></th>
+				<%
                         }
-                    %></tr></thead><tbody>
-                    <%
+                    %>
+			</tr>
+		</thead>
+		<tbody>
+			<%
                         while (rs.next()) {
-                        %><tr><%
+                        %><tr>
+				<%
                             for (int cab = 1; cab <= meta.getColumnCount(); cab++) {
 
-                    %><td><%= rs.getString(cab)%></td><%
+                    %><td><%= rs.getString(cab)%></td>
+				<%
 
                         }
-                    %></tr><%
+                    %>
+			</tr>
+			<%
                         }
-                    %></tbody></table>
+                    %>
+		</tbody>
+	</table>
 
-        <%
+	<%
 
         } catch (Exception e) {
-        %><%=e.getMessage()%><%
+        %><%=e.getMessage()%>
+	<%
                     } finally {
                         if (rs != null) {
                             rs.close();
@@ -192,9 +218,9 @@
 
 
 
-        <%}
+	<%}
             }%>
 
 
-    </body>
+</body>
 </html>
