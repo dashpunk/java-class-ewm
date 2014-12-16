@@ -8,11 +8,11 @@ import psdi.mbo.MboRemote;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 
-public class AlteraStatusTarefaAgAjustes implements ActionCustomClass {
+public class AlteraFlagTarefaAgAjusteFalse implements ActionCustomClass {
 
-	public AlteraStatusTarefaAgAjustes() {
+	public AlteraFlagTarefaAgAjusteFalse() {
 		super();
-		System.out.println("########## Status WO Activity de mesmo pai para 'AG. AJUSTES'");
+		System.out.println("########## Flag MSNUFLGAGUARDANDOAJUSTE de WO Activity com mesmo pai para false");
 	}
 
 	public void applyCustomAction(MboRemote mbo, java.lang.Object[] params)
@@ -20,16 +20,14 @@ public class AlteraStatusTarefaAgAjustes implements ActionCustomClass {
 		
 		System.out.println("########## applyCustomAction");
 		
-		MboRemote mbo1 = mbo.getMboSet("PARENTPROCESS").getMbo();
-		System.out.println("########## WONUM PAI: " + mbo1.getString("WONUM"));
+		System.out.println("########## WONUM PAI: " + mbo.getString("WONUM"));
 		MboRemote mbo2;
 		
-		for (int i = 0; ((mbo2 = mbo1.getMboSet("WOACTIVITY").getMbo(i)) != null); i++){
+		for (int i = 0; ((mbo2 = mbo.getMboSet("WOACTIVITY").getMbo(i)) != null); i++){
 			
 			System.out.println("########## WOACTIVITY ID: " + mbo2.getString("WONUM") + " WONUM PAI: " + mbo2.getString("PARENT"));
 			
-			mbo2.setValue("STATUS", "AG. AJUSTES");
-			mbo2.getString("STATUS");
+			mbo2.setValue("MSNUFLGAGUARDANDOAJUSTE", false);
 		}	
 		
 	}
