@@ -8,9 +8,9 @@ import psdi.mbo.MboRemote;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 
-public class AlteraFlagTarefaAgAjusteTrue implements ActionCustomClass {
+public class AlteraTarefaCompraAut implements ActionCustomClass {
 
-	public AlteraFlagTarefaAgAjusteTrue() {
+	public AlteraTarefaCompraAut() {
 		super();
 		System.out.println("########## Flag MSNUFLGAGUARDANDOAJUSTE de WO Activity com mesmo pai para true");
 	}
@@ -30,10 +30,10 @@ public class AlteraFlagTarefaAgAjusteTrue implements ActionCustomClass {
 			System.out.println("########## WOACTIVITY ID: " + mbo2.getString("WONUM") + " WONUM PAI: " + mbo2.getString("PARENT"));
 			
 			mbo2.setValue("MSNUFLGAGUARDANDOAJUSTE", true, MboConstants.NOACCESSCHECK);
-			mbo2.setValue("STATUS", "AG. AJUSTES", MboConstants.NOACCESSCHECK);
+			mbo2.setValue("STATUS", "COMPRA AUT.", MboConstants.NOACCESSCHECK);
 		}	
 		
-		mbo1.setValue("STATUS", "ANALISANDO PROC", MboConstants.NOACCESSCHECK);
+		mbo1.setValue("STATUS", "REAL. QUANT.", MboConstants.NOACCESSCHECK);
 		mbo1.getMboSet("WOACTIVITY").save(MboConstants.NOACCESSCHECK);
 		
 	}

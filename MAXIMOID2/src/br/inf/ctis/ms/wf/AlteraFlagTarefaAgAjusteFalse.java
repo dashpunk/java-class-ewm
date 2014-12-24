@@ -26,9 +26,12 @@ public class AlteraFlagTarefaAgAjusteFalse implements ActionCustomClass {
 		for (int i = 0; ((mbo2 = mbo.getMboSet("WOACTIVITY").getMbo(i)) != null); i++){
 			
 			System.out.println("########## WOACTIVITY ID: " + mbo2.getString("WONUM") + " WONUM PAI: " + mbo2.getString("PARENT"));
-			
-			mbo2.setValue("MSNUFLGAGUARDANDOAJUSTE", false);
+						   
+			mbo2.setValue("MSNUFLGAGUARDANDOAJUSTE", false, MboConstants.NOACCESSCHECK);
+			mbo2.setValue("STATUS", "ESTADO/MUNICIPIO", MboConstants.NOACCESSCHECK);
 		}	
+		
+		mbo.getMboSet("WOACTIVITY").save(MboConstants.NOACCESSCHECK);
 		
 	}
 
