@@ -7,9 +7,9 @@ import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.util.MXException;
 
-public class AlteraTarefaCompraAut implements ActionCustomClass {
+public class AlteraTarefaCancelado implements ActionCustomClass {
 
-	public AlteraTarefaCompraAut() {
+	public AlteraTarefaCancelado() {
 		super();
 		System.out.println("########## Flag MSNUFLGAGUARDANDOAJUSTE de WO Activity com mesmo pai para true");
 	}
