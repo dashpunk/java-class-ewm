@@ -7,11 +7,11 @@ import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.util.MXException;
 
-public class AlteraTarefaCompraAut implements ActionCustomClass {
+public class AlteraTarefaConcluido implements ActionCustomClass {
 
-	public AlteraTarefaCompraAut() {
+	public AlteraTarefaConcluido() {
 		super();
-		System.out.println("########## Status da Tarefa para COMPRA AUT.");
+		System.out.println("########## Status da Tarefa para CONCLUIDO");
 	}
 
 	public void applyCustomAction(MboRemote mbo, java.lang.Object[] params)
@@ -26,7 +26,7 @@ public class AlteraTarefaCompraAut implements ActionCustomClass {
 		int concluido = 1;
 		
 		mbo.setValue("MSNUFLGAPROVADO", true, MboConstants.NOACCESSCHECK);
-		mbo.setValue("STATUS", "COMPRA AUT.", MboConstants.NOACCESSCHECK);
+		mbo.setValue("STATUS", "CONCLUIDO", MboConstants.NOACCESSCHECK);
 						
 		mbo1.getMboSet("WOACTIVITY").save(MboConstants.NOACCESSCHECK);
 		
