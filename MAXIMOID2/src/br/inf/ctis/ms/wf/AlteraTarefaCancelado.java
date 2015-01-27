@@ -11,7 +11,7 @@ public class AlteraTarefaCancelado implements ActionCustomClass {
 
 	public AlteraTarefaCancelado() {
 		super();
-		System.out.println("########## Flag MSNUFLGAGUARDANDOAJUSTE de WO Activity com mesmo pai para true");
+		System.out.println("########## Status da Tarefa para CANCELADO");
 	}
 
 	public void applyCustomAction(MboRemote mbo, java.lang.Object[] params)
@@ -26,7 +26,7 @@ public class AlteraTarefaCancelado implements ActionCustomClass {
 		int concluido = 1;
 		
 		mbo.setValue("MSNUFLGAPROVADO", true, MboConstants.NOACCESSCHECK);
-		mbo.setValue("STATUS", "COMPRA AUT.", MboConstants.NOACCESSCHECK);
+		mbo.setValue("STATUS", "CANCELADO", MboConstants.NOACCESSCHECK);
 						
 		mbo1.getMboSet("WOACTIVITY").save(MboConstants.NOACCESSCHECK);
 		
@@ -35,7 +35,7 @@ public class AlteraTarefaCancelado implements ActionCustomClass {
 			System.out.println("########## WOACTIVITY ID: " + mbo2.getString("WONUM") + " WONUM PAI: " + mbo2.getString("PARENT"));
 			System.out.println("########## Status: " + mbo2.getString("STATUS"));
 			
-			if(!mbo2.getString("STATUS").equalsIgnoreCase("COMPRA AUT.")){
+			if(!mbo2.getString("STATUS").equalsIgnoreCase("COMPRA AUT.") && !mbo2.getString("STATUS").equalsIgnoreCase("CANCELADO") && !mbo2.getString("STATUS").equalsIgnoreCase("CONCLUIDO")){
 				concluido = 0;
 			}
 			
