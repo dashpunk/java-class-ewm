@@ -13,7 +13,7 @@ import psdi.util.MXException;
 import br.inf.id2.common.util.Validar;
 
 /**
- * @author willians.andrade
+ * @author marcelosydney.lima
  */
 
 public class CPFValidoSemMascara extends MboValueAdapter {
@@ -28,11 +28,11 @@ public class CPFValidoSemMascara extends MboValueAdapter {
         valor = Uteis.getApenasNumeros(getMboValue().getString());
         super.validate();
         String param[] = {valor};
-        if (!Validar.CPF(valor)) {
-            //busca mensagem do maximo, grupo mensagem e chave mensagem
-            throw new MXApplicationException("company", "CPFInvalido", param);
+        if (Validar.CPF(valor)) {
+        	getMboValue().setValue(Uteis.getApenasNumeros(valor));
+        } else {
+        	throw new MXApplicationException("company", "CPFInvalido", param);
         }
-
+        
     }
-
 }

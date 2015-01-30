@@ -11,7 +11,7 @@ import br.inf.id2.common.util.Validar;
 
 
 /**
- * @author Marcelo
+ * @author marcelosydney.lima
  */
 
 public class CPFCNPJValidoSemMascara extends MboValueAdapter {
@@ -26,9 +26,13 @@ public class CPFCNPJValidoSemMascara extends MboValueAdapter {
         valor = Uteis.getApenasNumeros(getMboValue().getString());
         super.validate();
         String param[] = {valor};
-        if (!Validar.CNPJ(valor)) {
-            //busca mensagem do maximo, grupo mensagem e chave mensagem
-            throw new MXApplicationException("company", "CNPJInvalido", param);
+        if (Validar.CPF(valor)) {
+        	getMboValue().setValue(Uteis.getApenasNumeros(valor));
+        } else if (Validar.CNPJ(valor)){
+        	getMboValue().setValue(Uteis.getApenasNumeros(valor));
+        } else {
+        	throw new MXApplicationException("company", "CPFCNPJInvalido");
         }
+        
     }
 }
