@@ -73,6 +73,7 @@ public class MsGerOC extends psdi.webclient.system.beans.AppBean {
 						
 						mbo.setValue("MSNUMVALUNIT", mbo1.getDouble("MSNUMPREC"));
 						mbo.setValue("MSNUMTOTAL", mbo1.getDouble("MSNUMPREC") * mbo1.getDouble("MSNUMQNT"));
+						
 					} else if(!mbo1.getBoolean("MSFLVENC")){
 						System.out.println("################# Entrou Perdedor: " + mbo1.getString("MSSISMAT"));
 					}
