@@ -3,7 +3,6 @@ package br.inf.ctis.ms.bean;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.mbo.MboSet;
@@ -202,7 +201,7 @@ public class MsNotaEmp extends AppBean {
 									// Setando Status
 									for (int j = 0; ((mbo1 = getMbo().getMboSet("MSTBMEDICAMENTO").getMbo(j)) !=null); j++) {
 										System.out.println("############ Entrou no for de medicamentos");
-										mbo1.setValue("STATUS", "AG.REMESSA", MboConstants.NOACCESSCHECK);
+										mbo1.setValue("STATUS", "AG.AGENDAMENTO", MboConstants.NOACCESSCHECK);
 										System.out.println("########### STATUS = " + mbo1.getString("STATUS"));
 									}
 									/// Fim	

@@ -59,6 +59,7 @@ public class BaixaEstoqueGuiaRemessa implements ActionCustomClass {
 						
 		}
 		
+		mbo.getMboSet("MSTBMEDGUIA").save(MboConstants.NOACCESSCHECK);
 		mbo.getMboSet("MSTBMEDALMOX").save(MboConstants.NOACCESSCHECK);
 		
 	}
