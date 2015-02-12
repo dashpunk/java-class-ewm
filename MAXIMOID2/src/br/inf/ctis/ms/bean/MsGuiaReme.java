@@ -8,6 +8,9 @@ import java.util.Calendar;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import psdi.mbo.MboConstants;
+import psdi.mbo.MboRemote;
 import psdi.server.MXServer;
 import psdi.util.DBConnect;
 import psdi.util.MXException;
@@ -33,7 +36,7 @@ public class MsGuiaReme extends AppBean {
 		ResultSet idMax = null;
 		
 		try {
-			if(getMbo().isNew()){
+			if(getMbo().isNew()) {
 				System.out.println("########## Entrou em isNew()");
 				prop = MXServer.getMXServer().getConfig();
 				
@@ -69,6 +72,16 @@ public class MsGuiaReme extends AppBean {
 					System.out.println("########## MSCODREMESSA = " + codRemessa);
 					getMbo().setValue("MSCODREMESSA", codRemessa);
 				}
+				
+				// Setando Status Medicamentos
+				MboRemote mbo1;
+				
+				for (int j = 0; ((mbo1 = getMbo().getMboSet("MSTBMEDICAMENTO").getMbo(j)) !=null); j++) {
+					System.out.println("############ Entrou no for de medicamentos");
+					mbo1.setValue("STATUS", "AG.REMESSA", MboConstants.NOACCESSCHECK);
+					System.out.println("########### STATUS = " + mbo1.getString("STATUS"));
+				}
+				/// Fim	
 				
 				super.save();
 			} 
