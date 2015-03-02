@@ -1,5 +1,5 @@
 /*
- * Alterar Stutus dos Medicamentos para Demandas Judiciais
+ * Alterar Status dos Medicamentos para Demandas Judiciais
  */
 package br.inf.ctis.common.wf;
 
@@ -24,7 +24,7 @@ public class AlterarStatusMedicamentos implements ActionCustomClass {
 		if (mbo.getString("STATUS").equals("EMAND")) {
 			for (int i = 0; ((aMbo = mbo.getMboSet("MSTBMEDICAMENTO").getMbo(i)) != null); i++) {
 
-				if (aMbo.getString("MSALNTIPOATENDIMENTO").equals("COMPRA")) {
+				if (aMbo.getString("MSALNTIPOATENDIMENTO").equals("COMPRA") && !aMbo.getString("STATUS").equalsIgnoreCase("ATEND.DEP.JUD")) {
 					aMbo.setValue("STATUS", "SOL.AUT.COMPRA", MboConstants.NOACCESSCHECK);
 					aMbo.setValue("MSFLWORKFLOW", "03", MboConstants.NOACCESSCHECK);					
 				}
