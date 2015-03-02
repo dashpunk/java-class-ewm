@@ -19,7 +19,7 @@ public class AlteraMedicamentosGerGuiaRemessa implements ActionCustomClass {
 		
 		System.out.println("########## applyCustomAction");
 		
-		System.out.println("########## AGENDAMENTO ID: " + mbo.getString("MSAGENDAMENTOID"));
+		//System.out.println("########## AGENDAMENTO ID: " + mbo.getString("MSAGENDAMENTOID"));
 		MboRemote mbo2;
 		
 		for (int i = 0; ((mbo2 = mbo.getMboSet("MSTBMEDICAMENTO").getMbo(i)) != null); i++){

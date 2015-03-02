@@ -136,6 +136,11 @@ public class MsOrdemCompra extends DataBean {
 								.getBoolean("msfornec004"), 2L);
 						mboSuporteOC.setValue("msfornec005", getMbo()
 								.getBoolean("msfornec005"), 2L);
+						mboSuporteOC.setValue("MSEXCLUSIVOCNPJ", getMbo()
+								.getString("MSEXCLUSIVOCNPJ"), 2L);
+						/*
+						 *Adicionado o CNPJ do fornecedor exclusívo 
+						 */
 
 						flagUm = 1;
 					}

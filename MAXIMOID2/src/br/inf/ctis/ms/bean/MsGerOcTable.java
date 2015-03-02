@@ -27,7 +27,7 @@ public class MsGerOcTable extends DataBean {
 	 
 	 public int excluirMedic() throws MXException, RemoteException {
 		 // Mensagem de Alerta
-		 if(!getMbo().getString("MSSTATUS").equalsIgnoreCase("APROVADA")) {
+		 if(!getMbo().getMboSet("MSTBOC").getString("MSSTATUS").equalsIgnoreCase("APROVADA")) {
 		
 			 String yesNoId = getClass().getName();
 			 int userInput = MXApplicationYesNoCancelException.getUserInput(yesNoId, MXServer.getMXServer(), getMbo().getUserInfo());
