@@ -68,11 +68,12 @@ public class MsGerOC extends psdi.webclient.system.beans.AppBean {
 						System.out.println("################# Soma Total Linha: " + mbo1.getDouble("MSNUMQNT") * mbo1.getDouble("MSNUMPREC"));
 						mbo1.setValue("MSPRECTOTAL", mbo1.getDouble("MSNUMQNT") * mbo1.getDouble("MSNUMPREC"));
 						System.out.println("################# MSPRECTOTAL: " + mbo1.getDouble("MSPRECTOTAL"));
-						Total += mbo1.getDouble("MSNUMQNT") * mbo1.getDouble("MSNUMPREC");
+						
+						Total += mbo.getDouble("MSQTD") * mbo1.getDouble("MSNUMPREC");
 						System.out.println("################# Soma Total Parcial: " + Total);
 						
 						mbo.setValue("MSNUMVALUNIT", mbo1.getDouble("MSNUMPREC"));
-						mbo.setValue("MSNUMTOTAL", mbo1.getDouble("MSNUMPREC") * mbo1.getDouble("MSNUMQNT"));
+						mbo.setValue("MSNUMTOTAL", mbo1.getDouble("MSNUMPREC") * mbo.getDouble("MSQTD"));
 						
 					} else if(!mbo1.getBoolean("MSFLVENC")){
 						System.out.println("################# Entrou Perdedor: " + mbo1.getString("MSSISMAT"));
