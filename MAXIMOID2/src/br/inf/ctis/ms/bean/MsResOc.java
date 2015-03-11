@@ -107,8 +107,7 @@ public class MsResOc extends AppBean {
         val.append("<tbody>");
         val.append("<tr>");
 		val.append("<td valign=\"top\" width=\"900\">");
-		val.append("<p align=\"left\"><b>Despacho Referente ao Processo<b><br /></b></b></p>");
-		val.append("<p align=\"left\">Registro SIPAR n.º: " + sipar + " - Ação Judicial - " + "<b>XXXXXXXXXX<b><b><b><br /></b></b></b></b></p>");
+		val.append("<p align=\"left\"><b>Despacho Referente ao Processo da Ordem de Compra - " + getMbo().getInt("MSTBOCID") + "<b><br /></b></b></p>");
 		val.append("</td>");
 		val.append("</tr>");
 		val.append("</tbody>");
@@ -226,8 +225,7 @@ public class MsResOc extends AppBean {
         val.append("<tbody>");
         val.append("<tr>");
 		val.append("<td valign=\"top\" width=\"900\">");
-		val.append("<p align=\"left\"><b>Despacho Referente ao Processo<b><br /></b></b></p>");
-		val.append("<p align=\"left\">Registro SIPAR n.º: " + sipar + " - Ação Judicial - " + "<b>XXXXXXXXXX<b><b><b><br /></b></b></b></b></p>");
+		val.append("<p align=\"left\"><b>Despacho Referente ao Processo da Ordem de Compra - " + getMbo().getInt("MSTBOCID") + "<b><br /></b></b></p>");
 		val.append("</td>");
 		val.append("</tr>");
 		val.append("</tbody>");
@@ -342,8 +340,7 @@ public class MsResOc extends AppBean {
         val.append("<tbody>");
         val.append("<tr>");
 		val.append("<td valign=\"top\" width=\"900\">");
-		val.append("<p align=\"left\"><b>Despacho Referente ao Processo<b><br /></b></b></p>");
-		val.append("<p align=\"left\">Registro SIPAR n.º: " + sipar + " - Ação Judicial - " + "<b>XXXXXXXXXX<b><b><b><br /></b></b></b></b></p>");
+		val.append("<p align=\"left\"><b>Despacho Referente ao Processo da Ordem de Compra - " + getMbo().getInt("MSTBOCID") + "<b><br /></b></b></p>");
 		val.append("</td>");
 		val.append("</tr>");
 		val.append("</tbody>");
