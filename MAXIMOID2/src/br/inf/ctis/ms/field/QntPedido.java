@@ -1,4 +1,4 @@
-package br.inf.id2.ms.field;
+package br.inf.ctis.ms.field;
 
 import psdi.mbo.*;
 import java.rmi.RemoteException;
