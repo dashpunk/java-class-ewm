@@ -2,9 +2,7 @@ package br.inf.ctis.common.field;
 
 import java.rmi.RemoteException;
 import java.util.Calendar;
-
 import psdi.id2.Uteis;
-import psdi.mbo.Mbo;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
 import psdi.util.MXApplicationException;
@@ -24,7 +22,7 @@ public class NumerosBarraAnoMenorIgualAtual extends MboValueAdapter {
 	    System.out.println("###############getMboValue().getString() = " + getMboValue().getString());
 	    System.out.println("###############valor = " + valor);
 	    
-	    if ((valor.length() < 6) || (valor.length() > 7)) {
+	    if ((valor.length() < 6) || (valor.length() > 6)) {
 	    	throw new MXApplicationException("generica", "MascaraInvalida");
 	    }
 
