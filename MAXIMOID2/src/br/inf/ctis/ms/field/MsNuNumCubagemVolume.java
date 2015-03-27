@@ -28,6 +28,6 @@ public class MsNuNumCubagemVolume extends MboValueAdapter{
 		Double aquisicaoVolume =  cubagemVolume * qtdEmbalagens;
 		System.out.println("########## aquisicaoVolume: " + aquisicaoVolume);
 		
-		getMboValue("MSNUNUMAQUISICAOVOLUME").setValue(aquisicaoVolume);
+		getMboValue("MSNUNUMAQUISICAOVOLUME").setValue((aquisicaoVolume/100));
 	}
 }

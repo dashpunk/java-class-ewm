@@ -27,7 +27,7 @@ public class MsNuNumQtdEmbalagens extends MboValueAdapter{
 		Double aquisicaoPeso =  embalagemPeso * qtdEmbalagens;
 		System.out.println("########## aquisicaoPeso: " + aquisicaoPeso);
 		
-		getMboValue("MSNUNUMAQUISICAOPESO").setValue(aquisicaoPeso);
+		getMboValue("MSNUNUMAQUISICAOPESO").setValue((aquisicaoPeso/1000));
 		
 		System.out.println("########## getMboValue(MSNUNUMCUBAGEMVOLUME).getDouble(): " + getMboValue("MSNUNUMCUBAGEMVOLUME").getDouble());
 		Double cubagemVolume = getMboValue("MSNUNUMCUBAGEMVOLUME").getDouble();
@@ -37,7 +37,7 @@ public class MsNuNumQtdEmbalagens extends MboValueAdapter{
 		Double aquisicaoVolume =  cubagemVolume * qtdEmbalagens;
 		System.out.println("########## aquisicaoVolume: " + aquisicaoVolume);
 		
-		getMboValue("MSNUNUMAQUISICAOVOLUME").setValue(aquisicaoVolume);
+		getMboValue("MSNUNUMAQUISICAOVOLUME").setValue((aquisicaoVolume/100));
 	}
 
 }
