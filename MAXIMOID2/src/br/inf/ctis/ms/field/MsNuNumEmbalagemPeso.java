@@ -28,6 +28,6 @@ public class MsNuNumEmbalagemPeso extends MboValueAdapter{
 		Double aquisicaoPeso =  embalagemPeso * qtdEmbalagens;
 		System.out.println("########## aquisicaoPeso: " + aquisicaoPeso);
 		
-		getMboValue("MSNUNUMAQUISICAOPESO").setValue(aquisicaoPeso);
+		getMboValue("MSNUNUMAQUISICAOPESO").setValue((aquisicaoPeso/1000));
 	}
 }
