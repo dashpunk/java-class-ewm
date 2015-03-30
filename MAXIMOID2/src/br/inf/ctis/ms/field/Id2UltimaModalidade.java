@@ -46,7 +46,7 @@ public class Id2UltimaModalidade extends MboValueAdapter {
 			
 			//MSVWVALORUNITARIODEMANDA
 			int ano = 0;
-			Double valorUnitario = 0d;
+			Double valorUnitario = 999999999999999d;
 			MboRemote mbo1;
 			
 			//Verifica maior ano entre as ultimas aquisicoes
