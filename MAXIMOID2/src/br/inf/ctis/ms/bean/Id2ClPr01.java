@@ -115,7 +115,7 @@ public class Id2ClPr01 extends PRAppBean {
 				System.out.println("########## ID da linha: " + entrega3.getInt("MSTBPREVISAOENTREGAID"));
 				System.out.println("########## parcelas.indexOf()" + parcelas.indexOf(entrega3.getInt("MSTBPREVISAOENTREGAID")));
 				
-				entrega3.setValue("MSNUCODPARCELA", parcelas.indexOf(entrega3.getInt("MSTBPREVISAOENTREGAID")));
+				entrega3.setValue("MSNUCODPARCELA", parcelas.indexOf(entrega3.getInt("MSTBPREVISAOENTREGAID"))+1);
 			}
 			
 			//NUMERO DA PARCELA DE ENTREGA
