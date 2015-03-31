@@ -24,11 +24,11 @@ public class ID2ClPRAppBean extends PRAppBean {
     @Override
     public synchronized void fireDataChangedEvent(DataBean speaker) {
         super.fireDataChangedEvent(speaker);
-        somaStArmazenagem();
-        somaStDistribuicao();
+        //somaStArmazenagem();
+        //somaStDistribuicao();
     }
 
-    private void somaStArmazenagem() {
+    /*private void somaStArmazenagem() {
         double retorno = 0;
         try {
 
@@ -89,7 +89,7 @@ public class ID2ClPRAppBean extends PRAppBean {
             //System.out.println("+++ b ex " + ex.getMessage());
         }
 
-    }
+    }*/
 
     /**
      *
@@ -103,8 +103,8 @@ public class ID2ClPRAppBean extends PRAppBean {
      * @since 19/06/2010
      */
     public int SAVE() throws MXException, RemoteException {
-        somaStArmazenagem();
-        somaStDistribuicao();
+        //somaStArmazenagem();
+        //somaStDistribuicao();
         Uteis.espera("*************** SAVE()");
 
         if (getMbo().getString("ID2CODCOO") == null || getMbo().getString("ID2CODCOO").equals("")) {
