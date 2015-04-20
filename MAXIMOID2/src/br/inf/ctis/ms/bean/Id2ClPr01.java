@@ -41,51 +41,12 @@ public class Id2ClPr01 extends PRAppBean {
 		Connection conexao = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		ResultSet rs2 = null;
     	
     	try {
     		
-    		//PREVISAO DE ENTREGA
-    		
-    		MboRemote entrega;
-    		MboRemote itensEntrega;
-    	    	
-			for (int i = 0; ((entrega = getMbo().getMboSet("MSTBPREVISAOENTREGA").getMbo(i)) != null); i++) {
-				
-				double totalVolume = 0d;
-				double totalPeso = 0d;
-				double totalQuantidade = 0d;
-				
-				for (int j = 0; ((itensEntrega = entrega.getMboSet("MSTBITENSENTREGA").getMbo(j)) != null); j++) {
-					
-					System.out.println("######### CATMAT: " + itensEntrega.getString("ID2ITEMNUM"));
-					
-					System.out.println("######### Volume: " + ((itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOVOLUME") / itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensEntrega.getDouble("MSNUNUMQUANTIDADE")));					
-					totalVolume += ((itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOVOLUME") / itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensEntrega.getDouble("MSNUNUMQUANTIDADE"));
-					
-					System.out.println("######### Peso: " + ((itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOPESO") / itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensEntrega.getDouble("MSNUNUMQUANTIDADE")));
-					totalPeso += ((itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOPESO") / itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensEntrega.getDouble("MSNUNUMQUANTIDADE"));
-					
-					System.out.println("######### Quantidade: " + itensEntrega.getDouble("MSNUNUMQUANTIDADE"));
-					totalQuantidade += itensEntrega.getDouble("MSNUNUMQUANTIDADE");
-				}
-				
-				entrega.setValue("MSNUNUMVOLUME", totalVolume);
-				entrega.setValue("MSNUNUMPESO", totalPeso);
-				entrega.setValue("MSNUNUMQUANTIDADE", totalQuantidade);
-								
-			}
-			
-			//PREVISAO DE ENTREGA
-			
-			
-			
-			super.save();
-			//NUMERO DA PARCELA DE ENTREGA
-			
-			MboRemote entrega2;
-			ArrayList<Integer> parcelas = new ArrayList<Integer>();
-			
-			prop = MXServer.getMXServer().getConfig();
+    		//-------------------------------------------------------------------CONEXAO
+    		prop = MXServer.getMXServer().getConfig();
 			
 			String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
             String url = prop.getProperty("mxe.db.url", "jdbc:oracle:thin:@srvoradf0.saude.gov:1521/DFPO1.SAUDE.GOV");
@@ -96,6 +57,90 @@ public class Id2ClPr01 extends PRAppBean {
 			conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
 			
 			stmt = conexao.createStatement();
+			
+			//-------------------------------------------------------------------CONEXAO
+    		
+    		//-------------------------------------------------------------------PREVISAO DE ENTREGA
+    		
+    		MboRemote entrega;
+    		MboRemote itensEntrega;
+    	    	
+			for (int i = 0; ((entrega = getMbo().getMboSet("MSTBPREVISAOENTREGA").getMbo(i)) != null); i++) {
+				
+				if (!entrega.toBeDeleted()) {
+					double totalVolume = 0d;
+					double totalPeso = 0d;
+					double totalQuantidade = 0d;
+					
+					for (int j = 0; ((itensEntrega = entrega.getMboSet("MSTBITENSENTREGA").getMbo(j)) != null); j++) {
+						
+						System.out.println("######### CATMAT: " + itensEntrega.getString("ID2ITEMNUM"));
+						
+						System.out.println("######### Volume: " + ((itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOVOLUME") / itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensEntrega.getDouble("MSNUNUMQUANTIDADE")));					
+						totalVolume += ((itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOVOLUME") / itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensEntrega.getDouble("MSNUNUMQUANTIDADE"));
+						
+						System.out.println("######### Peso: " + ((itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOPESO") / itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensEntrega.getDouble("MSNUNUMQUANTIDADE")));
+						totalPeso += ((itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOPESO") / itensEntrega.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensEntrega.getDouble("MSNUNUMQUANTIDADE"));
+						
+						System.out.println("######### Quantidade: " + itensEntrega.getDouble("MSNUNUMQUANTIDADE"));
+						totalQuantidade += itensEntrega.getDouble("MSNUNUMQUANTIDADE");
+					}
+					
+					entrega.setValue("MSNUNUMVOLUME", totalVolume);
+					entrega.setValue("MSNUNUMPESO", totalPeso);
+					entrega.setValue("MSNUNUMQUANTIDADE", totalQuantidade);
+				} else if (entrega.toBeDeleted()) {
+					entrega.getMboSet("MSTBITENSENTREGA").deleteAll();
+				}
+								
+			}
+			
+			//-------------------------------------------------------------------PREVISAO DE ENTREGA
+			
+			//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
+			
+			MboRemote distribuicao;
+    		MboRemote itensDist;
+    	    	
+			for (int i = 0; ((distribuicao = getMbo().getMboSet("MSTBPREVISAODISTRIBUICAO").getMbo(i)) != null); i++) {
+				
+				if (!distribuicao.toBeDeleted()) {
+					double totalVolume = 0d;
+					double totalPeso = 0d;
+					double totalQuantidade = 0d;
+					
+					for (int j = 0; ((itensDist = distribuicao.getMboSet("MSTBITENSDISTRIBUICAO").getMbo(j)) != null); j++) {
+						
+						System.out.println("######### CATMAT: " + itensDist.getString("ID2ITEMNUM"));
+						
+						System.out.println("######### Volume: " + ((itensDist.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOVOLUME") / itensDist.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensDist.getDouble("MSNUNUMQUANTIDADE")));					
+						totalVolume += ((itensDist.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOVOLUME") / itensDist.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensDist.getDouble("MSNUNUMQUANTIDADE"));
+						
+						System.out.println("######### Peso: " + ((itensDist.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOPESO") / itensDist.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensDist.getDouble("MSNUNUMQUANTIDADE")));
+						totalPeso += ((itensDist.getMboSet("PRLINE").getMbo(0).getDouble("MSNUNUMAQUISICAOPESO") / itensDist.getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) * itensDist.getDouble("MSNUNUMQUANTIDADE"));
+						
+						System.out.println("######### Quantidade: " + itensDist.getDouble("MSNUNUMQUANTIDADE"));
+						totalQuantidade += itensDist.getDouble("MSNUNUMQUANTIDADE");
+					}
+					
+					distribuicao.setValue("MSNUNUMVOLUME", totalVolume);
+					distribuicao.setValue("MSNUNUMPESO", totalPeso);
+					distribuicao.setValue("MSNUNUMQUANTIDADE", totalQuantidade);
+				} else if (distribuicao.toBeDeleted()) {
+					distribuicao.getMboSet("MSTBPREVISAODISTRIBUICAO").deleteAll();
+				}
+								
+			}
+			
+			//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
+			
+			super.save();
+			
+			//-------------------------------------------------------------------NUMERO DA PARCELA DE ENTREGA
+			
+			MboRemote entrega2;
+			ArrayList<Integer> parcelas = new ArrayList<Integer>();
+						
 			rs = stmt.executeQuery("select MSTBPREVISAOENTREGAID from MSTBPREVISAOENTREGA where prnum = " + getMbo().getString("PRNUM") + " order by to_date('01/'||MSALDTAENTREGA, 'DD/MM/YYYY'), MSTBPREVISAOENTREGAID");
 			
 			while (rs.next()) {
@@ -118,7 +163,36 @@ public class Id2ClPr01 extends PRAppBean {
 				entrega3.setValue("MSNUCODPARCELA", parcelas.indexOf(entrega3.getInt("MSTBPREVISAOENTREGAID"))+1);
 			}
 			
-			//NUMERO DA PARCELA DE ENTREGA
+			//-------------------------------------------------------------------NUMERO DA PARCELA DE ENTREGA
+			
+			//-------------------------------------------------------------------NUMERO DA PARCELA DE DISTRIBUICAO
+			
+			MboRemote distribuicao2;
+			ArrayList<Integer> parcelasDist = new ArrayList<Integer>();
+						
+			rs2 = stmt.executeQuery("select MSTBPREVISAODISTRIBUICAOID from MSTBPREVISAODISTRIBUICAO where prnum = " + getMbo().getString("PRNUM") + " order by to_date('01/'||MSALDTADISTRIBUICAO, 'DD/MM/YYYY'), MSTBPREVISAODISTRIBUICAOID");
+			
+			while (rs2.next()) {
+				System.out.println("########## rs2.getInt(MSTBPREVISAODISTRIBUICAOID)" + rs2.getInt("MSTBPREVISAODISTRIBUICAOID"));
+				for (int i = 0; ((distribuicao2 = getMbo().getMboSet("MSTBPREVISAODISTRIBUICAO").getMbo(i)) != null); i++) {
+					if ((rs2.getInt("MSTBPREVISAODISTRIBUICAOID") == distribuicao2.getInt("MSTBPREVISAODISTRIBUICAOID")) && !distribuicao2.toBeDeleted()) {
+						parcelasDist.add(rs2.getInt("MSTBPREVISAODISTRIBUICAOID"));
+						System.out.println("########## Adicionado o ID: " + rs2.getInt("MSTBPREVISAODISTRIBUICAOID"));
+					}
+				}
+			}
+			
+			MboRemote distribuicao3;
+			
+			for (int j = 0; ((distribuicao3 = getMbo().getMboSet("MSTBPREVISAODISTRIBUICAO").getMbo(j)) != null); j++) {
+				
+				System.out.println("########## ID da linha: " + distribuicao3.getInt("MSTBPREVISAODISTRIBUICAOID"));
+				System.out.println("########## parcelasDist.indexOf()" + parcelasDist.indexOf(distribuicao3.getInt("MSTBPREVISAODISTRIBUICAOID")));
+				
+				distribuicao3.setValue("MSNUCODPARCELA", parcelasDist.indexOf(distribuicao3.getInt("MSTBPREVISAODISTRIBUICAOID"))+1);
+			}
+			
+			//-------------------------------------------------------------------NUMERO DA PARCELA DE DISTRIBUICAO
 			
 			super.save();
 			
