@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
+
+import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.server.MXServer;
 import psdi.util.DBConnect;
@@ -36,7 +38,7 @@ public class Id2ClPr01 extends PRAppBean {
 
     @Override
 	public void save() throws MXException {
-    	
+    	   	 	
     	Properties prop;
 		Connection conexao = null;
 		Statement stmt = null;
@@ -44,6 +46,9 @@ public class Id2ClPr01 extends PRAppBean {
 		ResultSet rs2 = null;
     	
     	try {
+    		
+    		getMbo().setValue("SITEID", getMbo().getString("MSALCODSITEID"), MboConstants.NOACCESSCHECK);  
+    		
     		
     		//-------------------------------------------------------------------CONEXAO
     		prop = MXServer.getMXServer().getConfig();
