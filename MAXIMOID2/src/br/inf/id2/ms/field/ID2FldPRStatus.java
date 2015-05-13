@@ -57,38 +57,5 @@ public class ID2FldPRStatus extends MboValueAdapter {
             }
         }
 
-    }
-    
-    
-    @Override
-    public void init() throws MXException, RemoteException {
-    	//System.out.println("################### INIT");
-	    if (getMboValue().getMbo().getString("STATUS") != null && !getMboValue().getMbo().getString("STATUS").equals("EM ALTERAÇÃO")) {
-			
-	    	try {
-	    		getMboValue().getMbo().getMboSet("MS_RL01LOCDIS").setFlag(MboConstants.READONLY, true);
-	    	} catch (Exception e) {
-	    		//Caso n�o exista
-	    	}
-	    	try {
-	    		getMboValue().getMbo().getMboSet("MS_RL01LOCDIS").getMbo().getMboSet("MS_RL01ITEDIS").setFlag(MboConstants.READONLY, true);
-	    	} catch (Exception e) {
-	    		//Caso n�o exista
-	    	}
-	    	try {
-	    		getMboValue().getMbo().getMboSet("MS_RL01LOCREC").setFlag(MboConstants.READONLY, true);
-	    	} catch (Exception e) {
-	    		//Caso n�o exista
-	    	}
-	    	try {
-	    		getMboValue().getMbo().getMboSet("MS_RL01LOCREC").getMbo().getMboSet("MS_RL01ITEREC").setFlag(MboConstants.READONLY, true);
-	    	} catch (Exception e) {
-	    		//Caso n�o exista
-	    	}
-	    	//System.out.println("############ PASSOU!");
-	    }
-    	super.init();
-    }
-
-    
+    }    
 }
