@@ -14,7 +14,6 @@ import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 import psdi.webclient.beans.pr.PRAppBean;
 import psdi.webclient.system.beans.DataBean;
-import br.inf.id2.common.util.Executa;
 
 public class Id2ClPr01 extends PRAppBean {
 
@@ -37,7 +36,98 @@ public class Id2ClPr01 extends PRAppBean {
 
     @Override
 	public void save() throws MXException {
-    	   	 	
+    	
+    	try {
+			getMbo().setValue("SITEID", getMbo().getString("MSALCODSITEID"), MboConstants.NOACCESSCHECK);
+		
+			//-------------------------------------------------------------------PREVISAO DE ENTREGA
+			
+			MboRemote itemEntrega;
+			    		
+			for (int i = 0; ((itemEntrega = getMbo().getMboSet("PRLINEENTREGA").getMbo(i)) != null); i++) {
+				
+				if (itemEntrega.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
+					
+					int countEntregas = itemEntrega.getMboSet("MSTBPREVISAOENTREGA").count();
+					System.out.println("########## countEntregas: " + countEntregas);
+					
+					if (countEntregas < 1) {
+						throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega");
+					} else {
+					
+						MboRemote mbo;
+						int contador = 0;
+						
+						for (int j = 0; ((mbo = itemEntrega.getMboSet("MSTBPREVISAOENTREGA").getMbo(j)) != null); j++) {
+							if (!mbo.toBeDeleted()) {
+								contador++;
+							}
+						}
+						System.out.println("########## contador: " + contador);
+						
+						if (contador < 1) {
+							throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega");
+						}
+						
+					}
+				} else if (itemEntrega.getString("ID2DISTDIRETA").equalsIgnoreCase("NAO")) {
+	    					
+					Double valor = 0d;
+					MboRemote mbo;
+					
+					for (int j = 0; ((mbo = itemEntrega.getMboSet("MSTBPREVISAOENTREGA").getMbo(j)) != null); j++) {
+						
+						System.out.println("########## Data: " + mbo.getString("MSALDTAENTREGA") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
+						valor += mbo.getDouble("MSNUNUMQUANTIDADE");
+						
+						System.out.println("########## valor: " + valor);
+					}
+								        
+			        if (valor != itemEntrega.getDouble("ORDERQTY")) {
+			        	throw new MXApplicationException("entrega", "FaltaEntregas");
+			        }
+	
+				} 
+			}
+			//-------------------------------------------------------------------PREVISAO DE ENTREGA
+			
+			//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
+			
+			MboRemote itemDistribuicao;
+			    		
+			for (int i = 0; ((itemDistribuicao = getMbo().getMboSet("PRLINEENTREGA").getMbo(i)) != null); i++) {
+				
+				if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
+					if (itemDistribuicao.getMboSet("MSTBPREVISAOENTREGA").count() < 1) {
+						throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaDistribuicao");
+					}
+				} else if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("NAO")) {
+	    					
+					Double valor = 0d;
+					MboRemote mbo;
+					
+					for (int j = 0; ((mbo = itemDistribuicao.getMboSet("MSTBPREVISAOENTREGA").getMbo(j)) != null); j++) {
+						
+						System.out.println("########## Data: " + mbo.getString("MSALDTAENTREGA") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
+						valor += mbo.getDouble("MSNUNUMQUANTIDADE");
+						
+						System.out.println("########## valor: " + valor);
+					}
+			        
+			        if (valor != itemDistribuicao.getDouble("ORDERQTY")) {
+			        	throw new MXApplicationException("distribuicao", "FaltaDistribuicoes");
+			        }
+	
+				} 
+			}
+			//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
+			
+    	} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}  
+		super.save();
+    	
     	Properties prop;
 		Connection conexao = null;
 		Statement stmt = null;
@@ -45,35 +135,7 @@ public class Id2ClPr01 extends PRAppBean {
 		ResultSet rs2 = null;
     	
     	try {
-    		
-    		getMbo().setValue("SITEID", getMbo().getString("MSALCODSITEID"), MboConstants.NOACCESSCHECK);  
-    		    		
-    		//-------------------------------------------------------------------PREVISAO DE ENTREGA
-    		
-			MboRemote itemEntrega;
-    		    		
-    		for (int i = 0; ((itemEntrega = getMbo().getMboSet("PRLINEENTREGA").getMbo(i)) != null); i++) {
-				
-    			if (itemEntrega.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
-					if (itemEntrega.getMboSet("MSTBPREVISAOENTREGA").count() < 1) {
-						throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega");
-					}
-				} else if (itemEntrega.getString("ID2DISTDIRETA").equalsIgnoreCase("NAO")) {
-	    					
-					Double valor = Executa.somaValor("MSNUNUMQUANTIDADE", itemEntrega.getMboSet("MSTBPREVISAOENTREGA"));
-			        System.out.println("########## valorEntrega = " + valor);
-			        
-			        if (valor != itemEntrega.getDouble("ORDERQTY")) {
-			        	throw new MXApplicationException("entrega", "FaltaEntregas");
-			        }
-
-				} 
-    		}
-			
-			//-------------------------------------------------------------------PREVISAO DE ENTREGA
-			
-			super.save();
-			
+    					
 			//-------------------------------------------------------------------CONEXAO
     		prop = MXServer.getMXServer().getConfig();
 			
@@ -96,7 +158,9 @@ public class Id2ClPr01 extends PRAppBean {
 				MboRemote entrega2;
 				ArrayList<Integer> parcelas = new ArrayList<Integer>();
 							
-				rs = stmt.executeQuery("select MSTBPREVISAOENTREGAID from MSTBPREVISAOENTREGA where prnum = " + prlineentrega.getString("PRNUM") + "prlineid = " + prlineentrega.getInt("PRLINEID") + " order by to_date('01/'||MSALDTAENTREGA, 'DD/MM/YYYY'), MSTBPREVISAOENTREGAID");
+				rs = stmt.executeQuery("select MSTBPREVISAOENTREGAID from MSTBPREVISAOENTREGA where prnum = " + 
+											prlineentrega.getString("PRNUM") + " and prlineid = " + 
+												prlineentrega.getInt("PRLINEID") + " order by to_date('01/'||MSALDTAENTREGA, 'DD/MM/YYYY'), MSTBPREVISAOENTREGAID");
 				
 				while (rs.next()) {
 					System.out.println("########## rs.getInt(MSTBPREVISAOENTREGAID)" + rs.getInt("MSTBPREVISAOENTREGAID"));
@@ -128,7 +192,9 @@ public class Id2ClPr01 extends PRAppBean {
 				MboRemote distribuicao2;
 				ArrayList<Integer> parcelasDist = new ArrayList<Integer>();
 							
-				rs2 = stmt.executeQuery("select MSTBPREVISAODISTRIBUICAOID from MSTBPREVISAODISTRIBUICAO where prnum = " + prlinedistribuicao.getString("PRNUM") + "prlineid = " + prlinedistribuicao.getInt("PRLINEID") + " order by to_date('01/'||MSALDTADISTRIBUICAO, 'DD/MM/YYYY'), MSTBPREVISAODISTRIBUICAOID");
+				rs2 = stmt.executeQuery("select MSTBPREVISAODISTRIBUICAOID from MSTBPREVISAODISTRIBUICAO where prnum = " + 
+											prlinedistribuicao.getString("PRNUM") + " and prlineid = " + 
+												prlinedistribuicao.getInt("PRLINEID") + " order by to_date('01/'||MSALDTADISTRIBUICAO, 'DD/MM/YYYY'), MSTBPREVISAODISTRIBUICAOID");
 				
 				while (rs2.next()) {
 					System.out.println("########## rs2.getInt(MSTBPREVISAODISTRIBUICAOID)" + rs2.getInt("MSTBPREVISAODISTRIBUICAOID"));
