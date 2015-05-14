@@ -21,14 +21,17 @@ public class MsNuNumQuantidadeEntrega extends MboValueAdapter{
 		double parcelaPeso = 0d;
 		Double valor = 0d;
 		MboRemote mbo;
-		
-		for (int i = 0; ((mbo = getMboValue().getMbo().getMboSet("MSTBPREVISAOENTREGA").getMbo(i)) != null); i++) {
+					
+		for (int i = 0; ((mbo = getMboValue().getMbo().getMboSet("PRLINE").getMbo(0).getMboSet("MSTBPREVISAOENTREGA").getMbo(i)) != null); i++) {
 			
 			System.out.println("########## Data: " + mbo.getString("MSALDTAENTREGA") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
 			valor += mbo.getDouble("MSNUNUMQUANTIDADE");
 			
 			System.out.println("########## valor: " + valor);
 		}
+		
+		valor += getMboValue().getDouble();
+		System.out.println("########## valor+qtd: " + valor);
 
         if (getMboValue().getMbo().getMboSet("PRLINE").getMbo(0).getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
         	if (valor >= getMboValue().getMbo().getMboSet("PRLINE").getMbo(0).getDouble("ORDERQTY")) {
