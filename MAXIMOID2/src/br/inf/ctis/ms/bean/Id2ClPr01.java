@@ -13,7 +13,6 @@ import psdi.util.DBConnect;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 import psdi.webclient.beans.pr.PRAppBean;
-import psdi.webclient.system.beans.DataBean;
 
 public class Id2ClPr01 extends PRAppBean {
 
@@ -30,16 +29,15 @@ public class Id2ClPr01 extends PRAppBean {
     }
 
     @Override
-    public synchronized void fireDataChangedEvent(DataBean speaker) {
-        super.fireDataChangedEvent(speaker);
-    }
-
-    @Override
 	public void save() throws MXException {
-    	
+    	    	   	
     	try {
-			getMbo().setValue("SITEID", getMbo().getString("MSALCODSITEID"), MboConstants.NOACCESSCHECK);
-		
+		    		   		
+    		if (!getMbo().isNull("MSALCODSITEID")){
+				getMbo().setValue("SITEID", getMbo().getString("MSALCODSITEID"), MboConstants.NOACCESSCHECK);
+			}
+    		
+    		super.save();
 			//-------------------------------------------------------------------PREVISAO DE ENTREGA
 			
 			MboRemote itemEntrega;
@@ -66,6 +64,7 @@ public class Id2ClPr01 extends PRAppBean {
 						System.out.println("########## contador: " + contador);
 						
 						if (contador < 1) {
+							app.gotoTab("tab_entrega");
 							throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega");
 						}
 						
