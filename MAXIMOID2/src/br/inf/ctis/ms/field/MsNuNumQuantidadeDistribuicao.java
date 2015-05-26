@@ -48,6 +48,7 @@ public class MsNuNumQuantidadeDistribuicao extends MboValueAdapter{
 		
 		getMboValue().getMbo().setValue("MSNUNUMVOLUME", parcelaVolume);
 		getMboValue().getMbo().setValue("MSNUNUMPESO", parcelaPeso);
+		getMboValue().getMbo().getMboSet("PRLINE").getMbo(0).getMboSet("MSTBPREVISAODISTRIBUICAO").save();
         
 	}
 
