@@ -24,7 +24,7 @@ public class MsNuNumQuantidadeDistribuicao extends MboValueAdapter{
 		
 		for (int i = 0; ((mbo = getMboValue().getMbo().getMboSet("PRLINE").getMbo(0).getMboSet("MSTBPREVISAODISTRIBUICAO").getMbo(i)) != null); i++) {
 			
-			System.out.println("########## Data: " + mbo.getString("MSALDTAENTREGA") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
+			System.out.println("########## Data: " + mbo.getString("MSALDTADISTRIBUICAO") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
 			valor += mbo.getDouble("MSNUNUMQUANTIDADE");
 			
 			System.out.println("########## valor: " + valor);
