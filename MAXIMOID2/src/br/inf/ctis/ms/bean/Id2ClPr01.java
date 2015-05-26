@@ -37,7 +37,6 @@ public class Id2ClPr01 extends PRAppBean {
 				getMbo().setValue("SITEID", getMbo().getString("MSALCODSITEID"), MboConstants.NOACCESSCHECK);
 			}
     		
-    		super.save();
 			//-------------------------------------------------------------------PREVISAO DE ENTREGA
 			
 			MboRemote itemEntrega;
@@ -94,20 +93,21 @@ public class Id2ClPr01 extends PRAppBean {
 			
 			MboRemote itemDistribuicao;
 			    		
-			for (int i = 0; ((itemDistribuicao = getMbo().getMboSet("PRLINEENTREGA").getMbo(i)) != null); i++) {
+			for (int i = 0; ((itemDistribuicao = getMbo().getMboSet("PRLINEDISTRIBUICAO").getMbo(i)) != null); i++) {
 				
-				if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
-					if (itemDistribuicao.getMboSet("MSTBPREVISAOENTREGA").count() < 1) {
+				/*if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
+					if (itemDistribuicao.getMboSet("MSTBPREVISAODISTRIBUICAO").count() < 1) {
 						throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaDistribuicao");
 					}
-				} else if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("NAO")) {
+				} else */
+				if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("SIM")) {
 	    					
 					Double valor = 0d;
 					MboRemote mbo;
 					
-					for (int j = 0; ((mbo = itemDistribuicao.getMboSet("MSTBPREVISAOENTREGA").getMbo(j)) != null); j++) {
+					for (int j = 0; ((mbo = itemDistribuicao.getMboSet("MSTBPREVISAODISTRIBUICAO").getMbo(j)) != null); j++) {
 						
-						System.out.println("########## Data: " + mbo.getString("MSALDTAENTREGA") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
+						System.out.println("########## Data: " + mbo.getString("MSALDTADISTRIBUICAO") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
 						valor += mbo.getDouble("MSNUNUMQUANTIDADE");
 						
 						System.out.println("########## valor: " + valor);
