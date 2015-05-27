@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
+
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.server.MXServer;
@@ -37,89 +38,117 @@ public class Id2ClPr01 extends PRAppBean {
 				getMbo().setValue("SITEID", getMbo().getString("MSALCODSITEID"), MboConstants.NOACCESSCHECK);
 			}
     		
-			//-------------------------------------------------------------------PREVISAO DE ENTREGA
-			
-			MboRemote itemEntrega;
-			    		
-			for (int i = 0; ((itemEntrega = getMbo().getMboSet("PRLINEENTREGA").getMbo(i)) != null); i++) {
+			if(getMbo().getString("STATUS").equalsIgnoreCase("ENVIADO")) {
+				//-------------------------------------------------------------------PREVISAO DE ENTREGA
 				
-				if (itemEntrega.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
+				String catmatSemEntregas = "";
+				int qtdCatmatSemEntregas = 0;
+				String catmatFaltaEntregas = "";
+				int qtdCatmatFaltaEntregas = 0;
+				MboRemote itemEntrega;
+				    		
+				for (int i = 0; ((itemEntrega = getMbo().getMboSet("PRLINEENTREGA").getMbo(i)) != null); i++) {
 					
-					int countEntregas = itemEntrega.getMboSet("MSTBPREVISAOENTREGA").count();
-					System.out.println("########## countEntregas: " + countEntregas);
-					
-					if (countEntregas < 1) {
-						throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega");
-					} else {
-					
+					if (itemEntrega.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
+						
+						int countEntregas = itemEntrega.getMboSet("MSTBPREVISAOENTREGA").count();
+						System.out.println("########## countEntregas: " + countEntregas);
+						
+						if (countEntregas < 1) {
+							qtdCatmatSemEntregas++;
+							catmatSemEntregas += " \n" + itemEntrega.getString("ID2ITEMNUM");
+							//throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega");
+						} else {
+						
+							MboRemote mbo;
+							int contador = 0;
+							
+							for (int j = 0; ((mbo = itemEntrega.getMboSet("MSTBPREVISAOENTREGA").getMbo(j)) != null); j++) {
+								if (!mbo.toBeDeleted()) {
+									contador++;
+								}
+							}
+							System.out.println("########## contador: " + contador);
+							
+							if (contador < 1) {
+								qtdCatmatSemEntregas++;
+								catmatSemEntregas += " \n" + itemEntrega.getString("ID2ITEMNUM");
+								//throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega");
+							}
+							
+						}
+					} else if (itemEntrega.getString("ID2DISTDIRETA").equalsIgnoreCase("NAO")) {
+		    					
+						Double valor = 0d;
 						MboRemote mbo;
-						int contador = 0;
 						
 						for (int j = 0; ((mbo = itemEntrega.getMboSet("MSTBPREVISAOENTREGA").getMbo(j)) != null); j++) {
-							if (!mbo.toBeDeleted()) {
-								contador++;
-							}
+							
+							System.out.println("########## Data: " + mbo.getString("MSALDTAENTREGA") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
+							valor += mbo.getDouble("MSNUNUMQUANTIDADE");
+							
+							System.out.println("########## valor: " + valor);
 						}
-						System.out.println("########## contador: " + contador);
-						
-						if (contador < 1) {
-							app.gotoTab("tab_entrega");
-							throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega");
-						}
-						
-					}
-				} else if (itemEntrega.getString("ID2DISTDIRETA").equalsIgnoreCase("NAO")) {
-	    					
-					Double valor = 0d;
-					MboRemote mbo;
-					
-					for (int j = 0; ((mbo = itemEntrega.getMboSet("MSTBPREVISAOENTREGA").getMbo(j)) != null); j++) {
-						
-						System.out.println("########## Data: " + mbo.getString("MSALDTAENTREGA") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
-						valor += mbo.getDouble("MSNUNUMQUANTIDADE");
-						
-						System.out.println("########## valor: " + valor);
-					}
-								        
-			        if (valor != itemEntrega.getDouble("ORDERQTY")) {
-			        	throw new MXApplicationException("entrega", "FaltaEntregas");
-			        }
-	
-				} 
-			}
-			//-------------------------------------------------------------------PREVISAO DE ENTREGA
-			
-			//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
-			
-			MboRemote itemDistribuicao;
-			    		
-			for (int i = 0; ((itemDistribuicao = getMbo().getMboSet("PRLINEDISTRIBUICAO").getMbo(i)) != null); i++) {
+									        
+				        if (valor != itemEntrega.getDouble("ORDERQTY")) {
+				        	qtdCatmatFaltaEntregas++;
+				        	catmatFaltaEntregas += " \n" + itemEntrega.getString("ID2ITEMNUM");
+				        	//throw new MXApplicationException("entrega", "FaltaEntregas");
+				        }
+		
+					} 
+				}
 				
-				/*if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
-					if (itemDistribuicao.getMboSet("MSTBPREVISAODISTRIBUICAO").count() < 1) {
-						throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaDistribuicao");
-					}
-				} else */
-				if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("SIM")) {
-	    					
-					Double valor = 0d;
-					MboRemote mbo;
+				if (qtdCatmatSemEntregas > 0) {
+					throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega", new String[]{catmatSemEntregas});
+				}
+				
+				if (qtdCatmatFaltaEntregas > 0) {
+					throw new MXApplicationException("entrega", "FaltaEntregas", new String[]{catmatFaltaEntregas});
+				}
+				//-------------------------------------------------------------------PREVISAO DE ENTREGA
+				
+				//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
+				
+				String catmatFaltaDistribuicoes = "";
+				int qtdCatmatFaltaDistribuicoes = 0;
+				MboRemote itemDistribuicao;
+				    		
+				for (int i = 0; ((itemDistribuicao = getMbo().getMboSet("PRLINEDISTRIBUICAO").getMbo(i)) != null); i++) {
 					
-					for (int j = 0; ((mbo = itemDistribuicao.getMboSet("MSTBPREVISAODISTRIBUICAO").getMbo(j)) != null); j++) {
+					/*if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
+						if (itemDistribuicao.getMboSet("MSTBPREVISAODISTRIBUICAO").count() < 1) {
+							throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaDistribuicao");
+						}
+					} else */
+					if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("SIM")) {
+		    					
+						Double valor = 0d;
+						MboRemote mbo;
 						
-						System.out.println("########## Data: " + mbo.getString("MSALDTADISTRIBUICAO") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
-						valor += mbo.getDouble("MSNUNUMQUANTIDADE");
-						
-						System.out.println("########## valor: " + valor);
-					}
-			        
-			        if (valor != itemDistribuicao.getDouble("ORDERQTY")) {
-			        	throw new MXApplicationException("distribuicao", "FaltaDistribuicoes");
-			        }
-	
-				} 
+						for (int j = 0; ((mbo = itemDistribuicao.getMboSet("MSTBPREVISAODISTRIBUICAO").getMbo(j)) != null); j++) {
+							
+							System.out.println("########## Data: " + mbo.getString("MSALDTADISTRIBUICAO") + " ########## Quantidade: " + mbo.getDouble("MSNUNUMQUANTIDADE"));
+							valor += mbo.getDouble("MSNUNUMQUANTIDADE");
+							
+							System.out.println("########## valor: " + valor);
+						}
+				        
+				        if (valor != itemDistribuicao.getDouble("ORDERQTY")) {
+				        	qtdCatmatFaltaDistribuicoes++;
+				        	catmatFaltaDistribuicoes += " \n" + itemDistribuicao.getString("ID2ITEMNUM");
+				        	//throw new MXApplicationException("distribuicao", "FaltaDistribuicoes");
+				        }
+		
+					} 
+				}
+				
+				if (qtdCatmatFaltaDistribuicoes > 0) {
+					throw new MXApplicationException("distribuicao", "FaltaDistribuicoes", new String[]{catmatFaltaDistribuicoes});
+				}
+				//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
 			}
-			//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
+    		
 			
     	} catch (RemoteException e1) {
 			// TODO Auto-generated catch block

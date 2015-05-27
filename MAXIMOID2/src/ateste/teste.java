@@ -1,7 +1,9 @@
 package ateste;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import psdi.id2.Uteis;
 import psdi.util.MXApplicationException;
@@ -14,24 +16,36 @@ public class teste {
 	 */
 	public static void main(String[] args) {
 		
-		String valor = "42016";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-	    System.out.println("###############valor = " + valor);
-	
-		if ((valor.length() < 5) || (valor.length() > 6)) {
-            System.out.println("1");
-		}
+		Date data;
+		try {
+			data = sdf.parse("01/" + "01/2016");
 		
-		if (valor.length() == 5) {
+		System.out.println("########## Data = " + data);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(data);
+		
+		System.out.println("########## meses = " + (1000 / 500));
+		System.out.println("########## meses = " + (int) Math.round(1000 / 500));
+		int meses = (int) Math.round(1000 / 500);
+		
+		System.out.println(c.getTime());
+		c.set(Calendar.MONTH, c.get(Calendar.MONTH) + meses);
+		System.out.println("########## Data apos somar meses = " + c.getTime() + " -> " + sdf.format(c.getTime()).substring(3));
+		
+		String valor = sdf.format(c.getTime()).substring(4);
+		
+		if (valor.length() == 6) {
 			valor = "0" + valor;
-			System.out.println(valor);
 	    }
-		Calendar cAtual = Calendar.getInstance();        
 		
-		if (Integer.valueOf(cAtual.get(Calendar.YEAR)) < Integer.valueOf(valor.substring(2, 6)).intValue()) {
-			System.out.println(Integer.valueOf(valor.substring(0, 2)).intValue());
+		System.out.println(valor);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 
 	}
 
