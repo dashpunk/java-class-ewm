@@ -92,10 +92,10 @@ public class PrevisaoCoberturaNovaAquisicao extends MboValueAdapter{
 				System.out.println("########## meses = " + (int) Math.round(getMboValue("ID2QNTPEDIDO").getDouble() / getMboValue("MSNUNUMCONSUMOMEDIOMENSAL").getDouble()));
 				int meses = (int) Math.round(getMboValue("ID2QNTPEDIDO").getDouble() / getMboValue("MSNUNUMCONSUMOMEDIOMENSAL").getDouble());
 				
-				c.set(Calendar.MONTH, c.get(Calendar.MONTH) + meses + 1);
-				System.out.println("########## Data apos somar meses = " + c.getTime() + " -> " + sdf.format(c.getTime()).substring(4));
+				c.set(Calendar.MONTH, c.get(Calendar.MONTH) + meses);
+				System.out.println("########## Data apos somar meses = " + c.getTime() + " -> " + sdf.format(c.getTime()).substring(3));
 				
-				String valor = sdf.format(c.getTime()).substring(4);
+				String valor = sdf.format(c.getTime()).substring(3);
 				
 				if (valor.length() == 6) {
 					valor = "0" + valor;
