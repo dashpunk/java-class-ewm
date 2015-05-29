@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
-
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
 import psdi.server.MXServer;
@@ -28,10 +27,18 @@ public class Id2ClPr01 extends PRAppBean {
      */
     public Id2ClPr01() {
     }
-
+    
     @Override
 	public void save() throws MXException {
-    	    	   	
+    	
+    	int qtdCatmatSemEntregas = 0;
+    	int qtdCatmatFaltaEntregas = 0;
+    	String catmatSemEntregas = "";
+    	String catmatFaltaEntregas = "";
+    	
+    	int qtdCatmatFaltaDistribuicoes = 0;
+    	String catmatFaltaDistribuicoes = "";
+    	
     	try {
 		    		   		
     		if (!getMbo().isNull("MSALCODSITEID")){
@@ -41,10 +48,10 @@ public class Id2ClPr01 extends PRAppBean {
 			if(getMbo().getString("STATUS").equalsIgnoreCase("ENVIADO")) {
 				//-------------------------------------------------------------------PREVISAO DE ENTREGA
 				
-				String catmatSemEntregas = "";
-				int qtdCatmatSemEntregas = 0;
-				String catmatFaltaEntregas = "";
-				int qtdCatmatFaltaEntregas = 0;
+				//String catmatSemEntregas = "";
+				//int qtdCatmatSemEntregas = 0;
+				//String catmatFaltaEntregas = "";
+				//int qtdCatmatFaltaEntregas = 0;
 				MboRemote itemEntrega;
 				    		
 				for (int i = 0; ((itemEntrega = getMbo().getMboSet("PRLINEENTREGA").getMbo(i)) != null); i++) {
@@ -99,19 +106,21 @@ public class Id2ClPr01 extends PRAppBean {
 					} 
 				}
 				
-				if (qtdCatmatSemEntregas > 0) {
+				/*if (qtdCatmatSemEntregas > 0) {
+					getMbo().setValue("STATUS", "EM ALTERA플O", MboConstants.NOACCESSCHECK);
 					throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega", new String[]{catmatSemEntregas});
 				}
 				
 				if (qtdCatmatFaltaEntregas > 0) {
+					getMbo().setValue("STATUS", "EM ALTERA플O", MboConstants.NOACCESSCHECK);
 					throw new MXApplicationException("entrega", "FaltaEntregas", new String[]{catmatFaltaEntregas});
-				}
+				}*/
 				//-------------------------------------------------------------------PREVISAO DE ENTREGA
 				
 				//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
 				
-				String catmatFaltaDistribuicoes = "";
-				int qtdCatmatFaltaDistribuicoes = 0;
+				//String catmatFaltaDistribuicoes = "";
+				//int qtdCatmatFaltaDistribuicoes = 0;
 				MboRemote itemDistribuicao;
 				    		
 				for (int i = 0; ((itemDistribuicao = getMbo().getMboSet("PRLINEDISTRIBUICAO").getMbo(i)) != null); i++) {
@@ -143,27 +152,64 @@ public class Id2ClPr01 extends PRAppBean {
 					} 
 				}
 				
-				if (qtdCatmatFaltaDistribuicoes > 0) {
+				/*if (qtdCatmatFaltaDistribuicoes > 0) {
 					throw new MXApplicationException("distribuicao", "FaltaDistribuicoes", new String[]{catmatFaltaDistribuicoes});
-				}
+				}*/
 				//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
 			}
-    		
 			
-    	} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}  
-		super.save();
+			if (qtdCatmatSemEntregas > 0) {
+				getMbo().setValue("STATUS", "EM ALTERA플O", MboConstants.NOACCESSCHECK);
+				getMbo().setValueNull("ID2DATAPLANO", MboConstants.NOACCESSCHECK);
+				MboRemote prline;
+				for (int i = 0; ((prline = getMbo().getMboSet("PRLINE").getMbo(i)) != null); i++) {
+					if(prline.getString("ID2STATUS").equalsIgnoreCase("ENVIADO")){
+						prline.setValue("ID2STATUS", "RASCUNHO", MboConstants.NOACCESSCHECK);
+					}
+				}
+				throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega", new String[]{catmatSemEntregas});
+			}
+			
+			if (qtdCatmatFaltaEntregas > 0) {
+				getMbo().setValue("STATUS", "EM ALTERA플O", MboConstants.NOACCESSCHECK);
+				getMbo().setValueNull("ID2DATAPLANO", MboConstants.NOACCESSCHECK);
+				MboRemote prline;
+				for (int i = 0; ((prline = getMbo().getMboSet("PRLINE").getMbo(i)) != null); i++) {
+					if(prline.getString("ID2STATUS").equalsIgnoreCase("ENVIADO")){
+						prline.setValue("ID2STATUS", "RASCUNHO", MboConstants.NOACCESSCHECK);
+					}
+				}
+				throw new MXApplicationException("entrega", "FaltaEntregas", new String[]{catmatFaltaEntregas});
+			}
+			
+			if (qtdCatmatFaltaDistribuicoes > 0) {
+				getMbo().setValue("STATUS", "EM ALTERA플O", MboConstants.NOACCESSCHECK);
+				getMbo().setValueNull("ID2DATAPLANO", MboConstants.NOACCESSCHECK);
+				MboRemote prline;
+				for (int i = 0; ((prline = getMbo().getMboSet("PRLINE").getMbo(i)) != null); i++) {
+					if(prline.getString("ID2STATUS").equalsIgnoreCase("ENVIADO")){
+						prline.setValue("ID2STATUS", "RASCUNHO", MboConstants.NOACCESSCHECK);
+					}
+				}
+				throw new MXApplicationException("distribuicao", "FaltaDistribuicoes", new String[]{catmatFaltaDistribuicoes});
+			}
+    	} catch (RemoteException e) {
+			e.printStackTrace();	
+    	}
     	
     	Properties prop;
 		Connection conexao = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		ResultSet rs2 = null;
-    	
-    	try {
-    					
+			
+		try {
+			
+			System.out.println("################################################ SAVE 1antes");
+			super.save();
+			System.out.println("################################################ SAVE 1depois");
+		
+			
 			//-------------------------------------------------------------------CONEXAO
     		prop = MXServer.getMXServer().getConfig();
 			
@@ -245,8 +291,11 @@ public class Id2ClPr01 extends PRAppBean {
 				}
 			}
 			//-------------------------------------------------------------------NUMERO DA PARCELA DE DISTRIBUICAO
+							
 			
+			/*System.out.println("################################################ SAVE 2antes");
 			super.save();
+			System.out.println("################################################ SAVE 2depois");*/
 			
     	} catch (RemoteException e) {
 			e.printStackTrace();
@@ -268,7 +317,10 @@ public class Id2ClPr01 extends PRAppBean {
 		    try { rs.close(); } catch (Exception e) { /**/ }
 		}
     	
+    	System.out.println("################################################ SAVE 3antes");
     	super.save();
+    	System.out.println("################################################ SAVE 3depois");
+    
     }
     
 }
