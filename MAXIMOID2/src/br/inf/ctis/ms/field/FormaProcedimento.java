@@ -25,6 +25,7 @@ public class FormaProcedimento extends MboValueAdapter {
         	getMboValue().getMbo().setValueNull("MSIRP");
         	getMboValue().getMbo().setValueNull("MSJUSTIRP");
         	getMboValue().getMbo().setValueNull("MS_JUSTIFICATIVA");
+        	getMboValue().getMbo().setValueNull("MSMODALIDADESESAI");
         } else if (getMboValue().getString().equals("CONTRATACAO DIRETA")) {
         	getMboValue().getMbo().setValueNull("MSALCODTIPOCONTRATACAO");
         	getMboValue().getMbo().setValueNull("MS_REGPRECO");
@@ -33,6 +34,7 @@ public class FormaProcedimento extends MboValueAdapter {
         	getMboValue().getMbo().setValueNull("MSIRP");
         	getMboValue().getMbo().setValueNull("MSJUSTIRP");
         	getMboValue().getMbo().setValueNull("MS_JUSTIFICATIVA");
+        	getMboValue().getMbo().setValueNull("MSMODALIDADESESAI");
         } else if (getMboValue().getString().equals("LICITACAO")){
         	getMboValue().getMbo().setValueNull("MSALCODTIPOCONTRATACAO");
         	getMboValue().getMbo().setValueNull("MSALCODEMBASAMENTOLEGAL");
@@ -40,6 +42,7 @@ public class FormaProcedimento extends MboValueAdapter {
         	getMboValue().getMbo().setValueNull("MSIRP");
         	getMboValue().getMbo().setValueNull("MSJUSTIRP");
         	getMboValue().getMbo().setValueNull("MS_JUSTIFICATIVA");
+        	getMboValue().getMbo().setValueNull("MSMODALIDADESESAI");
         }
 
     }
