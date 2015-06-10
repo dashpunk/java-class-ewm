@@ -36,7 +36,7 @@ public class MsDistPecPregao extends DataBean {
 	String Statuspec ="";
 
 	public MsDistPecPregao (){
-		
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPecPregao_teste00");
 	}
 	
 	public int selectrecord() throws MXException, RemoteException {
@@ -116,7 +116,7 @@ public class MsDistPecPregao extends DataBean {
 		
 		int retorno = 0;
 		
-		// Se Existir Campos Obrigatórios
+		// Se Existir Campos Obrigatorios
 		if (mboCampos.count() > 0) {
 		
 			for (int i = 0; (aMbo = mboCampos.getMbo(i)) != null; i++) {
@@ -145,11 +145,11 @@ public class MsDistPecPregao extends DataBean {
 			}
 		}
 		
-		if (app.getDataBean("MAINRECORD").getMbo().isNull("MSAREADAF")){
+		/*if (app.getDataBean("MAINRECORD").getMbo().isNull("MSAREADAF")){
 			app.getDataBean("MAINRECORD").getMbo().setValue("MSFLAGMSG", "1", MboConstants.NOACCESSCHECK);
     		save();
     		throw new MXApplicationException("ms_clpo01", "informeAreaDaf");
-		}
+		}*/
 		
 		if (retorno > 0){
 			
