@@ -21,7 +21,7 @@ public class PersisteContractPec extends MAXTableDomain {
 
 	public PersisteContractPec(MboValue mbv) {
 		super(mbv);
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersisteContractPec versao 11 ");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro da Classe PersisteContractPec versao 00 ");
 	}
 	
 	public void validate() throws MXException, RemoteException {
@@ -37,18 +37,18 @@ public class PersisteContractPec extends MAXTableDomain {
 	    System.out.println("###############getMboValue().getString() = " + getMboValue().getString());
 	    System.out.println("###############valor = " + valor);
 	    
-	    if ((valor.length() < 6) || (valor.length() > 7)) {
+	    if ((valor.length() < 8) || (valor.length() > 9)) {
 	    	throw new MXApplicationException("genericaContract", "MascaraInvalida");
 	    }
 
-	    if (valor.length() == 6) {
+	    if (valor.length() == 8) {
 	    	valor = "0" + valor;
 	    }
 	    
 	    Calendar cAtual = Calendar.getInstance();        
 
-        if (Integer.valueOf(cAtual.get(Calendar.YEAR)) >= Integer.valueOf(valor.substring(3, 7)).intValue()) {
-        	getMboValue().setValue(Uteis.getValorMascarado("###/####", valor, false));
+        if (Integer.valueOf(cAtual.get(Calendar.YEAR)) >= Integer.valueOf(valor.substring(5, 9)).intValue()) {
+        	getMboValue().setValue(Uteis.getValorMascarado("#####/####", valor, false));
         }
 	    else {
 	      throw new MXApplicationException("genericaContract", "AnoInvalido");
