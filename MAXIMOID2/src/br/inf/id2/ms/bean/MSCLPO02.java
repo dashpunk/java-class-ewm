@@ -1,10 +1,16 @@
 package br.inf.id2.ms.bean;
 
+import br.inf.ctis.ms.bean.MsFinance;
 import br.inf.id2.common.util.Executa;
 import java.rmi.RemoteException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
@@ -23,7 +29,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	int qtdAnexoMsg = 0;
 	
     public MSCLPO02() {
-    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_teste01");
+    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_Teste02");
     }
 
     /**
@@ -33,7 +39,8 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
      * @throws RemoteException
      */
     @Override
-    public int SAVE() throws MXException, RemoteException {
+    public int SAVE() throws MXException, RemoteException {    	
+    	
 
         Executa.atualizaAtributo((MboSet) getMbo().getMboSet("POLINE"), "GLDEBITACCT", "0.0.0.0");
 
@@ -135,42 +142,67 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
     @SuppressWarnings("null")
 	@Override
     protected void initialize() throws MXException, RemoteException {
+    	Properties prop;
+		Connection conexao = null;
+    	
     	super.initialize();
     	
     	try {
-    		
-    		  		
-    		
-            Properties prop;
             prop = MXServer.getMXServer().getConfig();
+            
             String driver = prop.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
             String url = prop.getProperty("mxe.db.url");
             String username = prop.getProperty("mxe.db.user", "dbmaximo");
             String password = prop.getProperty("mxe.db.password", "max894512");
 
             Class.forName(driver).newInstance();
-            java.sql.Connection conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
-            Statement stmt = conexao.createStatement();
-            PreparedStatement ps = conexao.prepareStatement("UPDATE PO SET MSQTDANEXOPEC = ? WHERE PONUM = ?");
+            
+            try {
+            	conexao = DBConnect.getConnection(url, username, password, prop.getProperty("mxe.db.schemaowner", "dbmaximo"));
+			} catch (Exception e) {
+				Logger.getLogger(MSCLPO02.class.getName()).log(Level.SEVERE, null, e);
+				e.printStackTrace();
+			}
+            
+            
+//            Statement stmt = conexao.createStatement(); //não estava sendo utilizada. por isso foi comentado.
+            PreparedStatement ps = conexao.prepareStatement("UPDATE PO SET MSQTDANEXOPEC = ? WHERE PONUM = ?");//---- MSQTDANEXOPEC
             System.out.println("########## Quantidade de registros na tabela de Anexos/PEC: "+ getMbo().getMboSet("MSPECANEXOS").count());
             ps.setInt(1, getMbo().getMboSet("MSPECANEXOS").count());
             ps.setString(2, getMbo().getString("PONUM"));
 
+            PreparedStatement ps2 = conexao.prepareStatement("UPDATE PO SET MSQTDPESDISTR = ? WHERE PONUM = ?"); //---- MSQTDPESDISTR
+            System.out.println("########## Quantidade de registros na tabela de MSDISPESPEC: "+ getMbo().getMboSet("MSDISPESPEC").count());
+            ps2.setInt(1, getMbo().getMboSet("MSDISPESPEC").count());
+            ps2.setString(2, getMbo().getString("PONUM"));
 
             System.out.println("########## updatePO execute b");
-            int r = ps.executeUpdate();
+            int r = ps.executeUpdate(); //---- MSQTDANEXOPEC
+            int r2 = ps2.executeUpdate(); //---- MSQTDPESDISTR
+            
             System.out.println("########## updatePO execute a " + r);
+            System.out.println("########## updatePO execute a2 " + r2);
             conexao.commit();
             System.out.println("########## commit");
             
             super.SAVE();
-            
-
-            conexao.close();
-        } catch (Exception e) {
-            System.out.println("########## e = " + e.getMessage());
-        }
-    	
+    	} catch (RemoteException ex) {
+            Logger.getLogger(MSCLPO02.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        } catch (SQLException e) {
+        	 Logger.getLogger(MSCLPO02.class.getName()).log(Level.SEVERE, null, e);
+        	e.printStackTrace();
+		} catch (Exception e) {
+			 Logger.getLogger(MSCLPO02.class.getName()).log(Level.SEVERE, null, e);
+			e.printStackTrace();
+		} finally {
+		    try { 
+		    		conexao.close(); 
+		    } catch (Exception e) { 
+		    	Logger.getLogger(MSCLPO02.class.getName()).log(Level.SEVERE, null, e);
+				e.printStackTrace();
+			}
+		}
     }
 
 }
