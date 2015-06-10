@@ -1,5 +1,5 @@
 /**
- * Classe para distribuiÃ§Ã£o, iniciar e parar fluxo.
+ * Classe para distribuicao, iniciar e parar fluxo.
  */
 package br.inf.ctis.ms.bean;
 
@@ -164,11 +164,11 @@ public class MsDistPEC extends DataBean {
 			}
 		}
 		
-		if (app.getDataBean("MAINRECORD").getMbo().isNull("MSAREADAF")){
+		/*if (app.getDataBean("MAINRECORD").getMbo().isNull("MSAREADAF")){
 			app.getDataBean("MAINRECORD").getMbo().setValue("MSFLAGMSG", "1", MboConstants.NOACCESSCHECK);
     		save();
     		throw new MXApplicationException("ms_clpo01", "informeAreaDaf");
-		}
+		}*/
 		
 		if (retorno > 0){
 			
@@ -200,12 +200,8 @@ public class MsDistPEC extends DataBean {
 		MboRemote mboOldAnexo = app.getDataBean("MAINRECORD").getMbo().getMboSet("MSPECANEXOSFLAG").getMbo(0);
 		MboRemote mboPOAnexos = app.getDataBean("MAINRECORD").getMbo();
 		
-
-		mboPO.setValue("MSPECACAO", MsAcao);
-		mboPO.setValue("MSPECFLUXO", MsFluxo);
-		mboPO.setValue("STATUSPEC", Statuspec);
-		mboPO.setValue("MSCKANEXOS", Msckanexos);		
-		
+					
+		// setando valores condicionais
 		System.out.println(">>>>>>>>>>>>Antes do IF valor:" + mboGrupo.getBoolean("MSFLAGRESP"));
 		if (mboGrupo.getBoolean("MSFLAGRESP")){
 			System.out.println(">>>>>>>>>>>>Valor do 2 Responsavel:" + mboPO.getString("MSSECREPB"));
@@ -227,7 +223,9 @@ public class MsDistPEC extends DataBean {
 			System.out.println(">>>>>>>>>>>>Setando Registro de Designação do Fluxo:" + MsDistDem);
 		}
 		else {
-			mboPO.setValue("MSPECGRUPO", MsGrupo); 
+			mboPO.setValue("MSPECGRUPO", MsGrupo);
+			mboPO.setValueNull("MSPECDIST");
+			mboPO.setValueNull("MSPECDIST2");
 			System.out.println(">>>>>>>>>>>>Setando Registro de Designação do Fluxo: " + MsGrupo);
 		}
 		
@@ -259,8 +257,7 @@ public class MsDistPEC extends DataBean {
 		    try { conexao.close(); } catch (Exception e) { /**/ }
 		    try { st2.close(); } catch (Exception e) { /**/ }
 		    try { rsQuery.close(); } catch (Exception e) { /**/ }
-		}		
-			
+		}			
 		
 		if((QtdAnexosPO==QtdAnexos) && (!mboPOAnexos.getBoolean("MSCKANEXOS"))){
 			System.out.println(">>>>>>>>>>>>Quantidade de anexos iguais e nao e obrigatoria");
@@ -275,7 +272,13 @@ public class MsDistPEC extends DataBean {
 		else{
 			mboOldAnexo.setValue("MSDECISAO", Decisao);
 		}
+		// Fim do add da tarefa na tabela de anexos/mensagens
 		
+		//setando valores nao condicionais
+		mboPO.setValue("MSPECACAO", MsAcao);
+		mboPO.setValue("MSPECFLUXO", MsFluxo);
+		mboPO.setValue("STATUSPEC", Statuspec);	
+		mboPO.setValue("MSCKANEXOS", Msckanexos);
 		super.save();		 
 
 	}
