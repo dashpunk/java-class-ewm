@@ -33,7 +33,7 @@ public class MsDistItemPregao extends DataBean {
 	String Status ="";
 	
 	public MsDistItemPregao (){
-		
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistItemPregao_teste00");
 	}
 	
 	public int selectrecord() throws MXException, RemoteException {
@@ -99,7 +99,7 @@ public class MsDistItemPregao extends DataBean {
 
 	}
 	
-	private void validarCampos() throws MXException, RemoteException  {
+	/*private void validarCampos() throws MXException, RemoteException  {
 		System.out.println("applyCustomAction");
 
 		MboRemote aMbo;
@@ -159,16 +159,16 @@ public class MsDistItemPregao extends DataBean {
 		
 		app.getDataBean("MAINRECORD").getMbo().setValue("MSFLAGMSG", "0", MboConstants.NOACCESSCHECK);
 		save();
-	}
+	}*/
 
 	private void setarValores() throws RemoteException, MXException {
 
-		MboRemote mboPO = app.getDataBean("MAINRECORD").getMbo();
+		MboRemote mboItens = app.getDataBean("MAINRECORD").getMbo();
 
-		mboPO.setValue("MSPECACAO", MsAcao);
-		mboPO.setValue("MSPECFLUXO", MsFluxo);
-		mboPO.setValue("MSPECGRUPO", MsGrupo);
-		mboPO.setValue("STATUS", Status);
+		mboItens.setValue("MSPECACAO", MsAcao);
+		mboItens.setValue("MSPECFLUXO", MsFluxo);
+		mboItens.setValue("MSPECGRUPO", MsGrupo);
+		mboItens.setValue("STATUS", Status);
 		
 	}
 
