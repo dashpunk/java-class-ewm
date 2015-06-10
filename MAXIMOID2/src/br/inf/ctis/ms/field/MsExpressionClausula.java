@@ -11,6 +11,8 @@ import psdi.mbo.MboValueAdapter;
 import psdi.mbo.SqlFormat;
 import psdi.util.MXException;
 import psdi.util.MXSystemException;
+import psdi.webclient.system.beans.DataBean;
+import psdi.webclient.system.runtime.WebClientRuntime;
 
 /**
  * 
@@ -19,13 +21,10 @@ import psdi.util.MXSystemException;
  */
 public class MsExpressionClausula extends MboValueAdapter {
 	
-	private String objectName;
-	private String entityName;
-	private Mbo currentMbo;
-	 private Locale locale = Locale.getDefault();
-	private TimeZone timeZone = TimeZone.getDefault();
-	public static final int VALIDATE_THROW_SQLEXCEPTION = 1;
-	public static final int VALIDATE_THROW_MXEXCEPTION = 2;
+	  private String where = "";
+	  private String oldWhere = "";
+	  private boolean isModified = false;
+	  
 
 	public MsExpressionClausula(MboValue mbv) throws MXException {
 		super(mbv);
@@ -33,13 +32,29 @@ public class MsExpressionClausula extends MboValueAdapter {
 	}
 	public void validate() throws MXException, RemoteException {
 		
-		String expression = getMboValue().getMbo().getString("DESCRIPTION");
-		System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do metodo validate de expression: "+expression);
-		getWhere(expression);
+		//String expression = getMboValue().getMbo().getString("DESCRIPTION");
+		System.out.println(">>>>>>>>>>>>>>>>>>>> 1-Dentro do metodo validate  ");
+		//getWhere(expression);
+		oldWhere = getWhere();
+		System.out.println(">>>>>>>>>>>>>>>>>>>> 4-Resultado do oldWhere:  "+oldWhere);
+		Mbo thisValue = getMboValue().getMbo();
+		thisValue.createComm();
+		thisValue.setValue("DESCRIPTION", true);
 		
 	}
+	public String getWhere() throws MXException, RemoteException
+	  {	    
+	    String expression = getMboValue().getMbo().getString("DESCRIPTION");
+	    System.out.println(">>>>>>>>>>>>>>>>>>>> 2-Resultado do expression antes do decode:  "+expression);
+	    //String userAndQbeWhere = daBean.getUserAndQbeWhere();
+	    if (expression != null) {
+	    	expression = WebClientRuntime.decodeSafevalue(expression);
+	    	System.out.println(">>>>>>>>>>>>>>>>>>>> 3-Resultado do expression apos o decode:  "+expression);	
+	    }
+	    return expression;
+	  }
 	
-	private String getWhere(String expression)
+	/*private String getWhere(String expression)
 			     throws RemoteException, MXException
 			     {
 			     if ((this instanceof ExpressionBuilderSetRemote))
@@ -52,22 +67,23 @@ public class MsExpressionClausula extends MboValueAdapter {
 			 
 			     System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do metodo getWhere de expression: "+expression);
 			     
-			     MboSetRemote msr = getDiscardableMboSet(this.objectName, this.currentMbo);
+			     //MboSetRemote msr = getDiscardableMboSet(this.objectName, this.currentMbo);
+			   
 			     SqlFormat sqlFormat = new SqlFormat(this.locale, this.timeZone, expression);
 			     String formattedExp = sqlFormat.formatRaw();
 			     System.out.println(">>>>>>>>>>>>>>>>>>>> Expressao em formattedExp: "+formattedExp);
-			     msr.setWhere(formattedExp);
-			     msr.reset();
-			     String mboWhere = this.entityName + " where " + msr.getWhere();
-			     System.out.println(">>>>>>>>>>>>>>>>>>>> Expressao em mboWhere: "+mboWhere);
+			     //msr.setWhere(formattedExp);
+			     // msr.reset();
+			     String mboWhere = "MSTBCLACAP" + " where " + formattedExp;
+			     //System.out.println(">>>>>>>>>>>>>>>>>>>> Expressao em mboWhere: "+mboWhere);
 			 
 			     String where = "Select * from " + mboWhere;
 			     
 			     System.out.println(">>>>>>>>>>>>>>>>>>>> Expressao em where: "+where);
 			     return where;
-			   }
+			   }*/
 	
-	private MboSetRemote getDiscardableMboSet(Object objectName2, Object currentMbo2)
+	/*private MboSetRemote getDiscardableMboSet(Object objectName2, Object currentMbo2)
 			     throws RemoteException, MXException
 			     {
 					System.out.println(">>>>>>>>>>>>>>>>>>>> Dentro do metodo getDiscarddableMboSet");
@@ -75,6 +91,7 @@ public class MsExpressionClausula extends MboValueAdapter {
 				     mboset.setFlag(39L, true);
 				     return mboset;
 			     }
+	*/		     
 	/*public void validate(String expression, int flag) throws RemoteException, MXException, SQLException
 	  {
 	   // String where = getWhere(expression);
