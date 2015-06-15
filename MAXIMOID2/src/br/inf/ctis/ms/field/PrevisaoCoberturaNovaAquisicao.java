@@ -61,17 +61,28 @@ public class PrevisaoCoberturaNovaAquisicao extends MboValueAdapter{
 	        		throw new MXApplicationException("data", "CampoMesAnoInvalido");
 	        	}
 	        	
-	        	//Ano atual
-	        	Calendar cAtual = Calendar.getInstance();
+	        	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        	
-	        	//Ano do Campo
-	        	Calendar cValor = Calendar.getInstance();
-	        	cValor.set(Calendar.MONTH, Integer.parseInt(datas[0]));
-	        	cValor.set(Calendar.YEAR, Integer.parseInt(datas[1]));
-	        	System.out.println("############# Datas - Atual: " + cAtual + " | Campo: " + cValor.toString());
+	        	Date data = null;
+				try {
+					data = sdf.parse("01/" + novoValor);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				
+				System.out.println("########## Data = " + data);
+				
+				Calendar cAtual = Calendar.getInstance();
+				Calendar cValor = Calendar.getInstance();
+				cValor.setTime(data);
 	        	
+	        	System.out.println("############# Datas - Atual: " + cAtual.getTime() + " | Campo: " + cValor.getTime());
+	        		        	
 	        	if (Data.dataInicialMenorFinal(cValor.getTime(), cAtual.getTime())) {
-	        		throw new MXApplicationException("data", "DataMenorQueAtual");
+	        		System.out.println("############# MES - Atual: " + cAtual.getTime().getMonth() + " | Campo: " + cValor.getTime().getMonth());
+	        		if (cValor.getTime().getMonth() < cAtual.getTime().getMonth()) {
+	        			throw new MXApplicationException("data", "DataMenorQueAtual");
+	        		}
 	        	}
 	        
 	        }
@@ -87,12 +98,14 @@ public class PrevisaoCoberturaNovaAquisicao extends MboValueAdapter{
 				
 				Calendar c = Calendar.getInstance();
 				c.setTime(data);
-				
+								
 				System.out.println("########## meses = " + (getMboValue("ID2QNTPEDIDO").getDouble() / getMboValue("MSNUNUMCONSUMOMEDIOMENSAL").getDouble()));
 				System.out.println("########## meses = " + (int) Math.round(getMboValue("ID2QNTPEDIDO").getDouble() / getMboValue("MSNUNUMCONSUMOMEDIOMENSAL").getDouble()));
 				int meses = (int) Math.round(getMboValue("ID2QNTPEDIDO").getDouble() / getMboValue("MSNUNUMCONSUMOMEDIOMENSAL").getDouble());
 				
-				c.set(Calendar.MONTH, c.get(Calendar.MONTH) + meses);
+				
+				System.out.println("########## Data antes de somar meses = " + c.getTime() + " -> " + sdf.format(c.getTime()).substring(3));
+				c.add(Calendar.MONTH, meses);
 				System.out.println("########## Data apos somar meses = " + c.getTime() + " -> " + sdf.format(c.getTime()).substring(3));
 				
 				String valor = sdf.format(c.getTime()).substring(3);

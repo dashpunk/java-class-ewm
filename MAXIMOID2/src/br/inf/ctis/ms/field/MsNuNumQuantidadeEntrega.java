@@ -9,6 +9,7 @@ import psdi.mbo.MboValueAdapter;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 
+
 public class MsNuNumQuantidadeEntrega extends MboValueAdapter{
 	
 	public MsNuNumQuantidadeEntrega(MboValue mbv) throws MXException {
@@ -60,6 +61,7 @@ public class MsNuNumQuantidadeEntrega extends MboValueAdapter{
         getMboValue().getMbo().setValue("MSNUNUMVOLUME", parcelaVolume, MboConstants.NOACCESSCHECK);
     	getMboValue().getMbo().setValue("MSNUNUMPESO", parcelaPeso, MboConstants.NOACCESSCHECK);
     	getMboValue().getMbo().getMboSet("PRLINE").getMbo(0).getMboSet("MSTBPREVISAOENTREGA").save();
+    	
 	}
 
 }
