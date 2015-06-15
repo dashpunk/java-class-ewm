@@ -120,7 +120,13 @@ public class Id2UltimaModalidade extends MboValueAdapter {
 				}
 								
 				System.out.println("########## valorUnitario: " + valorUnitario + " ###### Ano: " + ano);
-				getMboValue("UNITCOST").setValue(valorUnitario);
+				
+				if (valorUnitario!=999999999999999d) {
+					getMboValue("UNITCOST").setValue(valorUnitario);
+				} else {
+					getMboValue("UNITCOST").setValueNull(NOACCESSCHECK);
+				}
+				
 				
 			}
 			//Verifica valor unitario da ARP ou menor valor unitario entre as outras modalidades de aquisicao do ultimo ano
