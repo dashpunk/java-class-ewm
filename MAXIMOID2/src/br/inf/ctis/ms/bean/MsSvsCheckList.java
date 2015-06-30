@@ -21,13 +21,35 @@ import psdi.util.MXException;
  *
  */
 public class MsSvsCheckList extends psdi.webclient.system.beans.AppBean {
+	
 	public MsSvsCheckList() {
 		System.out.print("||||||||||||||||||   SVS ######## --- MsSvsCheckLists");
 	}
 	
 	@Override
 	public void save() throws MXException {
+		
+			
 		try {
+			
+			if(getMbo().getMboSet("MSTBINSUMOS").isEmpty()){
+				
+				MboRemote mbo;
+				MboRemote mboDestino = null;
+				
+				for (int i = 0; ((mbo= getMbo().getMboSet("POLINE").getMbo(i)) !=null); i++) {
+					mboDestino = getMbo().getMboSet("MSTBINSUMOS").add();
+					System.out.println("############ add() na MSTBINSUMOS");
+					
+					mboDestino.setValue("MSTBCADDEMSVSID", getMbo().getInt("MSTBCADDEMSVSID"), 2L);
+					mboDestino.setValue("polineid", mbo.getInt("polineid"), 2L);
+					mboDestino.setValue("ponum", mbo.getString("ponum"), 2L);
+					mboDestino.setValue("ID2ITEMNUM", mbo.getString("ID2ITEMNUM"), 2L);
+					mboDestino.setValue("DESCRIPTION", mbo.getString("DESCRIPTION"), 2L);
+					mboDestino.setValue("MSNUMQNT", mbo.getDouble("orderqty"), 2L);
+				}
+			}
+			
 			String PersonID = sessionContext.getUserInfo().getPersonId();
 			System.out.print("CTIS # --- Capturado PERSONID " + PersonID);
 			

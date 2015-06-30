@@ -15,14 +15,14 @@ import java.sql.Statement;
 import java.util.Calendar;
 import java.util.Properties;
 
-public class MsFinance extends AppBean {
+public class MsGFinSaa extends AppBean {
 
 	/**
 	 * @author marcelosydney.lima
 	 * psdi.webclient.system.beans.AppBean
 	 */
-	public MsFinance() {
-		System.out.println("########## Versão 2.0");
+	public MsGFinSaa() {
+		System.out.println("########## MSGFINSAA - Versão 1.0");
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class MsFinance extends AppBean {
 						System.out.println("########## Valor Global ST = " + valorglobal);
 							
 					} else {
-						throw new MXApplicationException("invoiceline", "SemInsumos");
+						throw new MXApplicationException("invoiceline", "SemObjetos");
 					}
 				}
 			}
@@ -112,8 +112,8 @@ public class MsFinance extends AppBean {
 						
 						for (int j = 0; ((mbo3 = mbo1.getMboSet("MSTBAPNOTAEMPENHO").getMbo(j)) != null); j++) {
 							if (!mbo3.toBeDeleted()) {
-								System.out.println("########## Valor total da NE = " + mbo3.getMboSet("MSTBNOTAEMPENHO").getMbo(0).getDouble("MSNUNUMVALOREMPENHO"));
-								valortotalne += mbo3.getMboSet("MSTBNOTAEMPENHO").getMbo(0).getDouble("MSNUNUMVALOREMPENHO");
+								System.out.println("########## Valor total da NE = " + mbo3.getDouble("MSNUNUMVALORNEUTILIZADO"));
+								valortotalne += mbo3.getDouble("MSNUNUMVALORNEUTILIZADO");
 								System.out.println("########## Valor Total das NEs (PARCIAL) = " + valortotalne);
 							}
 						}
@@ -157,12 +157,12 @@ public class MsFinance extends AppBean {
 				}
 			}
 		
-			System.out.println("########## Valor Global Final = " + valorglobal);
+			/*System.out.println("########## Valor Global Final = " + valorglobal);
 			saldoinstrumento = getMbo().getDouble("VALOR_TOTAL_INSTRUMENTO") - valorglobal;
 			System.out.println("########## Saldo do Instrumento = " + saldoinstrumento);
 			if (saldoinstrumento <0) {
 				throw new MXApplicationException("invoice", "SaldoInsuficiente");
-			}
+			}*/
 	
 		} catch (RemoteException e) {
 			e.printStackTrace();

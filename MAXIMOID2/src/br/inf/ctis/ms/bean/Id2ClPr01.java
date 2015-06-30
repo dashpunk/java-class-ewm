@@ -167,6 +167,7 @@ public class Id2ClPr01 extends PRAppBean {
 						prline.setValue("ID2STATUS", "RASCUNHO", MboConstants.NOACCESSCHECK);
 					}
 				}
+				super.save();
 				throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega", new String[]{catmatSemEntregas});
 			}
 			
@@ -179,6 +180,7 @@ public class Id2ClPr01 extends PRAppBean {
 						prline.setValue("ID2STATUS", "RASCUNHO", MboConstants.NOACCESSCHECK);
 					}
 				}
+				super.save();
 				throw new MXApplicationException("entrega", "FaltaEntregas", new String[]{catmatFaltaEntregas});
 			}
 			
@@ -191,6 +193,7 @@ public class Id2ClPr01 extends PRAppBean {
 						prline.setValue("ID2STATUS", "RASCUNHO", MboConstants.NOACCESSCHECK);
 					}
 				}
+				super.save();
 				throw new MXApplicationException("distribuicao", "FaltaDistribuicoes", new String[]{catmatFaltaDistribuicoes});
 			}
     	} catch (RemoteException e) {
