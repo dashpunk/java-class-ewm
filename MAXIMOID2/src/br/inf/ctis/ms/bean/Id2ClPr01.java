@@ -40,12 +40,12 @@ public class Id2ClPr01 extends PRAppBean {
     	String catmatFaltaDistribuicoes = "";
     	
     	try {
-		    		   		
+    		
     		if (!getMbo().isNull("MSALCODSITEID")){
 				getMbo().setValue("SITEID", getMbo().getString("MSALCODSITEID"), MboConstants.NOACCESSCHECK);
-			}
-    		
-			if(getMbo().getString("STATUS").equalsIgnoreCase("ENVIADO")) {
+    		}
+		    		   		
+    		if(getMbo().getString("STATUS").equalsIgnoreCase("ENVIADO") && getMbo().getString("MSALCODSITEID").equalsIgnoreCase("CGGPL")) {
 				//-------------------------------------------------------------------PREVISAO DE ENTREGA
 				
 				//String catmatSemEntregas = "";
@@ -319,11 +319,11 @@ public class Id2ClPr01 extends PRAppBean {
 		    try { stmt.close(); } catch (Exception e) { /**/ }
 		    try { rs.close(); } catch (Exception e) { /**/ }
 		}
-    	
-    	System.out.println("################################################ SAVE 3antes");
+    					
+		System.out.println("################################################ SAVE 3antes");
     	super.save();
     	System.out.println("################################################ SAVE 3depois");
-    
+    	
     }
     
 }
