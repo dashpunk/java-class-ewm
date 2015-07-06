@@ -31,13 +31,13 @@ public class Id2ClPr01 extends PRAppBean {
     @Override
 	public void save() throws MXException {
     	
-    	int qtdCatmatSemEntregas = 0;
+    	/*int qtdCatmatSemEntregas = 0;
     	int qtdCatmatFaltaEntregas = 0;
     	String catmatSemEntregas = "";
     	String catmatFaltaEntregas = "";
     	
     	int qtdCatmatFaltaDistribuicoes = 0;
-    	String catmatFaltaDistribuicoes = "";
+    	String catmatFaltaDistribuicoes = "";*/
     	
     	try {
     		
@@ -45,7 +45,7 @@ public class Id2ClPr01 extends PRAppBean {
 				getMbo().setValue("SITEID", getMbo().getString("MSALCODSITEID"), MboConstants.NOACCESSCHECK);
     		}
 		    		   		
-    		if(getMbo().getString("STATUS").equalsIgnoreCase("ENVIADO") && getMbo().getString("MSALCODSITEID").equalsIgnoreCase("CGGPL")) {
+    		/*if(getMbo().getString("STATUS").equalsIgnoreCase("ENVIADO") && getMbo().getString("MSALCODSITEID").equalsIgnoreCase("CGGPL")) {
 				//-------------------------------------------------------------------PREVISAO DE ENTREGA
 				
 				//String catmatSemEntregas = "";
@@ -106,15 +106,15 @@ public class Id2ClPr01 extends PRAppBean {
 					} 
 				}
 				
-				/*if (qtdCatmatSemEntregas > 0) {
-					getMbo().setValue("STATUS", "EM ALTERA플O", MboConstants.NOACCESSCHECK);
-					throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega", new String[]{catmatSemEntregas});
-				}
+				//if (qtdCatmatSemEntregas > 0) {
+					//getMbo().setValue("STATUS", "EM ALTERA플O", MboConstants.NOACCESSCHECK);
+					//throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaEntrega", new String[]{catmatSemEntregas});
+				//}
 				
-				if (qtdCatmatFaltaEntregas > 0) {
-					getMbo().setValue("STATUS", "EM ALTERA플O", MboConstants.NOACCESSCHECK);
-					throw new MXApplicationException("entrega", "FaltaEntregas", new String[]{catmatFaltaEntregas});
-				}*/
+				//if (qtdCatmatFaltaEntregas > 0) {
+					//getMbo().setValue("STATUS", "EM ALTERA플O", MboConstants.NOACCESSCHECK);
+					//throw new MXApplicationException("entrega", "FaltaEntregas", new String[]{catmatFaltaEntregas});
+				//}
 				//-------------------------------------------------------------------PREVISAO DE ENTREGA
 				
 				//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
@@ -125,11 +125,11 @@ public class Id2ClPr01 extends PRAppBean {
 				    		
 				for (int i = 0; ((itemDistribuicao = getMbo().getMboSet("PRLINEDISTRIBUICAO").getMbo(i)) != null); i++) {
 					
-					/*if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
-						if (itemDistribuicao.getMboSet("MSTBPREVISAODISTRIBUICAO").count() < 1) {
-							throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaDistribuicao");
-						}
-					} else */
+					//if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("AMBOS")) {
+						//if (itemDistribuicao.getMboSet("MSTBPREVISAODISTRIBUICAO").count() < 1) {
+							//throw new MXApplicationException("ambos", "NecessarioCadastroDeUmaDistribuicao");
+						//}
+					//} else
 					if (itemDistribuicao.getString("ID2DISTDIRETA").equalsIgnoreCase("SIM")) {
 		    					
 						Double valor = 0d;
@@ -152,9 +152,9 @@ public class Id2ClPr01 extends PRAppBean {
 					} 
 				}
 				
-				/*if (qtdCatmatFaltaDistribuicoes > 0) {
-					throw new MXApplicationException("distribuicao", "FaltaDistribuicoes", new String[]{catmatFaltaDistribuicoes});
-				}*/
+				//if (qtdCatmatFaltaDistribuicoes > 0) {
+					//throw new MXApplicationException("distribuicao", "FaltaDistribuicoes", new String[]{catmatFaltaDistribuicoes});
+				//}
 				//-------------------------------------------------------------------PREVISAO DE DISTRIBUICAO
 			}
 			
@@ -195,7 +195,7 @@ public class Id2ClPr01 extends PRAppBean {
 				}
 				super.save();
 				throw new MXApplicationException("distribuicao", "FaltaDistribuicoes", new String[]{catmatFaltaDistribuicoes});
-			}
+			}*/
     	} catch (RemoteException e) {
 			e.printStackTrace();	
     	}
