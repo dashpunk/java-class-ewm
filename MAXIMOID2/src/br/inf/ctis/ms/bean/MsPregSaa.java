@@ -87,7 +87,7 @@ public class MsPregSaa extends AppBean {
 								throw new MXApplicationException("pregao", "ValorUnitarioDivergente");
 							}
 						}
-						super.save();
+						//super.save();
 						
 					} else {
 						throw new MXApplicationException("pregao", "FornecedorNulo");
