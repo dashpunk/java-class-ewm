@@ -14,10 +14,14 @@ public class LimpaItensPregao extends MboValueAdapter {
 	@Override
 	public void validate() throws MXException, RemoteException {
 		super.validate();
-	
-		getMboValue().getMbo().getMboSet("MSTBITENSPREGAO").deleteAll();
-		getMboValue().getMbo().getMboSet("MSTBFORNECEDORESITEMPREGAO").deleteAll();
-		getMboValue().getMbo().getMboSet("MSTBITENSPREGAO").save();
-		getMboValue().getMbo().getMboSet("MSTBFORNECEDORESITEMPREGAO").save();
+		
+		if(!getMboValue().getMbo().isNew()){
+		
+			getMboValue().getMbo().getMboSet("MSTBITENSPREGAO").deleteAll();
+			getMboValue().getMbo().getMboSet("MSTBFORNECEDORESITEMPREGAO").deleteAll();
+			getMboValue().getMbo().getMboSet("MSTBITENSPREGAO").save();
+			getMboValue().getMbo().getMboSet("MSTBFORNECEDORESITEMPREGAO").save();
+		
+		}
 	}
 }

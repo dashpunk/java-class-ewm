@@ -15,11 +15,14 @@ public class LimpaItensContrato extends MboValueAdapter {
 	public void validate() throws MXException, RemoteException {
 		super.validate();
 	
-		getMboValue().getMbo().getMboSet("CONTRACTLINE").deleteAll();
-		getMboValue().getMbo().getMboSet("MSTBPARCELASCONTRATO").deleteAll();
-		getMboValue().getMbo().getMboSet("MSTBNECONTRATO").deleteAll();
-		getMboValue().getMbo().getMboSet("CONTRACTLINE").save();
-		getMboValue().getMbo().getMboSet("MSTBPARCELASCONTRATO").save();
-		getMboValue().getMbo().getMboSet("MSTBNECONTRATO").save();
+		if(!getMboValue().getMbo().isNew()){
+			getMboValue().getMbo().getMboSet("CONTRACTLINE").deleteAll();
+			getMboValue().getMbo().getMboSet("MSTBPARCELASCONTRATO").deleteAll();
+			getMboValue().getMbo().getMboSet("MSTBNECONTRATO").deleteAll();
+			getMboValue().getMbo().getMboSet("CONTRACTLINE").save();
+			getMboValue().getMbo().getMboSet("MSTBPARCELASCONTRATO").save();
+			getMboValue().getMbo().getMboSet("MSTBNECONTRATO").save();
+		}
+		
 	}
 }

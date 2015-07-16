@@ -15,7 +15,11 @@ public class LimpaItensNotaEmpenho extends MboValueAdapter {
 	public void validate() throws MXException, RemoteException {
 		super.validate();
 	
-		getMboValue().getMbo().getMboSet("MSTBITENSNOTAEMPENHO").deleteAll();
-		getMboValue().getMbo().getMboSet("MSTBITENSNOTAEMPENHO").save();
+		if(!getMboValue().getMbo().isNew()){
+			
+			getMboValue().getMbo().getMboSet("MSTBITENSNOTAEMPENHO").deleteAll();
+			getMboValue().getMbo().getMboSet("MSTBITENSNOTAEMPENHO").save();
+		}
+		
 	}
 }
