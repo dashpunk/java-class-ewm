@@ -15,7 +15,10 @@ public class LimpaItensArp extends MboValueAdapter {
 	public void validate() throws MXException, RemoteException {
 		super.validate();
 	
-		getMboValue().getMbo().getMboSet("MSTBITENSARP").deleteAll();
-		getMboValue().getMbo().getMboSet("MSTBITENSARP").save();
+		if(!getMboValue().getMbo().isNew()){
+			getMboValue().getMbo().getMboSet("MSTBITENSARP").deleteAll();
+			getMboValue().getMbo().getMboSet("MSTBITENSARP").save();
+		}
+		
 	}
 }

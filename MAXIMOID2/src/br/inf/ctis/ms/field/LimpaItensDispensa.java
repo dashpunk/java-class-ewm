@@ -15,7 +15,10 @@ public class LimpaItensDispensa extends MboValueAdapter {
 	public void validate() throws MXException, RemoteException {
 		super.validate();
 	
-		getMboValue().getMbo().getMboSet("MSTBITENSDISPENSA").deleteAll();
-		getMboValue().getMbo().getMboSet("MSTBITENSDISPENSA").save();
+		if(!getMboValue().getMbo().isNew()){
+			getMboValue().getMbo().getMboSet("MSTBITENSDISPENSA").deleteAll();
+			getMboValue().getMbo().getMboSet("MSTBITENSDISPENSA").save();
+		}
+		
 	}
 }

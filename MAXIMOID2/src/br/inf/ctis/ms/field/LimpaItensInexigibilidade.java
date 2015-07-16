@@ -15,7 +15,10 @@ public class LimpaItensInexigibilidade extends MboValueAdapter {
 	public void validate() throws MXException, RemoteException {
 		super.validate();
 	
-		getMboValue().getMbo().getMboSet("MSTBITENSINEXIGIBILIDADE").deleteAll();
-		getMboValue().getMbo().getMboSet("MSTBITENSINEXIGIBILIDADE").save();
+		if(!getMboValue().getMbo().isNew()){
+			getMboValue().getMbo().getMboSet("MSTBITENSINEXIGIBILIDADE").deleteAll();
+			getMboValue().getMbo().getMboSet("MSTBITENSINEXIGIBILIDADE").save();
+		}
+		
 	}
 }
