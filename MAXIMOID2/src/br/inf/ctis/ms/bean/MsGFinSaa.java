@@ -50,8 +50,13 @@ public class MsGFinSaa extends AppBean {
 							mbo2.setValue("MSNUNUMTOTALCOMTRIBUTO", valor);
 							System.out.println("########## Valor = " + valor);
 							if (!mbo2.toBeDeleted()) {
-								valortotalnf += valor;
-								valortotalnfst += mbo2.getDouble("LINECOSTFORUI");
+								if(mbo2.getDouble("LINECOSTFORUI") > 0){
+									valortotalnf += valor;
+									valortotalnfst += mbo2.getDouble("LINECOSTFORUI");
+								} else if (mbo2.getDouble("LINECOSTFORUI") <= 0) {
+									throw new MXApplicationException("invoiceline", "ValorMenorZero");
+								}
+								
 							}
 						}
 						System.out.println("########## Valor Total = " + valortotalnf);
