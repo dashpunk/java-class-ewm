@@ -3,8 +3,11 @@ package br.inf.ctis.ms.field;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.Date;
+
+import br.inf.ctis.common.util.Data;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
+import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 
 public class PaidDate extends MboValueAdapter{
@@ -16,7 +19,44 @@ public class PaidDate extends MboValueAdapter{
 	@Override
 	public void validate() throws MXException, RemoteException {
 		super.validate();
+		
+		Date valor = getMboValue().getDate();
+        super.validate();
+        Date dataAtual = new Date();
+        
+        if (valor == null || dataAtual == null) {
+        	return;
+        }
 
+        if (Data.dataInicialMenorFinal(valor, dataAtual)) {
+            throw new MXApplicationException("system", "DataMenorQueAtual");
+        }
+		
+		Date dataInicial;
+	    Date dataFinal;
+	    
+	    
+    	if(!getMboValue("PAIDDATE").isNull()){
+    		dataFinal = getMboValue("PAIDDATE").getDate();
+            
+    		if(!getMboValue("ENTERDATE").isNull()){
+    			dataInicial = getMboValue("ENTERDATE").getDate();
+    			
+        		if (!Data.dataInicialMenorIgualFinal(dataInicial, dataFinal)) {
+        			throw new MXApplicationException("invoice", "EnterDateMaiorPaidDate");
+        		}
+        	}
+    		
+    		if(!getMboValue("INVOICEDATE").isNull()){
+    			dataInicial = getMboValue("INVOICEDATE").getDate();
+    			
+        		if (!Data.dataInicialMenorIgualFinal(dataInicial, dataFinal)) {
+        			throw new MXApplicationException("invoice", "InvoiceDateMaiorPaidDate");
+        		}
+        	}
+    	}
+	    
+		
 		Date data = getMboValue().getDate();
 		Calendar dataAtesto = Calendar.getInstance(); 
 		dataAtesto.setTime(data);
