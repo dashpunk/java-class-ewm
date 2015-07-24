@@ -21,7 +21,7 @@ public class VerificaDataNotaFiscal extends MboValueAdapter {
 		
 		super.validate();
 		
-		Date valor = getMboValue().getDate();
+		/*Date valor = getMboValue().getDate();
         super.validate();
         Date dataAtual = new Date();
         
@@ -31,7 +31,7 @@ public class VerificaDataNotaFiscal extends MboValueAdapter {
 
         if (Data.dataInicialMenorFinal(valor, dataAtual)) {
             throw new MXApplicationException("system", "DataMenorQueAtual");
-        }
+        }*/
 	    
 	    String campo = getMboValue().getName();
 	    Date dataInicial;

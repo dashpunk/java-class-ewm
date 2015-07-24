@@ -25,7 +25,7 @@ public class MsNuNumQtdPorEmbalagem extends MboValueAdapter{
 			System.out.println("########## qtdTotal: " + qtdTotal);
 			
 			System.out.println("########## Divisao: " + (qtdTotal / qtdPorEmbalagem));
-			Double qtdDeEmbalagens = (double) Math.round(qtdTotal / qtdPorEmbalagem);
+			Double qtdDeEmbalagens = (double) Math.ceil(qtdTotal / qtdPorEmbalagem);
 			System.out.println("########## qtdDeEmbalagens: " + qtdDeEmbalagens);
 			
 			getMboValue("MSNUNUMQTDEMBALAGENS").setValue(qtdDeEmbalagens);
