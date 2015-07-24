@@ -30,11 +30,20 @@ public class MesAnoMaiorAtual  extends MboValueAdapter {
 		if (valor.length() == 5) {
 			valor = "0" + valor;
 	    }
+		
+		System.out.println("########## Mes: " + Integer.valueOf(valor.substring(0, 2)).intValue());
+		if (Integer.valueOf(valor.substring(0, 2)).intValue() > 12 || Integer.valueOf(valor.substring(0, 2)).intValue() < 1) {
+			throw new MXApplicationException("generica", "MesInvalido");
+		}
 	    
 	    Calendar cAtual = Calendar.getInstance();        
 	
 		if (Integer.valueOf(cAtual.get(Calendar.YEAR)) < Integer.valueOf(valor.substring(2, 6)).intValue()) {
-			getMboValue().setValue(Uteis.getValorMascarado("##/####", valor, false));
+			if(Integer.valueOf(cAtual.get(Calendar.MONTH)+1) <= Integer.valueOf(valor.substring(0, 2)).intValue()) {
+				getMboValue().setValue(Uteis.getValorMascarado("##/####", valor, false));
+			} else {
+				throw new MXApplicationException("generica", "MesInvalido");
+			}
 		} else if (Integer.valueOf(cAtual.get(Calendar.YEAR)) == Integer.valueOf(valor.substring(2, 6)).intValue()) {
 			if(Integer.valueOf(cAtual.get(Calendar.MONTH)+1) <= Integer.valueOf(valor.substring(0, 2)).intValue()) {
 				getMboValue().setValue(Uteis.getValorMascarado("##/####", valor, false));

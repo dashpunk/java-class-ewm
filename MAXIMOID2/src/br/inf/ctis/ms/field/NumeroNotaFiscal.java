@@ -2,6 +2,7 @@ package br.inf.ctis.ms.field;
 
 import java.rmi.RemoteException;
 import psdi.id2.Uteis;
+import psdi.mbo.MboRemote;
 import psdi.mbo.MboValue;
 import psdi.mbo.MboValueAdapter;
 import psdi.util.MXApplicationException;
@@ -31,7 +32,17 @@ public class NumeroNotaFiscal extends MboValueAdapter {
 	    	getMboValue().setValue(getMboValue().getString().replaceAll("^0*", ""));
 	    	System.out.println("###############valor = " + getMboValue().getString().replaceAll("^0*", ""));
 	    }
-	   
+	    
 	    super.validate();
+	    
+	    MboRemote mbo1;
+	    
+	    for (int i = 0; ((mbo1 = getMboValue().getMbo().getMboSet("INVOICEMESMOVENDOR").getMbo(i)) != null); i++) {
+	    	if(getMboValue("INVOICEID").getInt() != mbo1.getInt("INVOICEID")) {
+	    		if (getMboValue().getString() == mbo1.getString("MSALNUMNOTAFISCAL")) {
+	    			throw new MXApplicationException("notafiscal", "NFdoFornecedorRepitida");
+	    		}
+	    	}
+	    }
 	  }
 }

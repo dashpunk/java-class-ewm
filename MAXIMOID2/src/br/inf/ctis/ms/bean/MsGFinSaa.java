@@ -84,12 +84,17 @@ public class MsGFinSaa extends AppBean {
 										
 						for (int j = 0; ((mbo2 = mbo1.getMboSet("MSTBAPNOTAFISCAL").getMbo(j)) != null); j++) {
 							if (!mbo2.toBeDeleted()) {
-								System.out.println("########## Valor total da NF = " + mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTAL"));
-								System.out.println("########## Valor total da NF = " + mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTALSEMTRIBUTO"));
-								valortotalap += mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTAL");
-								valortotalapst += mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTALSEMTRIBUTO");
-								System.out.println("########## Valor Total da AP (PARCIAL) = " + valortotalap);
-								System.out.println("########## Valor Total da AP ST (PARCIAL) = " + valortotalapst);
+								if(mbo2.getString("MSALNUMNOTAFISCAL").isEmpty() || mbo2.getString("MSALNUMNOTAFISCAL").equals("") || mbo2.isNull("MSALNUMNOTAFISCAL")){
+									throw new MXApplicationException("notafiscalap", "InvoiceidNull");
+								} else {
+									System.out.println("########## Valor total da NF = " + mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTAL"));
+									System.out.println("########## Valor total da NF = " + mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTALSEMTRIBUTO"));
+									valortotalap += mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTAL");
+									valortotalapst += mbo2.getMboSet("INVOICE").getMbo(0).getDouble("MSNUNUMVALORTOTALSEMTRIBUTO");
+									System.out.println("########## Valor Total da AP (PARCIAL) = " + valortotalap);
+									System.out.println("########## Valor Total da AP ST (PARCIAL) = " + valortotalapst);
+								}
+								
 							}
 						}
 						
@@ -117,9 +122,14 @@ public class MsGFinSaa extends AppBean {
 						
 						for (int j = 0; ((mbo3 = mbo1.getMboSet("MSTBAPNOTAEMPENHO").getMbo(j)) != null); j++) {
 							if (!mbo3.toBeDeleted()) {
-								System.out.println("########## Valor total da NE = " + mbo3.getDouble("MSNUNUMVALORNEUTILIZADO"));
-								valortotalne += mbo3.getDouble("MSNUNUMVALORNEUTILIZADO");
-								System.out.println("########## Valor Total das NEs (PARCIAL) = " + valortotalne);
+								if(mbo3.getString("MSALNUMNOTAEMPENHO").isEmpty() || mbo3.getString("MSALNUMNOTAEMPENHO").equals("") || mbo3.isNull("MSALNUMNOTAEMPENHO")){
+									throw new MXApplicationException("notafiscalap", "InvoiceidNull");
+								} else {
+									System.out.println("########## Valor total da NE = " + mbo3.getDouble("MSNUNUMVALORNEUTILIZADO"));
+									valortotalne += mbo3.getDouble("MSNUNUMVALORNEUTILIZADO");
+									System.out.println("########## Valor Total das NEs (PARCIAL) = " + valortotalne);
+								}
+								
 							}
 						}
 						
