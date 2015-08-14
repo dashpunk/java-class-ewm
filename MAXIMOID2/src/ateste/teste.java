@@ -20,89 +20,49 @@ public class teste {
 	 */
 	public static void main(String[] args) {
 		
-		String valor = "10/2016";
-        String novoValor;
-        String mascara="";
-		
-		valor = valor.replaceAll("/", "");
-    	
-    	
-		for (int i = 0; i < valor.length() - 4; i++){
-    		mascara = mascara + 9;
-    	}
-    	
-    	mascara = mascara + "/9999"; //numero + ano.
-    	
-    	novoValor = Uteis.getValorMascarado(mascara, valor, false);
-    	System.out.println("NumeroMascaraAno.validate = " + novoValor);
-    	
-   
-    	
-    	String[] datas = novoValor.split("/");
-    	if (Integer.parseInt(datas[0]) > 12) {
-    		System.out.println("dataCampoMesAnoInvalido");
-    	}
-    	
-    	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    	
-    	Date data = null;
-		try {
-			data = sdf.parse("01/" + novoValor);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		String valor = new String();
+	    valor = Uteis.getApenasNumeros("12/2016");
+	    
+	    System.out.println("###############valor = " + valor);
+	
+		if ((valor.length() < 5) || (valor.length() > 6)) {
+			System.out.println("genericaMascaraInvalida");
 		}
 		
-		System.out.println("########## Data = " + data);
+		if (valor.length() == 5) {
+			valor = "0" + valor;
+	    }
 		
-		Calendar cAtual = Calendar.getInstance();
-		Calendar cValor = Calendar.getInstance();
-		cValor.setTime(data);
-    	
-    	System.out.println("############# Datas - Atual: " + cAtual.getTime() + " | Campo: " + cValor.getTime());
-    		        	
-    	if (Data.dataInicialMenorFinal(cValor.getTime(), cAtual.getTime())) {
-    		System.out.println(cValor.getTime().getMonth() +" e "+ cAtual.getTime().getMonth());
-    		if (cValor.getTime().getMonth() < cAtual.getTime().getMonth()) {
-    			System.out.println("menor");
-    		}
-    		
-    	}
-    	try {
-			
-				
-			SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
-			
-			Date data1 = sdf2.parse("01/" + "10/2016");
-			System.out.println("########## Data = " + data1);
-			
-			Calendar c = Calendar.getInstance();
-			c.setTime(data1);
-							
-			System.out.println("########## meses = " + (973836 / 81153));
-			System.out.println("########## meses = " + (int) Math.round(973836 / 81153));
-			int meses = (int) Math.round(973836 / 81153);
-			
-			
-			System.out.println("########## Data antes de somar meses = " + c.getTime() + " -> " + sdf2.format(c.getTime()).substring(3));
-			c.add(Calendar.MONTH, meses);
-			System.out.println("########## Data apos somar meses = " + c.getTime() + " -> " + sdf2.format(c.getTime()).substring(3));
-			
-			String valor1 = sdf2.format(c.getTime()).substring(3);
-			
-			if (valor1.length() == 6) {
-				valor1 = "0" + valor1;
-		    }
-							
-			System.out.println(valor1);;
-			
-				
-				
-				
-			
-					
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		System.out.println("########## Mes: " + Integer.valueOf(valor.substring(0, 2)).intValue());
+		if (Integer.valueOf(valor.substring(0, 2)).intValue() > 12 || Integer.valueOf(valor.substring(0, 2)).intValue() < 1) {
+			System.out.println("genericaMesInvalido");
 		}
+	    
+	    Calendar cAtual = Calendar.getInstance();        
+	
+	    System.out.println(Integer.valueOf(cAtual.get(Calendar.YEAR)) + "  1111111 " + Integer.valueOf(valor.substring(2, 6)).intValue());
+		if (Integer.valueOf(cAtual.get(Calendar.YEAR)) < Integer.valueOf(valor.substring(2, 6)).intValue()) {
+			
+			System.out.println(Integer.valueOf(cAtual.get(Calendar.MONTH)+1) + "  22222222 " + Integer.valueOf(valor.substring(0, 2)).intValue());
+			if(Integer.valueOf(cAtual.get(Calendar.MONTH)+1) <= Integer.valueOf(valor.substring(0, 2)).intValue()) {
+				
+				System.out.println(Uteis.getValorMascarado("##/####", valor, false));
+			} else {
+				System.out.println("genericaMesInvalido");
+			}
+			System.out.println(Integer.valueOf(cAtual.get(Calendar.YEAR))+ "  3333333 " + Integer.valueOf(valor.substring(2, 6)).intValue());
+		} else if (Integer.valueOf(cAtual.get(Calendar.YEAR)) == Integer.valueOf(valor.substring(2, 6)).intValue()) {
+			
+			System.out.println(Integer.valueOf(cAtual.get(Calendar.MONTH)+1) + "  44444444 " + Integer.valueOf(valor.substring(0, 2)).intValue());
+			if(Integer.valueOf(cAtual.get(Calendar.MONTH)+1) <= Integer.valueOf(valor.substring(0, 2)).intValue()) {
+				
+				System.out.println(Uteis.getValorMascarado("##/####", valor, false));
+			} else {
+				System.out.println("genericaMesInvalido");
+			}
+		} else {
+			System.out.println("genericaAnoInvalido");
+	    }
+		
 	}
 }

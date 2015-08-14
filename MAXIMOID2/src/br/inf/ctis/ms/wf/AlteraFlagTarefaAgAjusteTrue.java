@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import psdi.common.action.ActionCustomClass;
 import psdi.mbo.MboConstants;
 import psdi.mbo.MboRemote;
-import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 
 public class AlteraFlagTarefaAgAjusteTrue implements ActionCustomClass {
@@ -23,16 +22,12 @@ public class AlteraFlagTarefaAgAjusteTrue implements ActionCustomClass {
 		System.out.println("########## WONUM REGISTRO: " + mbo.getString("WONUM"));
 		MboRemote mbo1 = mbo.getMboSet("WORKORDER").getMbo(0);
 		System.out.println("########## WONUM PAI: " + mbo1.getString("WONUM"));
-		MboRemote mbo2;
 		
-		for (int i = 0; ((mbo2 = mbo1.getMboSet("WOACTIVITY").getMbo(i)) != null); i++){
+		System.out.println("########## WOACTIVITY ID: " + mbo.getString("WONUM") + " WONUM PAI: " + mbo.getString("PARENT"));
 			
-			System.out.println("########## WOACTIVITY ID: " + mbo2.getString("WONUM") + " WONUM PAI: " + mbo2.getString("PARENT"));
-			
-			mbo2.setValue("MSNUFLGAGUARDANDOAJUSTE", true, MboConstants.NOACCESSCHECK);
-			mbo2.setValue("STATUS", "AG. AJUSTES", MboConstants.NOACCESSCHECK);
-		}	
-		
+		mbo.setValue("MSNUFLGAGUARDANDOAJUSTE", true, MboConstants.NOACCESSCHECK);
+		mbo.setValue("STATUS", "AG. AJUSTES", MboConstants.NOACCESSCHECK);
+				
 		mbo1.setValue("STATUS", "ANALISANDO PROC", MboConstants.NOACCESSCHECK);
 		mbo1.getMboSet("WOACTIVITY").save(MboConstants.NOACCESSCHECK);
 		
