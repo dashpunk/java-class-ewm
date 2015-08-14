@@ -53,6 +53,16 @@ public class QntPedido extends MboValueAdapter {
 		
 		atualizaPrevisaoCobertura();
 
+		if(!getMboValue().getMbo().getMboSet("MSTBPREVISAODISTRIBUICAO").isEmpty()) {
+			getMboValue().getMbo().getMboSet("MSTBPREVISAODISTRIBUICAO").deleteAll();
+			getMboValue().getMbo().getMboSet("MSTBPREVISAODISTRIBUICAO").save();
+		}
+		
+		if(!getMboValue().getMbo().getMboSet("MSTBPREVISAOENTREGA").isEmpty()) {
+			getMboValue().getMbo().getMboSet("MSTBPREVISAOENTREGA").deleteAll();
+			getMboValue().getMbo().getMboSet("MSTBPREVISAOENTREGA").save();
+		}
+		
     }
     
     

@@ -28,8 +28,8 @@ public class PaidDate extends MboValueAdapter{
         	return;
         }
 
-        if (Data.dataInicialMenorFinal(valor, dataAtual)) {
-            throw new MXApplicationException("system", "DataMenorQueAtual");
+        if (!Data.dataInicialMenorIgualFinal(valor, dataAtual)) {
+            throw new MXApplicationException("system", "DataMaiorQueAtual");
         }
 		
 		Date dataInicial;
