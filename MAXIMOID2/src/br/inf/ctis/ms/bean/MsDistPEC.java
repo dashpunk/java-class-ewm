@@ -51,6 +51,7 @@ public class MsDistPEC extends DataBean {
 	String MsDistDem ="";
 	String MsDistDem2 ="";
 	String Decisao="";
+	float Duracao=0;
 	boolean Msckanexos;
 	//Declaracoes para Tabela  de anexos	
 	Properties prop;
@@ -62,7 +63,7 @@ public class MsDistPEC extends DataBean {
 	
 
 	public MsDistPEC() {	
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_teste00");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistPEC_VERSAO01");
 	}
 
 	public int selectrecord() throws MXException, RemoteException {
@@ -102,6 +103,7 @@ public class MsDistPEC extends DataBean {
 
 		PoNum = app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"); 
 		MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID");
+		Duracao = mboStatus.getFloat("MSDURACAO");
 		MsAcao = getMbo(row).getInt("MSACAO");
 		Decisao = getMbo(row).getString("DESCRIPTION");
 		Statuspec = mboStatus.getString("DESCRIPTION");
@@ -279,6 +281,7 @@ public class MsDistPEC extends DataBean {
 		mboPO.setValue("MSPECFLUXO", MsFluxo);
 		mboPO.setValue("STATUSPEC", Statuspec);	
 		mboPO.setValue("MSCKANEXOS", Msckanexos);
+		mboPO.setValue("MSPODURACAO", Duracao);
 		super.save();		 
 
 	}

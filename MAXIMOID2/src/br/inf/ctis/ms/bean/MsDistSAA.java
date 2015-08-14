@@ -29,10 +29,10 @@ public class MsDistSAA extends DataBean {
 	int MsAcao = 0; 
 	String MsGrupo = ""; 
 	String MSFLAGMSG = "0";
-	String Statuspec ="";
+	int Statusaa =0;
 
 	public MsDistSAA (){
-		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistSAA_teste00");
+		System.out.println(">>>>>>>>>> Dentro da classe: br.inf.ctis.ms.bean.MsDistSAA_teste01");
 	}
 	
 	public int selectrecord() throws MXException, RemoteException {
@@ -48,22 +48,14 @@ public class MsDistSAA extends DataBean {
 	
 	private void linhaSelecionada() throws RemoteException, MXException  {
 		WebClientEvent event = this.app.getWebClientSession().getCurrentEvent();
-		int row = getRowIndexFromEvent(event);
-
-		MboRemote mboAcao;
-		mboAcao = getMbo().getMboSet("MSTBPEC_ACOESPREG").getMbo(0);
+		int row = getRowIndexFromEvent(event);		
 		
-		MboRemote mboStatus;
-		mboStatus = getMbo().getMboSet("MSTBPEC_ACOESPREG2").getMbo(0);
-
-		MboRemote mboGrupo;
-		mboGrupo = getMbo().getMboSet("MSTBPEC_GRUPO").getMbo(0);
-
+				
 		PoNum = app.getDataBean("MAINRECORD").getMbo().getInt("PONUM"); 
-		MsFluxo = mboAcao.getInt("MSTBPEC_FLUXOID");
-		MsAcao = getMbo(row).getInt("MSACAO");
-		Statuspec = mboStatus.getString("DESCRIPTION");
-		MsGrupo = mboGrupo.getString("MSGRUPO"); 		
+		// Antes: MsAcao = getMbo(row).getInt("NEXTAREFA");
+		Statusaa = app.getDataBean("MAINRECORD").getMbo().getMboSet("MSTBSAA_DISTRIBUICAO").getMbo(0).getInt("TAREFA");
+		System.out.println(">>>>>>>>>> Valor da Tarefa da tabela de distribuicao pessoal: "+Statusaa);
+		
 }
 
 		private void fecharERotear() throws RemoteException, MXException {
@@ -96,11 +88,9 @@ public class MsDistSAA extends DataBean {
 
 			MboRemote mboPO = app.getDataBean("MAINRECORD").getMbo();
 
-			mboPO.setValue("MSPECACAO", MsAcao);
-			mboPO.setValue("MSPECFLUXO", MsFluxo);
-			mboPO.setValue("MSPECGRUPO", MsGrupo);
-			mboPO.setValue("STATUSPEC", Statuspec);
-			System.out.println("Setando Status PEC:" + Statuspec);
+			mboPO.setValue("STATUSAA", Statusaa);
+			
+			super.save();
 
 		}
 

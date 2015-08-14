@@ -29,7 +29,7 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
 	int qtdAnexoMsg = 0;
 	
     public MSCLPO02() {
-    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_Teste02");
+    	System.out.println(">>>>>>>>> Dentro da classe: br.inf.id2.ms.bean.MSCLPO02_versao00");
     }
 
     /**
@@ -43,6 +43,9 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
     	
 
         Executa.atualizaAtributo((MboSet) getMbo().getMboSet("POLINE"), "GLDEBITACCT", "0.0.0.0");
+        
+        Properties propTR;
+		Connection conexaoTR = null;
 
         //verifica se algum poline foi deletado
         MboRemote mbo;
@@ -131,9 +134,71 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
         			}
         		}        		
         		
-        	}        	
+        	}
+        
+        //Gerando o valor total de compra do TR para o PEC
+        	super.save(); 
+        	try {
+        		
+        		MboRemote mbo1;
+        		float qtdTotal =0;
+                propTR = MXServer.getMXServer().getConfig();
+                
+                String driver = propTR.getProperty("mxe.db.driver", "oracle.jdbc.OracleDriver");
+                String url = propTR.getProperty("mxe.db.url");
+                String username = propTR.getProperty("mxe.db.user", "dbmaximo");
+                String password = propTR.getProperty("mxe.db.password", "max894512");
+
+                Class.forName(driver).newInstance();
+                
+                try {
+                	conexaoTR = DBConnect.getConnection(url, username, password, propTR.getProperty("mxe.db.schemaowner", "dbmaximo"));
+    			} catch (Exception e) {
+    				Logger.getLogger(MSCLPO02.class.getName()).log(Level.SEVERE, null, e);
+    				e.printStackTrace();
+    			}
+                
+                for(int i = 0; ((mbo1 = getMbo().getMboSet("POLINE").getMbo(i)) != null); i++){
+                	
+                	qtdTotal+=(mbo1.getFloat("MSVALEST") * mbo1.getFloat("ORDERQTY"));
+                	
+                }              
+                              
+                
+//                Statement stmt = conexao.createStatement(); //não estava sendo utilizada. por isso foi comentado.
+                PreparedStatement ps = conexaoTR.prepareStatement("UPDATE PO SET MSVLRTOTALCOMPRA = ? WHERE PONUM = ?");//---- MSQTDANEXOPEC
+                ps.setFloat(1, qtdTotal);
+                System.out.println("########## vALOR DO TOTAL: "+ getMbo().getFloat("MSVLRTOTALCOMPRA"));
+                ps.setString(2, getMbo().getString("PONUM"));                
+
+                System.out.println("########## updatePO execute b");
+                int r = ps.executeUpdate();  
+                
+                System.out.println("########## updatePO execute a " + r);                
+                conexaoTR.commit();
+                System.out.println("########## commit");
+                
+                super.SAVE();
+        	} catch (RemoteException ex) {
+                Logger.getLogger(MSCLPO02.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            } catch (SQLException e) {
+            	 Logger.getLogger(MSCLPO02.class.getName()).log(Level.SEVERE, null, e);
+            	e.printStackTrace();
+    		} catch (Exception e) {
+    			 Logger.getLogger(MSCLPO02.class.getName()).log(Level.SEVERE, null, e);
+    			e.printStackTrace();
+    		} finally {
+    		    try { 
+    		    		conexaoTR.close(); 
+    		    } catch (Exception e) { 
+    		    	Logger.getLogger(MSCLPO02.class.getName()).log(Level.SEVERE, null, e);
+    				e.printStackTrace();
+    			}
+    		}
+        	super.save(); 
         	
-        //}
+        
         
         System.out.println(">>>>>>>>> Metodo save executado");
         return super.SAVE();
@@ -144,8 +209,15 @@ public class MSCLPO02 extends psdi.webclient.beans.po.POAppBean {
     protected void initialize() throws MXException, RemoteException {
     	Properties prop;
 		Connection conexao = null;
+		MboRemote mboAnexo;
     	
     	super.initialize();
+    	
+    	for (int J = 0; ((mboAnexo = getMbo().getMboSet("MSPECANEXOS").getMbo(J)) != null); J++) {
+ 		   mboAnexo.setValue("MSFLAGLEITURA", true);
+ 		   
+ 	   }
+ 	   super.SAVE();
     	
     	try {
             prop = MXServer.getMXServer().getConfig();
