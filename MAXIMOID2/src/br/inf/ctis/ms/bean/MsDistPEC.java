@@ -282,8 +282,8 @@ public class MsDistPEC extends DataBean {
 		mboPO.setValue("STATUSPEC", Statuspec);	
 		mboPO.setValue("MSCKANEXOS", Msckanexos);
 		mboPO.setValue("MSPODURACAO", Duracao);
-		super.save();		 
-
+		super.save();
+		
 	}
 	private void DefineDoc() throws RemoteException, MXException {
 		
