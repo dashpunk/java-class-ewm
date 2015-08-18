@@ -10,6 +10,13 @@ import psdi.mbo.MboValueAdapter;
 import psdi.util.MXApplicationException;
 import psdi.util.MXException;
 
+
+/*
+ * EMISSAO - INVOICEDATE
+ * ATESTO - PAIDDATE
+ * ENTRADA NA CEOF - ENTERDATE
+ */
+
 public class PaidDate extends MboValueAdapter{
 	
 	public PaidDate(MboValue mbv) throws MXException {
@@ -32,25 +39,25 @@ public class PaidDate extends MboValueAdapter{
             throw new MXApplicationException("system", "DataMaiorQueAtual");
         }
 		
-		Date dataInicial;
-	    Date dataFinal;
+		Date dataTeste;
+	    Date paidDate;
 	    
 	    
     	if(!getMboValue("PAIDDATE").isNull()){
-    		dataFinal = getMboValue("PAIDDATE").getDate();
+    		paidDate = getMboValue("PAIDDATE").getDate();
             
     		if(!getMboValue("ENTERDATE").isNull()){
-    			dataInicial = getMboValue("ENTERDATE").getDate();
+    			dataTeste = getMboValue("ENTERDATE").getDate();
     			
-        		if (!Data.dataInicialMenorIgualFinal(dataInicial, dataFinal)) {
-        			throw new MXApplicationException("invoice", "EnterDateMaiorPaidDate");
+        		if (!Data.dataInicialMenorIgualFinal(paidDate, dataTeste)) {
+        			throw new MXApplicationException("invoice", "PaidDateMaiorEnterDate");
         		}
         	}
     		
     		if(!getMboValue("INVOICEDATE").isNull()){
-    			dataInicial = getMboValue("INVOICEDATE").getDate();
+    			dataTeste = getMboValue("INVOICEDATE").getDate();
     			
-        		if (!Data.dataInicialMenorIgualFinal(dataInicial, dataFinal)) {
+        		if (!Data.dataInicialMenorIgualFinal(dataTeste, paidDate)) {
         			throw new MXApplicationException("invoice", "InvoiceDateMaiorPaidDate");
         		}
         	}
